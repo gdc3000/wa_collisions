@@ -1,9 +1,6 @@
 ## vehicle_collisions
 [![Build Status](https://travis-ci.org/uwescience/vehicle_collisions.svg?branch=master)](https://travis-ci.org/uwescience/vehicle_collisions)
 
-GEOFF ADDED THIS TO THE READ.ME
-
-
 Shablona is a template project for small scientific python projects. The
 recommendations we make here follow the standards and conventions of much of
 the scientific Python eco-system. Following these standards and recommendations

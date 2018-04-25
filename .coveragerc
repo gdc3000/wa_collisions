@@ -1,0 +1,7 @@
+[run]
+branch = True
+source = vehicle_collisions/*
+include = vehicle_collisions/*
+omit = */setup.py
+[report]
+include = vehicle_collisions/*

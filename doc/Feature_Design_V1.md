@@ -53,10 +53,42 @@ Assign: Libby
 
 ### Assign Neighborhoods 
 
-Assign: Salik 
+    - Name: GetNeighbourhoods
+    - What it does?
+        - given a dataframe containing latitudes and longitudes, assigns seattle neighbourhoods to them
+    - Input:
+        - Data frame containing latitudes and longitudes
+    - Ouput:
+        - Data frame with a columns attached about which neighborhood they are in.
+    - How:
+        - Read Seattle neighbour hood shapefile
+        - Create shape using shapify (Python library)
+        - using this shape file fine neighbour hood of each point and attach to dataframe.
+    - How:
+        - This allows us to later group data by neighbourhoods for visualization.
 
 ### Visualize Data Geographically in Neighborhoods 
 
-Assign: Salik 
+    - Name: PlotNeighbourhoods
+    - What it does?
+        - given a dataframe with data per neighbourhood, 1 row per neighbourhood, plot that that data in a neighbour hood map.
+    - Input:
+        - dataframe with data per neighbourhood, 1 row per neighbourhood. 1 column should state the value
+    - Ouput:
+        A map plot of the neighbourhood data
+    - How it connects to the use cases  
+        - This can be used as a module to draw different types of visualizations.
+
+### Visualize Data Geographically individually 
+
+    - Name: PlotPoints
+    - What it does?
+        - given a dataframe with data per observation (columns for lattitude, longitude and value) plot that that data in a seattle map.
+    - Input:
+        - dataframe with columns: lattitude, longitude and value
+    - Ouput:
+        A map plot of the individual points in a seattle map (possibly as a heat map)
+    - How it connects to the use cases  
+        - This can be used as a module to draw different types of visualizations.
 
 ### Add more!!! 

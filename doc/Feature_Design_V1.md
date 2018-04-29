@@ -24,7 +24,9 @@ Assign: Fei
 
 ### Do different types of accidents happen in different neighborhoods with different levels of crime (911 call)?
 
-Assign: Libby 
+    The user of this package will have the ability to correlate the types of accidents and the levels of crime in each neighboorhood. 
+    We will measure the type of accident based on the encoding from the Seattle collision dataset. The level of crime will be based on the frequency of 911 calls in each neighboorhood. 
+    There will be a way to visually and quantitatively coorrelate the two types of data. The user can then better determine where to live and drive in Seattle. 
 
 ### Have the number of accidents changed over time? Can we see the change in Seattle speed limits in the Seattle collision data?
 
@@ -36,20 +38,37 @@ Assign: Geoff
 
 ### Create Dataframe 
 
-Assign: Libby 
+    - Name: ReadData
+    - What it does?
+        - Read the data in from the source 
+    - Input: dataset 
+    - Output: datafame 
+    - How it connects to the use cases?
+        - Once the dataset is read in, then it can be cleaned using the Clean Data component 
 
 ### Clean Data
 
-Assign: Libby 
+    - Name: CleanData
+    - What it does?
+        - Cleans the data that is read from the source 
+        - Deals with any missing values, converts to NA 
+        - Converts data types to the data types necessary for analysis (text strings to dates, text to numeric, etc.)
+        - Ensures that categorical data are in the correct categories (for instance fixes spelling mistakes)
+    - Input: data frames 
+    - Output: cleaned data ready for integration
+    - How it connects to other use cases?
+        - The output of the CleanData will be used in the Integrate Data Source component 
 
 ### Integrate Data Source 
 
     - Name: FullDataset
     - What it does?
-        - integrating cleaned data 
+        - Integrate cleaned dataset into one dataset   
     - Input: cleaned data sorts 
     - Ouput: cleaned integrated data ready for visualization and analysis 
-    - How it connects to the use cases 
+    - How it connects to the use cases? 
+        - The output of the Create Datafame and Clean Data components will be used as an input to create the FullDataset 
+        - This dataset will be used in all other components that depend on data 
 
 ### Assign Neighborhoods 
 

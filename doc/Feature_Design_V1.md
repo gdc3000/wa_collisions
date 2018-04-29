@@ -24,9 +24,9 @@ Assign: Fei
 
 ### Do different types of accidents happen in different neighborhoods with different levels of crime (911 call)?
 
-    The user of this package will have the ability to correlate the types of accidents and the levels of crime in each neighboorhood. 
-    We will measure the type of accident based on the encoding from the Seattle collision dataset. The level of crime will be based on the frequency of 911 calls in each neighboorhood. 
-    There will be a way to visually and quantitatively coorrelate the two types of data. The user can then better determine where to live and drive in Seattle. 
+* The user of this package will have the ability to correlate the types of accidents and the levels of crime in each neighboorhood. 
+* We will measure the type of accident based on the encoding from the Seattle collision dataset. The level of crime will be based on the frequency of 911 calls in each neighboorhood. 
+* There will be a way to visually and quantitatively coorrelate the two types of data. The user can then better determine where to live and drive in Seattle. 
 
 ### Have the number of accidents changed over time? Can we see the change in Seattle speed limits in the Seattle collision data?
 

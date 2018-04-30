@@ -12,11 +12,20 @@
 - For each use case, we plan to create on jypter notebook demo. 
 - The demo will call the components which will by python method(s) that are within our vehicle_collisions/
 
-### Where do more accidents occur in Seattle? Where should I avoid driving or living?
+### Where do more accidents occur in Seattle?
 
-Add description - to each 
-
-Assign: Geoff   
+    - Name: AnalyzeCrashLocations
+    - What it does?
+        - Read the data in from the source 
+	- Produce a Jupyter notebook which does the following:
+		-Identifies hot spots for accidents
+		-Performs regression analysis accidents do determine if certain
+			features are related to accidents
+		-Summarizes findings of analysis
+    - Input: CleanData output
+    - Output: Jupyter notebook
+    - How it connects to the use cases?
+        - Utilizes cleaned data to perform useful analysis.
 
 ### How does weather/climate effect driving?
 
@@ -30,7 +39,19 @@ Assign: Fei
 
 ### Have the number of accidents changed over time? Can we see the change in Seattle speed limits in the Seattle collision data?
 
-Assign: Geoff 
+    - Name: AnalyzeCrashesOverTime
+    - What it does?
+        - Read the data in from the source 
+	- Produce a Jupyter notebook which does the following:
+		-Shows visualizations of accident data over time, potentially filtered to hot spots
+			identified in AnalyzeCrashLocations.
+		-Performs time series analysis on crash data to understand impact of changes like speed limit changes,
+			road work and seasonality
+    - Input: CleanData output
+    - Output: Jupyter notebook
+    - How it connects to the use cases?
+        - Utilizes cleaned data to perform useful analysis. Potentially utilizes AnalyzeCrashLocation insights in
+		developing compelling visualizations.
 
 ## Components:
 
@@ -40,7 +61,7 @@ Assign: Geoff
 
     - Name: ReadData
     - What it does?
-        - Read the data in from the source 
+        - Read the data in from the source
     - Input: dataset 
     - Output: datafame 
     - How it connects to the use cases?

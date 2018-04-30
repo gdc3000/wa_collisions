@@ -29,7 +29,12 @@
 
 ### How does weather/climate effect driving?
 
-Assign: Fei
+* The user of this package will have the ability to dynamically analyze the correlation between collision density within a neighborhood in Seattle and temperature and weather type
+* We will divide the Seattle city area into sub areas by density of collisions and proximities to the 10 weather stations. For each area, determine the effect of temperature, weather type on the density of collisions based on historical data.
+* The user will be provided with an UI to select one of the sub areas
+* The package returns a time series visualization of the temperatures of that neighborhood, together with the collision density
+* The package will also fit a regression model on number of collisions with estimated road surface temperature, air temperature, precipitation and weather type for the selected neighborhood. It then renders the result of correlation coefficients and confidence intervels for each predictor variable to the user
+* User should also be able to apply the same analysis to the entire Seattle city
 
 ### Do different types of accidents happen in different neighborhoods with different levels of crime (911 call)?
 
@@ -131,4 +136,15 @@ Assign: Fei
     - How it connects to the use cases  
         - This can be used as a module to draw different types of visualizations.
 
+### Component to render the result of statistical analysis results
+    - Name: RenderStats
+    - What it does?
+        - Given the resulting object of a statistical analysis, it renders the object to the user in a concise and visually pleasing way that is also consisitent to the rest of the package's visualizations.
+    - Input:
+        - A python object that contains result of a statistical analysis (regression for example)
+    - Output:
+        - A visualization of the result and a summary paragraph
+    - How it connects to the user cases
+        - This can be used in all the use cases where user perform ML/statistical analysis as a standard output framework
+         
 ### Add more!!! 

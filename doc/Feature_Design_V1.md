@@ -136,15 +136,15 @@
         - This can be used in all the use cases where user perform ML/statistical analysis as a standard output framework
 
 ### Component to support juypter notebook analyzing crash locations
-   - Name: AnalyzeCrashLocations
-   - What it does?
-       - Read the data in from the source
-  - Suprports a Jupyter notebook which does the following:
-       - Identifies hot spots for accidents
-       - Performs regression analysis accidents do determine if certain
+    - Name: AnalyzeCrashLocations
+    - What it does?
+        - Read the data in from the source
+    - Suprports a Jupyter notebook which does the following:
+        - Identifies hot spots for accidents
+        - Performs regression analysis accidents do determine if certain
             features are related to accidents
-       - Summarizes findings of analysis
-   - Input: CleanData, RederStats, PlotPlot, PlotNeighbourhoods output.
-   - Output: modules which can be render with only a few lines of code in a Jupyter notebook
-   - How it connects to the use cases?
-       - Utilizes cleaned data to perform useful analysis.
+        - Summarizes findings of analysis
+    - Input: CleanData, RederStats, PlotPlot, PlotNeighbourhoods output.
+    - Output: modules which can be render with only a few lines of code in a Jupyter notebook
+    - How it connects to the use cases?
+        - Utilizes cleaned data to perform useful analysis.

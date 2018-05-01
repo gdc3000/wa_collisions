@@ -58,6 +58,12 @@
         - Utilizes cleaned data to perform useful analysis. Potentially utilizes AnalyzeCrashLocation insights in
 		developing compelling visualizations.
 
+### If the user has similar data for another city, they can use the methods we create on their own data. 
+
+* Our methods will be reproducible. The user will need to have the data in a specific format, but they can use our methods for analysis or visualization. 
+* We will not do extensive testing, but the user will be able to pull in data from another city. 
+* We will document the specific data format so that the user is able to confirm that thier data are in the correct format. 
+
 ## Components:
 
 - The components are in the order that we will work through them. 
@@ -146,5 +152,3 @@
         - A visualization of the result and a summary paragraph
     - How it connects to the user cases
         - This can be used in all the use cases where user perform ML/statistical analysis as a standard output framework
-         
-### Add more!!! 

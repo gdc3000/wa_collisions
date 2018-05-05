@@ -28,6 +28,12 @@
 * Drawbacks: 
     - Need to learn both leaflet and django 
     - The examples all call the Google Maps API and do not appear to have [layering functionality](http://django-map-widgets.readthedocs.io/en/latest/widgets/google_static_overlay_map_widget.html)
+    - In order to deploy, you need to create a webpage with [Django](https://docs.djangoproject.com/en/2.0/intro/tutorial01/)
+* Recommendation:
+    - I do not recommend using this package
+    - I did not need to download the package because of the issues discovered in the documentation
+    - The benefits of this package do not out way the issues
+    - The user needs to set up a full Django framework in order to add a Google map with no layers
 
 ## [Python Folium](http://python-visualization.github.io/folium/)
 

@@ -22,6 +22,21 @@
 - Found a [demo](https://github.com/plotly/dash-uber-rides-demo)
 - [Installation instructions](https://dash.plot.ly/installation)
 
+* Package Functionality:
+    - Draw interactive graphs in a web app using react JS.
+* Pros:
+    - Very easy to draw interactive charts, easy to learn
+    - Great documentation for supported features
+    - Active github with many commits
+    - Supports html and css so easy to customize
+* Cons:
+    - Dash only works with plotly as far as I could tell
+    - Only some graph types are supported in Plotly. Other Matplotlib graphs would have to be ported over
+    - Only supports some maps and with a mapbox account (not sure if Mapbox accounts are supported in this course)
+    - Custom shape files such as Seattle neighbourhoods not supported
+* Reommendation:
+    - We can use this if we decide to have an interactive display. However it can only be used for charts (and possibly some simple heatmaps).
+
 ## [Django Map Widgets](https://github.com/erdem/django-map-widgets)
 
 * Package Functionality:

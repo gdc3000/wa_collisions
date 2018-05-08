@@ -20,6 +20,7 @@
 ## [Dash](https://plot.ly/products/dash/)
 
 - Found a [demo](https://github.com/plotly/dash-uber-rides-demo)
+- [Installation instructions](https://dash.plot.ly/installation)
 
 ## [Django Map Widgets](https://github.com/erdem/django-map-widgets)
 

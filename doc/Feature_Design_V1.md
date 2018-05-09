@@ -19,6 +19,7 @@
 * We will perform analysis on the characteristics of different locations (such as population density, road quality, traffic volumes - depending on
   data availability) to understanding the relationships between these variables and collisions.
 * We will make this analysis repeatable so that it could be re-used with similar datasets from different cities.
+* Contact: Salik Warsi 
 
 ### How does weather/climate effect driving?
 
@@ -28,17 +29,20 @@
 * The package returns a time series visualization of the temperatures of that neighborhood, together with the collision density
 * The package will also fit a regression model on number of collisions with estimated road surface temperature, air temperature, precipitation and weather type for the selected neighborhood. It then renders the result of correlation coefficients and confidence intervels for each predictor variable to the user
 * User should also be able to apply the same analysis to the entire Seattle city
+* Contact: Fei Wang
 
 ### Do different types of accidents happen in different neighborhoods with different levels of crime (911 call)?
 
 * The user of this package will have the ability to correlate the types of accidents and the levels of crime in each neighboorhood.
 * We will measure the type of accident based on the encoding from the Seattle collision dataset. The level of crime will be based on the frequency of 911 calls in each neighboorhood.
 * There will be a way to visually and quantitatively coorrelate the two types of data. The user can then better determine where to live and drive in Seattle.
+* Contact: Libby Montague
 
 ### Have the number of accidents changed over time? Can we see the change in Seattle speed limits in the Seattle collision data?
 
 * The user of this will gain an understanding of how collisions have changed over time and by neighbourhood.
 * We will perform time series analysis to understand if population growth or changes in speed limits have impacted the number of collisions in Seattle.
+* Contact: Geoff Coyner
 
 ### If the user has similar data for another city, they can use the methods we create on their own data.
 
@@ -148,3 +152,11 @@
     - Output: modules which can be render with only a few lines of code in a Jupyter notebook
     - How it connects to the use cases?
         - Utilizes cleaned data to perform useful analysis.
+
+## Project Plan 
+
+### 5/15/2018 
+
+* Individually start researching the Use Cases (questions)
+* Follium visualizations for the locations question (Salik)
+* Framework for the Clean Data and the Integrate Data Source (Libby)

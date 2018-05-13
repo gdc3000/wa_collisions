@@ -1,6 +1,12 @@
 ## Script to map collisions to beats
+## The collisions need to be mapped to beats in order to compare to crime data
 ## Takes a long time to run 
 ## Currently only looks at 5 collisions 
+
+## Data from:
+## Collisions: https://data-seattlecitygis.opendata.arcgis.com/datasets/collisions/data?geometry=-122.526%2C47.676%2C-122.198%2C47.717
+## Beat Shape Files: https://data.seattle.gov/Public-Safety/Seattle-Police-Department-Beats/nnxn-434b
+## Crime Data (911): https://data.seattle.gov/Public-Safety/Crime-Data/4fs7-3vj5
 
 import numpy as np
 import pandas as pd

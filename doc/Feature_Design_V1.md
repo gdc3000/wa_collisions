@@ -16,10 +16,10 @@
 
 * The user of this package will have an understanding of where the most accidents in Seattle are occuring by neighbourhood and in a visual form.
 * We will visualize the locations of accidents in neighbourhoods on a map.
-* We will perform analysis on the characteristics of different locations (such as population density, road quality, traffic volumes - depending on
-  data availability) to understanding the relationships between these variables and collisions.
 * We will make this analysis repeatable so that it could be re-used with similar datasets from different cities.
 * Contact: Salik Warsi 
+* The first iteration will not include: We will perform analysis on the characteristics of different locations (such as population density, road quality, traffic volumes - depending on
+  data availability) to understanding the relationships between these variables and collisions.
 
 ### How does weather/climate effect driving?
 
@@ -33,6 +33,7 @@
 
 ### Do different types of accidents happen in different neighborhoods with different levels of crime (911 call)?
 
+* Because of issues with the data integration, we are not working on this part at this time. The collision data needs to be mapped to the beats and then to the collision data.
 * The user of this package will have the ability to correlate the types of accidents and the levels of crime in each neighboorhood.
 * We will measure the type of accident based on the encoding from the Seattle collision dataset. The level of crime will be based on the frequency of 911 calls in each neighboorhood.
 * There will be a way to visually and quantitatively coorrelate the two types of data. The user can then better determine where to live and drive in Seattle.

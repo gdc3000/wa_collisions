@@ -6,12 +6,15 @@
 
 # import packages
 import pandas as pd
+import os
+
+from neighborhood_reader import assign_neighborhood
 
 def read_collision_data(file_path):
     """ Read in the collision dataframe.
 
     Uses the input file path to find the csv file with the collision
-    data from Washington state.  
+    data from Washington state.
 
 
     Args:
@@ -28,11 +31,11 @@ def read_collision_data(file_path):
     if not os.path.exists(file_path):
         raise ValueError("file doesn't exist: " + str(file_path))
     
-    # read in the data frome the file 
-    data = None
+    # read in the data frome the file
+    collision_data = pd.read_csv(file_path)
 
-    # return the data 
-    return data
+    # return the data
+    return collision_data
 
 def read_weather_data(file_path):
     """ Read in the weather data.
@@ -41,7 +44,7 @@ def read_weather_data(file_path):
 
 
     Args:
-        file_path: 
+        file_path:
 
     Returns:
         dataframe of data from the weather data file
@@ -60,14 +63,14 @@ def read_weather_data(file_path):
     # return the data 
     return data
 
-def clean_collision_data(data):
+def clean_collision_data(collision_data):
     """ Clean the collision data.
 
     Uses the collision data and returns a cleaned data frame ...
 
 
     Args:
-        data: 
+        data:
 
     Returns:
         cleaned dataframe of data from the collision data file
@@ -75,4 +78,13 @@ def clean_collision_data(data):
     Raises:
         None
     """
-    pass
+
+    # change the dates to date time 
+    # adapted from Fei's exploration notebook 
+    collision_data.incdttm = pd.to_datetime(collision_data.incdttm)
+    collision_data.incdate = pd.to_datetime(collision_data.incdate)
+
+    ## add the assigned neighborhoods
+    collision_data = assign_neighborhood(collision_data)
+
+    return(collision_data)

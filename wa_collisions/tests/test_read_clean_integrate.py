@@ -49,7 +49,17 @@ class IntegrateDataTest(unittest.TestCase):
             read_clean_integrate_data.read_weather_data("test")
         except Exception as err:
             self.assertTrue(isinstance(err, ValueError))
+    
+    def test_clean_data_collisions(self):
+        """ Test the type of data from cleaning the data. 
 
+            The data type of the date and datetime should change when the
+            data are cleaned. This test confirms that there is a change.
+        """
+        data_file = "Collisions.csv"
+        test_data = read_clean_integrate_data.read_collision_data(data_file)
+        clean_data = read_clean_integrate_data.clean_collision_data(test_data)
+        self.assertFalse(type(test_data.inc_date),type(clean_data.inc_data))
 
 if __name__ == '__main__':
     unittest.main()

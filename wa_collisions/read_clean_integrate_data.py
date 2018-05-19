@@ -8,7 +8,7 @@
 import pandas as pd
 import os
 
-from neighborhood_reader import assign_neighborhood
+from wa_collisions.neighborhood_reader import assign_neighborhood
 
 def read_collision_data(file_path):
     """ Read in the collision dataframe.
@@ -84,7 +84,27 @@ def clean_collision_data(collision_data):
     collision_data.incdttm = pd.to_datetime(collision_data.incdttm)
     collision_data.incdate = pd.to_datetime(collision_data.incdate)
 
+    return(collision_data)
+
+def add_neighborhoods_collisions(collision_data):
+    """ Add the neighborhoods to the cleaned collision data.
+
+    Uses the cleaned collision data and returns a data frame with neighborhoods ...
+
+
+    Args:
+        data:
+
+    Returns:
+        cleaned dataframe of data from the collision data file
+
+    Raises:
+        None
+    """
+
     ## add the assigned neighborhoods
+    # removed for testing - issue because of time to test
     collision_data = assign_neighborhood(collision_data)
 
     return(collision_data)
+    

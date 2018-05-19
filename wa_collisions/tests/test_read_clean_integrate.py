@@ -6,10 +6,14 @@
 
 import unittest
 
-import read_clean_integrate_data
+#import read_clean_integrate_data
+from wa_collisions import read_clean_integrate_data
 
 # adapted from class 3 lecture - structure of unit tests
 # adapted from my homeowork 2 - the tests completed
+
+# store the relative path to the Collisions data 
+collisions_data = "../Collisions.csv"
 
 # Define a class in which the tests will run
 class IntegrateDataTest(unittest.TestCase):
@@ -25,9 +29,9 @@ class IntegrateDataTest(unittest.TestCase):
 
             Simple test to confirm that the method runs.
         """
-        data_file = "Collisions.csv"
+        data_file = collisions_data
         test_data = read_clean_integrate_data.read_collision_data(data_file)
-        read_clean_integrate_data.read_weather_data("Test.csv")
+        #read_clean_integrate_data.read_weather_data("Test.csv")
         read_clean_integrate_data.clean_collision_data(test_data)
 
 
@@ -56,10 +60,10 @@ class IntegrateDataTest(unittest.TestCase):
             The data type of the date and datetime should change when the
             data are cleaned. This test confirms that there is a change.
         """
-        data_file = "Collisions.csv"
+        data_file = collisions_data
         test_data = read_clean_integrate_data.read_collision_data(data_file)
         clean_data = read_clean_integrate_data.clean_collision_data(test_data)
-        self.assertFalse(type(test_data.inc_date),type(clean_data.inc_data))
+        self.assertTrue(type(test_data.incdate[0]), type(clean_data.incdate[0]))
 
 if __name__ == '__main__':
     unittest.main()

@@ -11,7 +11,8 @@ import geopandas as gpd
 import numpy as np
 from shapely.geometry import Point
 
-NEIGHBORHOODS = gpd.read_file('data/Neighborhoods/Neighborhoods.json')
+# edit the path for running unittests 
+NEIGHBORHOODS = gpd.read_file('wa_collisions/data/Neighborhoods/Neighborhoods.json')
 NEIGHBORHOODS_COUNT = len(NEIGHBORHOODS)
 
 def get_neighborhood(latitude, longitude):

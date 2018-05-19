@@ -3,8 +3,8 @@ Unittests for neighborhood_reader.py
 """
 
 import unittest
-from neighborhood_reader import assign_neighborhood
-from neighborhood_reader import get_neighborhood
+from wa_collisions.neighborhood_reader import assign_neighborhood
+from wa_collisions.neighborhood_reader import get_neighborhood
 
 # Define a class in which the tests will run
 class NeighborhoodReaderTest(unittest.TestCase):

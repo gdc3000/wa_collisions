@@ -13,7 +13,7 @@ from wa_collisions import read_clean_integrate_data
 # adapted from my homeowork 2 - the tests completed
 
 # store the relative path to the Collisions data 
-collisions_data = "../Collisions.csv"
+collisions_data = "wa_collisions/data/Collisions.csv"
 
 # Define a class in which the tests will run
 class IntegrateDataTest(unittest.TestCase):

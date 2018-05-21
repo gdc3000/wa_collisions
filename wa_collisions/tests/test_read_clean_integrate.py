@@ -24,7 +24,7 @@ class IntegrateDataTest(unittest.TestCase):
     is designed to run through defined unit tests.
     """
 
-    def test_smoke():
+    def test_smoke(self):
         """
         Test the methods in read_create_integrate_data work.
 
@@ -34,27 +34,35 @@ class IntegrateDataTest(unittest.TestCase):
         test_data = read_clean_integrate_data.read_collision_data(data_file)
         #read_clean_integrate_data.read_weather_data("Test.csv")
         read_clean_integrate_data.clean_collision_data(test_data)
+        self.assertTrue(len(test_data) > 1)
 
 
     # test the type of error that is created when the path is incorrect
-    def test_file(self):
+    def test_file_collision(self):
         """
         Test the exception raised by the modules to read in data.
 
         Test the exception that is returned when an invalid path is
-        supplied to read_collision_data and read_weather_data. The
-        incorrect path supplied is "test."
+        supplied to read_collision_data. The incorrect path supplied
+        is "test."
         """
-        try:
+        with self.assertRaises(ValueError):
             # supply an invalid path
             read_clean_integrate_data.read_collision_data("test")
-        except Exception as err:
-            self.assertTrue(isinstance(err, ValueError))
-        try:
+
+
+    # test the type of error that is created when the path is incorrect
+    def test_file_weather(self):
+        """
+        Test the exception raised by the modules to read in data.
+
+        Test the exception that is returned when an invalid path is
+        supplied to read_weather_data. The incorrect path supplied
+        is "test."
+        """
+        with self.assertRaises(ValueError):
             # supply an invalid path
             read_clean_integrate_data.read_weather_data("test")
-        except Exception as err:
-            self.assertTrue(isinstance(err, ValueError))
 
     def test_clean_data_collisions(self):
         """
@@ -66,7 +74,7 @@ class IntegrateDataTest(unittest.TestCase):
         data_file = COLLISIONS_DATA
         test_data = read_clean_integrate_data.read_collision_data(data_file)
         clean_data = read_clean_integrate_data.clean_collision_data(test_data)
-        self.assertTrue(type(test_data.incdate[0]), type(clean_data.incdate[0]))
+        self.assertTrue(type(test_data['incdate'][0]), type(clean_data['incdate'][0]))
 
 if __name__ == '__main__':
     unittest.main()

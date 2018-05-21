@@ -6,3 +6,4 @@ auto_examples/
 gen_api/
 scripts/dark_sky_api_setting.py
 scripts/collisions.db
+/data/*_fei.csv

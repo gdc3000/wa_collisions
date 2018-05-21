@@ -20,7 +20,7 @@ class VisualizerTest(unittest.TestCase):
         dataframe = pd.DataFrame(data=test_data)
         with self.assertRaises(ValueError):
             visualize_neighborhood(dataframe, "Value")
-            
+
     def missing_column_mapping_value(self):
         """
         Passing a data frame without the passed mapping_value

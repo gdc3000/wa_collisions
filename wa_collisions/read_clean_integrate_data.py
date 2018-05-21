@@ -1,17 +1,19 @@
-"""Read, Clean, and Integrate data. 
+"""
+Read, Clean, and Integrate data.
 
-   Module to read, clean and integrate the data from the weather 
-   and collision data sets. 
+Module to read, clean and integrate the data from the weather
+and collision data sets.
 """
 
 # import packages
-import pandas as pd
 import os
+import pandas as pd
 
 from wa_collisions.neighborhood_reader import assign_neighborhood
 
 def read_collision_data(file_path):
-    """ Read in the collision dataframe.
+    """
+    Read in the collision dataframe.
 
     Uses the input file path to find the csv file with the collision
     data from Washington state.
@@ -30,7 +32,7 @@ def read_collision_data(file_path):
     # adapted from 07-Exceptions
     if not os.path.exists(file_path):
         raise ValueError("file doesn't exist: " + str(file_path))
-    
+
     # read in the data frome the file
     collision_data = pd.read_csv(file_path)
 
@@ -38,7 +40,8 @@ def read_collision_data(file_path):
     return collision_data
 
 def read_weather_data(file_path):
-    """ Read in the weather data.
+    """
+    Read in the weather data.
 
     Uses the input file path to ...
 
@@ -56,15 +59,16 @@ def read_weather_data(file_path):
     # adapted from 07-Exceptions
     if not os.path.exists(file_path):
         raise ValueError("file doesn't exist: " + str(file_path))
-    
-    # read in the data frome the file 
+
+    # read in the data frome the file
     data = None
 
-    # return the data 
+    # return the data
     return data
 
 def clean_collision_data(collision_data):
-    """ Clean the collision data.
+    """
+    Clean the collision data.
 
     Uses the collision data and returns a cleaned data frame ...
 
@@ -79,15 +83,16 @@ def clean_collision_data(collision_data):
         None
     """
 
-    # change the dates to date time 
-    # adapted from Fei's exploration notebook 
+    # change the dates to date time
+    # adapted from Fei's exploration notebook
     collision_data.incdttm = pd.to_datetime(collision_data.incdttm)
     collision_data.incdate = pd.to_datetime(collision_data.incdate)
 
-    return(collision_data)
+    return collision_data
 
 def add_neighborhoods_collisions(collision_data):
-    """ Add the neighborhoods to the cleaned collision data.
+    """
+    Add the neighborhoods to the cleaned collision data.
 
     Uses the cleaned collision data and returns a data frame with neighborhoods ...
 
@@ -106,5 +111,5 @@ def add_neighborhoods_collisions(collision_data):
     # removed for testing - issue because of time to test
     collision_data = assign_neighborhood(collision_data)
 
-    return(collision_data)
+    return collision_data
     

@@ -1,4 +1,13 @@
 *.py[co]
+]
+*~
+*.DS_Store
+_build/
+auto_examples/
+gen_api/
+wa_collisions/data/Bellevue_Crash_Data_2015_01_01_2017_12_31.csv
+wa_collisions/data/Collisions.csv
+wa_collisions/data/Collisions_With_Neighborhoods.csv
 *~
 *.DS_Store
 _build/

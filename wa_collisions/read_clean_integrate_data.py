@@ -8,6 +8,7 @@ and collision data sets.
 # import packages
 import os
 import pandas as pd
+from pytz import timezone
 
 from wa_collisions.neighborhood_reader import assign_neighborhood
 
@@ -47,7 +48,7 @@ def read_weather_data(file_path):
 
 
     Args:
-        file_path:
+        file_path: the path to the .csv file containing the weather data
 
     Returns:
         dataframe of data from the weather data file
@@ -83,12 +84,20 @@ def clean_collision_data(collision_data):
         None
     """
 
-    # change the dates to date time
-    # adapted from Fei's exploration notebook
-    collision_data.incdttm = pd.to_datetime(collision_data.incdttm)
-    collision_data.incdate = pd.to_datetime(collision_data.incdate)
-
-    return collision_data
+    # change the dates to date time and extract year, month, day, hour for joining with weather data later 
+    collision_data.time = pd.DatetimeIndex(collision_data.incdttm)
+    collision_data.year = collision_data.time.dt.year 
+    collision_data.month = collision_data.time.dt.month 
+    collision_data.day = collision_data.time.dt.day
+    
+    # only keep attributes that are relevant to the analysis
+    columns = ['X', 'Y', 'addrtype', 'collisiontype', 'fatalities', 'injuries'
+           , 'lightcond', 'roadcond', 'junctiontype', 'location'
+           , 'pedcount', 'pedcylcount', 'personcount', 'sdot_coldesc', 'severitydesc'
+           , 'speeding', 'weather', 'time', 'epoch', 'year', 'month', 'day']
+    
+    return collision_data.loc[(-collision_data.X.isna()) & (-collision_data.Y.isna() & (collision_data.year >= 2014)), columns]
+    
 
 def add_neighborhoods_collisions(collision_data):
     """

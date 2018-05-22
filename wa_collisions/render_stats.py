@@ -3,7 +3,7 @@ Render stats functions
 
 Module contains functions which are used to pull, clean-up data and run a 
 causal impact analysis on whether or not trends in collisions changed
-measurably after the speed limits were reduced in central Seattle in 
+measurably after speed limits were reduced in central Seattle in 
 October 2016.
 """
 
@@ -11,7 +11,6 @@ October 2016.
 import pandas as pd
 import geopandas
 from datetime import datetime
-from causalimpact import CausalImpact
 
 from neighborhood_reader import get_neighborhood, assign_neighborhood
 import read_clean_integrate_data
@@ -42,6 +41,11 @@ def read_collision_with_neighborhoods(file_path,contains_neighborhood=False):
     """
     
     df = read_clean_integrate_data.read_collision_data(file_path)
+
+    if contains_neighborhood and 'object_id' not in df.columns:
+        raise ValueError("frame created from {0} does not contain a \
+            a field called 'object_id' which is the id for the \
+            neighborhood.".format(file_path))
 
     df = read_clean_integrate_data.clean_collision_data(df)
 
@@ -173,7 +177,7 @@ def find_period_ranges(input_frame,transition_date="2016-10-01"):
     transition_datetime = datetime.strptime(transition_date,'%Y-%m-%d')
     if transition_datetime <= min_date or transition_datetime >= max_date:
         raise ValueError("transition_date {0} must be between the minimum \
-            and maximum frame dates.".format(transition_date)
+            and maximum frame dates.".format(transition_date))
 
     actual_transition = data_month.ix[data_month.index.
         get_loc(transition_datetime,method='nearest')].name

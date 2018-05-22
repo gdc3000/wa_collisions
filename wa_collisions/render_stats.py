@@ -11,9 +11,10 @@ October 2016.
 import pandas as pd
 import geopandas
 from datetime import datetime
+import os
 
-from neighborhood_reader import get_neighborhood, assign_neighborhood
-import read_clean_integrate_data
+import wa_collisions.neighborhood_reader as neighborhood_reader
+import wa_collisions.read_clean_integrate_data as read_clean_integrate_data
 
 VALID_RESAMPLE_TYPES = ['M','W','D']
 
@@ -55,7 +56,7 @@ def read_collision_with_neighborhoods(file_path,contains_neighborhood=False):
     return df
 
 def pivot_by_treatment(input_frame,treatment_list,control_list=None
-    ,neighborhood_path='../wa_collisions/data/Neighborhoods/Neighborhoods.json'
+    ,neighborhood_path='wa_collisions/data/Neighborhoods/Neighborhoods.json'
     ,agg_by=None,resample_by='D'):
     """
     Read in the collision dataframe with a neighborhood assigned.
@@ -109,8 +110,11 @@ def pivot_by_treatment(input_frame,treatment_list,control_list=None
         raise ValueError("Parameter resample_by must be one of: " 
             + str(VALID_RESAMPLE_TYPES))
     
-    if isinstance(agg_by, str) or agg_by is None:
-        raise ValueError("agg_by must be either None or of type string."
+    if not isinstance(agg_by, str) and agg_by is not None:
+        raise ValueError("agg_by must be either None or of type string.")
+
+    if agg_by not in input_frame.columns and agg_by is not None:
+        raise ValueError("agg_by must be either None or a valid column")
 
     df = input_frame.copy()
     
@@ -123,7 +127,7 @@ def pivot_by_treatment(input_frame,treatment_list,control_list=None
     if control_list is None or control_list == []:
         control_ids = list(set(neighborhoods_df['OBJECTID'].unique()) - set(treatment_ids))
     else:
-        control_ids = _find_neighborhoods_ids(input_list=control_ids, neighborhoods_df=neighborhoods_df)
+        control_ids = _find_neighborhoods_ids(input_list=control_list, neighborhoods_df=neighborhoods_df)
 
     #Filter data 
     df = df[df['object_id'].isin(treatment_ids) | df['object_id'].isin(control_ids)]
@@ -142,7 +146,7 @@ def pivot_by_treatment(input_frame,treatment_list,control_list=None
     df = df[['SpeedLimitChange','SpeedLimitSame']]
 
     #Resample data
-    return df.resample(resample_by, how='sum')
+    return df.resample(resample_by).sum()
 
 def find_period_ranges(input_frame,transition_date="2016-10-01"):
     """

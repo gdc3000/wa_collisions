@@ -8,7 +8,7 @@ and collision data sets.
 # import packages
 import os
 import pandas as pd
-from pytz import timezone
+#from pytz import timezone
 
 from wa_collisions.neighborhood_reader import assign_neighborhood
 
@@ -84,27 +84,44 @@ def clean_collision_data(collision_data):
         None
     """
 
-    # change the dates to date time and extract year, month, day, hour for joining with weather data later 
-    collision_data.time = pd.DatetimeIndex(collision_data.incdttm)
-    collision_data.year = collision_data.time.dt.year 
-    collision_data.month = collision_data.time.dt.month 
-    collision_data.day = collision_data.time.dt.day
-    
-    # only keep attributes that are relevant to the analysis
-    columns = ['X', 'Y', 'addrtype', 'collisiontype', 'fatalities', 'injuries'
-           , 'lightcond', 'roadcond', 'junctiontype', 'location'
-           , 'pedcount', 'pedcylcount', 'personcount', 'sdot_coldesc', 'severitydesc'
-           , 'speeding', 'weather', 'time', 'epoch', 'year', 'month', 'day']
-    
-    return collision_data.loc[(-collision_data.X.isna()) & (-collision_data.Y.isna() & (collision_data.year >= 2014)), columns]
-    
+    # change the dates to date time and extract year, month, day, hour
+    # for joining with weather data later
+    # edited this because dt.year has a Future warning
+    # edited so that we use the ['new_column'] instead of .new_column
+    # for creating a new column
+    # reference:
+    # https://pandas.pydata.org/pandas-docs/stable/
+    # indexing.html#attribute-access
 
-def clean_collisisions_neighborhoods(collision_data):
+    collision_data['time'] = pd.to_datetime(collision_data.incdttm)
+    collision_data['year'] = collision_data.time.dt.year
+    collision_data['month'] = collision_data.time.dt.month
+    collision_data['day'] = collision_data.time.dt.day
+
+    # only keep attributes that are relevant to the analysis
+    columns = ['Y', 'X', 'addrtype', 'collisiontype', 'fatalities', 'injuries',
+               'lightcond', 'roadcond', 'junctiontype', 'location',
+               'pedcount', 'pedcylcount', 'personcount', 'sdot_coldesc',
+               'severitydesc', 'speeding', 'weather', 'time', 'epoch',
+               'year', 'month', 'day']
+
+    # recieving a warning about using .loc
+    #collision_data.loc[(-collision_data.X.isna()) & (-collision_data.Y.isna() &
+    # (collision_data.year >= 2014)), columns]
+    # drop the na
+    collision_data = collision_data.dropna(axis=0, how='any', subset=['X', 'Y'])
+    collision_data = collision_data[collision_data.year >= 2014]
+    collision_data = collision_data.reindex(columns=columns)
+
+    return collision_data
+
+
+def clean_collisions_neighborhoods(collision_data):
     """
     Add the neighborhoods and clean collision data.
 
-    Clean the collision data and add the neighborhood data. We have tests 
-    for the clean_collision_data and assign neighborhood. We do not have a set 
+    Clean the collision data and add the neighborhood data. We have tests
+    for the clean_collision_data and assign neighborhood. We do not have a set
     test for this function because of the run time to assign the neighborhoods.
 
 

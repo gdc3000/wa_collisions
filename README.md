@@ -1,5 +1,6 @@
 ## vehicle_collisions
 [![Build Status](https://travis-ci.org/gdc3000/wa_collisions.svg?branch=master)](https://travis-ci.org/gdc3000/wa_collisions)
+[![Coverage Status](https://coveralls.io/repos/github/gdc3000/wa_collisions/badge.svg)](https://coveralls.io/github/gdc3000/wa_collisions)
 
 Shablona is a template project for small scientific python projects. The
 recommendations we make here follow the standards and conventions of much of

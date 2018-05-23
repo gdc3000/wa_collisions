@@ -46,7 +46,7 @@ repository README_.
 
 License
 =======
-``vehicle_collisions`` is licensed under the terms of the MIT license. See the file
+``wa_collisions`` is licensed under the terms of the MIT license. See the file
 "LICENSE" for information on the history of this software, terms & conditions
 for usage, and a DISCLAIMER OF ALL WARRANTIES.
 
@@ -56,12 +56,12 @@ Copyright (c) 2015--, Ariel Rokem, The University of Washington
 eScience Institute.
 """
 
-NAME = "vehicle_collisions"
+NAME = "wa_collisions"
 MAINTAINER = "Ariel Rokem"
 MAINTAINER_EMAIL = "arokem@gmail.com"
 DESCRIPTION = description
 LONG_DESCRIPTION = long_description
-URL = "http://github.com/uwescience/vehicle_collisions"
+URL = "http://github.com/uwescience/wa_collisions"
 DOWNLOAD_URL = ""
 LICENSE = "MIT"
 AUTHOR = "Ariel Rokem"
@@ -71,5 +71,5 @@ MAJOR = _version_major
 MINOR = _version_minor
 MICRO = _version_micro
 VERSION = __version__
-PACKAGE_DATA = {'vehicle_collisions': [pjoin('data', '*')]}
+PACKAGE_DATA = {'wa_collisions': [pjoin('data', '*')]}
 REQUIRES = ["numpy"]

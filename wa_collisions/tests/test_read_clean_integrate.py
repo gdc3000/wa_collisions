@@ -12,7 +12,7 @@ from wa_collisions import read_clean_integrate_data
 # adapted from my homeowork 2 - the tests completed
 
 # store the relative path to the Collisions data
-COLLISIONS_DATA = "wa_collisions/data/Collisions.csv"
+COLLISIONS_DATA = "wa_collisions/data/Collisions_test.csv"
 
 # Define a class in which the tests will run
 class IntegrateDataTest(unittest.TestCase):
@@ -74,7 +74,7 @@ class IntegrateDataTest(unittest.TestCase):
         data_file = COLLISIONS_DATA
         test_data = read_clean_integrate_data.read_collision_data(data_file)
         clean_data = read_clean_integrate_data.clean_collision_data(test_data)
-        self.assertTrue(type(test_data['incdate'][0]), type(clean_data['incdate'][0]))
+        self.assertTrue(clean_data.year.value_counts().shape[0] == 4)
 
 if __name__ == '__main__':
     unittest.main()

@@ -117,11 +117,12 @@ def pivot_by_treatment(input_frame,treatment_list,control_list=None
         raise ValueError("agg_by must be either None or a valid column")
 
     df = input_frame.copy()
-    
+
     neighborhoods_df = geopandas.read_file(neighborhood_path)
     
     #Find treatment groups by id
-    treatment_ids = _find_neighborhoods_ids(input_list=treatment_list, neighborhoods_df=neighborhoods_df)
+    treatment_ids = _find_neighborhoods_ids(input_list=treatment_list
+        , neighborhoods_df=neighborhoods_df)
 
     #Find control group
     if control_list is None or control_list == []:
@@ -137,9 +138,10 @@ def pivot_by_treatment(input_frame,treatment_list,control_list=None
 
     #Pivot data
     if agg_by is None:
-        df = df.groupby(['incdate','speedlimit_change_flag']).size()
+        df = df.groupby(['time','speedlimit_change_flag']).size()
     else:
-        df = df.groupby(['incdate','speedlimit_change_flag'])[agg_by].sum()
+        df = df.groupby(['time','speedlimit_change_flag'])[agg_by].sum()
+        
     df = df.unstack()
     df = df.fillna(0)
     df = df.rename(columns={True: "SpeedLimitChange", False: "SpeedLimitSame"})    
@@ -215,9 +217,10 @@ def _find_neighborhoods_ids(input_list, neighborhoods_df):
         a list of neighborhood ids corresponding wiht the given names.
 
     """
+    
     id_list = []
     for i in range(0,len(input_list)):
         id_list = id_list + \
             [int(neighborhoods_df[neighborhoods_df['S_HOOD'] == input_list[i]]['OBJECTID'])]
-    
+
     return id_list

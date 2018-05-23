@@ -67,7 +67,7 @@ def read_weather_data(file_path):
     # return the data
     return data
 
-def clean_collision_data(collision_data):
+def clean_collision_data(collision_data,include_since_year=None):
     """
     Clean the collision data.
 
@@ -83,7 +83,6 @@ def clean_collision_data(collision_data):
     Raises:
         None
     """
-
     # change the dates to date time and extract year, month, day, hour
     # for joining with weather data later
     # edited this because dt.year has a Future warning
@@ -92,6 +91,9 @@ def clean_collision_data(collision_data):
     # reference:
     # https://pandas.pydata.org/pandas-docs/stable/
     # indexing.html#attribute-access
+
+    if not isinstance(include_since_year, int) and include_since_year is not None:
+        raise ValueError("{0} is not None or an int".format(include_since_year))
 
     collision_data['time'] = pd.to_datetime(collision_data.incdttm)
     collision_data['year'] = collision_data.time.dt.year
@@ -103,14 +105,19 @@ def clean_collision_data(collision_data):
                'lightcond', 'roadcond', 'junctiontype', 'location',
                'pedcount', 'pedcylcount', 'personcount', 'sdot_coldesc',
                'severitydesc', 'speeding', 'weather', 'time', 'epoch',
-               'year', 'month', 'day']
+               'year', 'month', 'day','S_HOOD']
+    
+    #Handle exception where neighborhood is included
+    if 'object_id' in collision_data.columns:
+        columns = columns + ['object_id']
 
     # recieving a warning about using .loc
     #collision_data.loc[(-collision_data.X.isna()) & (-collision_data.Y.isna() &
     # (collision_data.year >= 2014)), columns]
     # drop the na
     collision_data = collision_data.dropna(axis=0, how='any', subset=['X', 'Y'])
-    collision_data = collision_data[collision_data.year >= 2014]
+    if include_since_year is not None:
+        collision_data = collision_data[collision_data.year >= include_since_year]
     collision_data = collision_data.reindex(columns=columns)
 
     return collision_data

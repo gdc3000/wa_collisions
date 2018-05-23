@@ -76,5 +76,25 @@ class IntegrateDataTest(unittest.TestCase):
         clean_data = read_clean_integrate_data.clean_collision_data(test_data)
         self.assertTrue(type(test_data['incdate'][0]), type(clean_data['incdate'][0]))
 
+    def test_clean_data_collisions_end_year(self):
+        """
+        Test the type of data from cleaning the data.
+
+        The data type of the date and datetime should change when the
+        data are cleaned. This test confirms that there is a change.
+        """
+        data_file = COLLISIONS_DATA
+        test_data = read_clean_integrate_data.read_collision_data(data_file)
+        clean_data = read_clean_integrate_data.clean_collision_data(test_data
+            ,include_since_year=2014)
+
+        print('clean data min year:', clean_data.year.min())
+        self.assertTrue(clean_data.year.min()==2014)
+
+        with self.assertRaises(ValueError):
+            clean_data = read_clean_integrate_data.clean_collision_data(test_data
+                ,include_since_year='randomstring')
+        
+
 if __name__ == '__main__':
     unittest.main()

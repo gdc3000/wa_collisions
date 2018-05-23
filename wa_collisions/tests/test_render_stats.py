@@ -54,26 +54,26 @@ class RenderStatsTest(unittest.TestCase):
     def test_pivot_by_treatment_value_errors(self):
         #Test dataframe without neighborhood
         with self.assertRaises(ValueError):
-            render_stats.pivot_by_treatment(DF_NO_NEIGHBORHOODS,treatment_list=['test'])
+            render_stats.pivot_by_treatment(DF_NO_NEIGHBORHOODS,treatment_list=['Genesee'])
 
         #Test bad path
         with self.assertRaises(ValueError):
-            render_stats.pivot_by_treatment(DF_NEIGHBORHOODS,treatment_list=['test'],
+            render_stats.pivot_by_treatment(DF_NEIGHBORHOODS,treatment_list=['Genesee'],
                 neighborhood_path='bad_path')
 
         #Test invalid resample_by
         with self.assertRaises(ValueError):
-            render_stats.pivot_by_treatment(DF_NEIGHBORHOODS,treatment_list=['test']
+            render_stats.pivot_by_treatment(DF_NEIGHBORHOODS,treatment_list=['Genesee']
                 ,resample_by='Y')
 
         #Test agg_by not a string
         with self.assertRaises(ValueError):
-            render_stats.pivot_by_treatment(DF_NEIGHBORHOODS,treatment_list=['test']
+            render_stats.pivot_by_treatment(DF_NEIGHBORHOODS,treatment_list=['Genesee']
                 ,agg_by=12)
         
         #Test agg_by not a column
         with self.assertRaises(ValueError):
-            render_stats.pivot_by_treatment(DF_NEIGHBORHOODS,treatment_list=['test']
+            render_stats.pivot_by_treatment(DF_NEIGHBORHOODS,treatment_list=['Genesee']
                 ,agg_by='fake_column')
 
     def test_pivot_by_treatment_expected_ids_treatment(self):    
@@ -86,8 +86,7 @@ class RenderStatsTest(unittest.TestCase):
         
         change_speed_limit_object_count = int(len(test_treatment_in))
         same_speed_limit_object_count = int(80)
-        
-        print(out.index.min())
+
         self.assertTrue(int(out.sum()['SpeedLimitChange']) == change_speed_limit_object_count)
         self.assertTrue(int(out.sum()['SpeedLimitSame']) == same_speed_limit_object_count)
 

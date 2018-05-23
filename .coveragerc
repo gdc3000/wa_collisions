@@ -1,7 +1,6 @@
-[run]
-branch = True
-source = wa_collisions/*
-include = wa_collisions/*
-omit = */setup.py
 [report]
-include = wa_collisions/*
+omit =  
+    */python?.?/*
+    *__init__*
+exclude_lines =
+if __name__ == .__main__.:

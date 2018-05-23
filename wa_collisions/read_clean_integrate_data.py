@@ -120,6 +120,13 @@ def clean_collision_data(collision_data,include_since_year=None):
         collision_data = collision_data[collision_data.year >= include_since_year]
     collision_data = collision_data.reindex(columns=columns)
 
+    ## add some indicators for later creating the visualizations
+    collision_data['ind_ped'] = collision_data.pedcount > 0
+    collision_data['ind_speeding'] = collision_data.speeding == 'Y'
+    collision_data['ind_person'] = collision_data.personcount > 0
+    collision_data['ind_pedcycl'] = collision_data.pedcylcount > 0
+    collision_data['ind_fatalities'] = collision_data.fatalities > 0
+
     return collision_data
 
 

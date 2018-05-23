@@ -4,6 +4,7 @@ Unittests for render_stats.py
 
 import unittest
 import pandas as pd
+import datetime
 
 import wa_collisions.neighborhood_reader as neighborhood_reader
 import wa_collisions.render_stats as render_stats
@@ -78,8 +79,8 @@ class RenderStatsTest(unittest.TestCase):
 
     def test_pivot_by_treatment_expected_ids_treatment(self):    
         test_treatment_in = ['Atlantic','Pike-Market', 'Belltown', 'International District',
-        'Central Business District', 'First Hill', 'Yesler Terrace',
-        'Pioneer Square', 'Interbay','Mann','Minor']
+            'Central Business District', 'First Hill', 'Yesler Terrace',
+            'Pioneer Square', 'Interbay','Mann','Minor']
         
         out = render_stats.pivot_by_treatment(DF_NEIGHBORHOODS,treatment_list=test_treatment_in
             ,resample_by='D')
@@ -92,7 +93,7 @@ class RenderStatsTest(unittest.TestCase):
 
     def test_pivot_by_treatment_expected_ids_control(self):    
         test_treatment_in = ['Atlantic','Pike-Market', 'Belltown', 'International District',
-        'Central Business District', 'First Hill', 'Yesler Terrace']
+            'Central Business District', 'First Hill', 'Yesler Terrace']
         test_control_in = ['Pioneer Square', 'Interbay','Mann','Minor']
         
         out = render_stats.pivot_by_treatment(DF_NEIGHBORHOODS,treatment_list=test_treatment_in
@@ -111,9 +112,70 @@ class RenderStatsTest(unittest.TestCase):
         
         out = render_stats.pivot_by_treatment(DF_NEIGHBORHOODS,treatment_list=test_treatment_in
             ,resample_by='M')
-        
+
         self.assertTrue(out.index.min().month == 3)
         self.assertTrue(out.index.min().day == 31)
+
+    def test_pivot_by_treatment_agg_by(self): 
+        test_treatment_in = ['Atlantic','Pike-Market', 'Belltown', 'International District',
+        'Central Business District', 'First Hill', 'Yesler Terrace',
+        'Pioneer Square', 'Interbay','Mann','Minor']
+        
+        out = render_stats.pivot_by_treatment(DF_NEIGHBORHOODS,treatment_list=test_treatment_in
+            ,resample_by='D',agg_by='injuries')
+
+        injury_count = int(out.sum()['SpeedLimitSame'])
+        self.assertTrue(injury_count == 21)
+
+    def test_find_period_ranges_by_day(self):         
+        test_treatment_in = ['Atlantic','Pike-Market', 'Belltown', 'International District',
+            'Central Business District', 'First Hill', 'Yesler Terrace',
+            'Pioneer Square', 'Interbay','Mann','Minor']
+        transition_date="2016-10-03"
+        out_df = render_stats.pivot_by_treatment(DF_NEIGHBORHOODS,treatment_list=test_treatment_in
+            ,resample_by='D',agg_by='injuries')
+        out = render_stats.find_period_ranges(out_df,transition_date=transition_date)
+
+        #Test min date
+        min_date = out_df.index.min()
+        min_date = datetime.date(min_date.year, min_date.month, min_date.day)
+        self.assertTrue(min_date.strftime('%Y-%m-%d') == out[0][0])
+
+        #Test transition date
+        pre_transition_date = "2016-10-02"
+        self.assertTrue(out[0][1] == pre_transition_date)
+
+        #Test pre-transition date
+        self.assertTrue(out[1][0] == transition_date)
+
+        #Test max date
+        max_date = out_df.index.max()
+        max_date = datetime.date(max_date.year, max_date.month, max_date.day)
+        self.assertTrue(max_date.strftime('%Y-%m-%d') == out[1][1])
+        
+    def test_find_period_ranges_by_month(self):         
+        test_treatment_in = ['Atlantic','Pike-Market', 'Belltown', 'International District',
+            'Central Business District', 'First Hill', 'Yesler Terrace',
+            'Pioneer Square', 'Interbay','Mann','Minor']
+        transition_date="2016-10-02"
+        out_df = render_stats.pivot_by_treatment(DF_NEIGHBORHOODS,treatment_list=test_treatment_in
+            ,resample_by='M',agg_by='injuries')
+        out = render_stats.find_period_ranges(out_df,transition_date=transition_date)
+
+        print(out)
+        #Test min date
+        min_date = out_df.index.min()
+        min_date = datetime.date(min_date.year, min_date.month, min_date.day)
+        self.assertTrue(min_date.strftime('%Y-%m-%d') == out[0][0])
+
+        #Test transition date
+        rounded_transition_date="2016-10-31"
+        self.assertTrue(rounded_transition_date == out[1][0])
+
+        #Test max date
+        max_date = out_df.index.max()
+        max_date = datetime.date(max_date.year, max_date.month, max_date.day)
+        self.assertTrue(max_date.strftime('%Y-%m-%d') == out[1][1])
 
 if __name__ == '__main__':    
     unittest.main()

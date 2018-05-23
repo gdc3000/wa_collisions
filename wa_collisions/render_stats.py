@@ -177,23 +177,23 @@ def find_period_ranges(input_frame,transition_date="2016-10-01"):
             before the min date of the given frame or after the max
             date of the given frame.
     """
-    min_date = data_month.index.min()
-    max_date = data_month.index.max()
+    min_date = input_frame.index.min()
+    max_date = input_frame.index.max()
 
     transition_datetime = datetime.strptime(transition_date,'%Y-%m-%d')
     if transition_datetime <= min_date or transition_datetime >= max_date:
         raise ValueError("transition_date {0} must be between the minimum \
             and maximum frame dates.".format(transition_date))
 
-    actual_transition = data_month.ix[data_month.index.
+    actual_transition = input_frame.ix[input_frame.index.
         get_loc(transition_datetime,method='nearest')].name
 
     if actual_transition < transition_datetime:
         pre_end = actual_transition
-        post_start = data_month.ix[data_month.index.
+        post_start = input_frame.ix[input_frame.index.
             get_loc(transition_datetime,method='nearest')+1].name
     else:
-        pre_end = data_month.ix[data_month.index.
+        pre_end = input_frame.ix[input_frame.index.
             get_loc(transition_datetime,method='nearest')-1].name
         post_start = actual_transition
 

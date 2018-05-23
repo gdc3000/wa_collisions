@@ -99,11 +99,13 @@ def clean_collision_data(collision_data):
     return collision_data.loc[(-collision_data.X.isna()) & (-collision_data.Y.isna() & (collision_data.year >= 2014)), columns]
     
 
-def add_neighborhoods_collisions(collision_data):
+def clean_collisisions_neighborhoods(collision_data):
     """
-    Add the neighborhoods to the cleaned collision data.
+    Add the neighborhoods and clean collision data.
 
-    Uses the cleaned collision data and returns a data frame with neighborhoods ...
+    Clean the collision data and add the neighborhood data. We have tests 
+    for the clean_collision_data and assign neighborhood. We do not have a set 
+    test for this function because of the run time to assign the neighborhoods.
 
 
     Args:
@@ -116,8 +118,9 @@ def add_neighborhoods_collisions(collision_data):
         None
     """
 
+    collision_data = clean_collision_data(collision_data)
+
     ## add the assigned neighborhoods
-    # removed for testing - issue because of time to test
     collision_data = assign_neighborhood(collision_data)
 
     return collision_data

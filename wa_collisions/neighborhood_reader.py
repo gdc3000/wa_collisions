@@ -11,10 +11,7 @@ import geopandas as gpd
 import numpy as np
 from shapely.geometry import Point
 
-NEIGHBORHOODS = gpd.read_file('wa_collisions/data/Neighborhoods/Neighborhoods.json')
-NEIGHBORHOODS_COUNT = len(NEIGHBORHOODS)
-
-def get_neighborhood(latitude, longitude):
+def get_neighborhood(latitude, longitude, path=None):
     """
     Returns the Object ID for the Seattle neighborhood for a
     given latitude and longitude.
@@ -36,10 +33,13 @@ def get_neighborhood(latitude, longitude):
         ValueError: if the latitude or longitude can't be
             converted into float
     """
+    neighborhoods = _pull_neighborhoods_file(path)
+    neighborhood_count = _find_neighborhood_count(neighborhoods)
+    
     location_point = Point(float(latitude), float(longitude))
-    for i in range(0, NEIGHBORHOODS_COUNT):
-        if NEIGHBORHOODS['geometry'][i].contains(location_point):
-            return NEIGHBORHOODS['OBJECTID'][i]
+    for i in range(0, neighborhood_count):
+        if neighborhoods['geometry'][i].contains(location_point):
+            return neighborhoods['OBJECTID'][i]
     return -1
 
 
@@ -79,3 +79,13 @@ def assign_neighborhood(dataframe):
 
     dataframe['object_id'] = object_ids
     return dataframe
+
+def _pull_neighborhoods_file(path=None):    
+    if path is None:
+        path = 'wa_collisions/data/Neighborhoods/Neighborhoods.json'
+    return gpd.read_file(path)
+       
+def _find_neighborhood_count(frame=None):    
+    if frame is None:
+        frame = _pull_neighborhoods()
+    return len(frame)

@@ -12,7 +12,6 @@ import os
 from datetime import datetime
 import geopandas
 
-import wa_collisions.neighborhood_reader as neighborhood_reader
 import wa_collisions.read_clean_integrate_data as read_clean_integrate_data
 
 VALID_RESAMPLE_TYPES = ['M', 'W', 'D']

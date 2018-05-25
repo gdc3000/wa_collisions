@@ -17,7 +17,7 @@ ERROR = 0.000001
 def visualize_neighborhood(neighborhood_data, mapping_value):
     """
     Visualizes the data provided per neighborhood in abs
-    folim map nad returns the map.
+    folim map and returns the map.
 
     Args:
         neighborhood_data(pandas dataframe): Dataframe containing
@@ -55,3 +55,49 @@ def visualize_neighborhood(neighborhood_data, mapping_value):
         fill_color='YlOrRd',
         highlight=True)
     return neigborhood_map
+
+def visualize_neighborhood_count(neighborhood_data):
+    """
+    Visualizes the number of rows per each neighborhood.
+
+    Args:
+        neighborhood_data(pandas dataframe): Dataframe containing
+            the rows per neighborhood which is to be mapped.
+
+    Returns:
+        the map produced
+
+    Raises:
+        ValueError: if neighborhood_data doesn't have the column
+            'object_id' denoting neighborhood.
+    """
+    if not 'object_id' in neighborhood_data.columns:
+        raise ValueError("Dataframe doesn't have a column object_id")
+    counts_per_neighborhood = neighborhood_data.groupby(
+        ['object_id']).size().reset_index(name='count')
+    return visualize_neighborhood(counts_per_neighborhood, 'count')
+
+def visualize_neighborhood_mean(neighborhood_data, value):
+    """
+    Visualizes the mean value for each neighborhood.
+
+    Args:
+        neighborhood_data(pandas dataframe): Dataframe containing
+            the rows per neighborhood which is to be mapped.
+        value (string): Name of column of neighborhood_data
+            whose mean value is to be calculated and mapped.
+
+    Returns:
+        the map produced
+
+    Raises:
+        ValueError: if neighborhood_data doesn't have the column
+            'object_id' denoting neighborhood or the column value.
+    """
+    if not 'object_id' in neighborhood_data.columns:
+        raise ValueError("Dataframe doesn't have a column object_id")
+    if not value in neighborhood_data.columns:
+        raise ValueError("Dataframe doesn't have a column " + value)
+    counts_per_neighborhood = neighborhood_data.groupby(
+        ['object_id'])[value].mean().reset_index(name='mean')
+    return visualize_neighborhood(counts_per_neighborhood, 'mean')

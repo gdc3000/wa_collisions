@@ -6,6 +6,7 @@ import unittest
 import pandas as pd
 from wa_collisions.neighborhood_reader import assign_neighborhood
 from wa_collisions.neighborhood_reader import get_neighborhood
+from wa_collisions.neighborhood_reader import pull_neighborhoods_file
 
 # Define a class in which the tests will run
 class NeighborhoodReaderTest(unittest.TestCase):
@@ -17,32 +18,37 @@ class NeighborhoodReaderTest(unittest.TestCase):
         """
         Tests that wrong location returns -1
         """
-        object_id = get_neighborhood(0, 0)
+        neighborhoods = pull_neighborhoods_file()
+        object_id = get_neighborhood(0, 0, neighborhoods)
         self.assertTrue(object_id == -1)
 
     def test_right_neighborhood(self):
         """
         Tests that right location return 100
         """
+        neighborhoods = pull_neighborhoods_file()
         # Location in Broadway neighborhood
-        object_id = get_neighborhood(-122.3230027, 47.6199206)
+        object_id = get_neighborhood(
+            -122.3230027, 47.6199206, neighborhoods)
         self.assertTrue(object_id == 100)
 
     def test_wrong_latitude(self):
         """
         Tests that passing non float latitude raises a value error
         """
+        neighborhoods = pull_neighborhoods_file()
         # Passing non float values
         with self.assertRaises(ValueError):
-            get_neighborhood("a", 47.6199206)
+            get_neighborhood("a", 47.6199206, neighborhoods)
 
     def test_wrong_longitude(self):
         """
         Tests that passing non float values raises a value error
         """
+        neighborhoods = pull_neighborhoods_file()
         # Passing non float values
         with self.assertRaises(ValueError):
-            get_neighborhood(-122.3230027, "a")
+            get_neighborhood(-122.3230027, "a", neighborhoods)
 
     def test_missing_column_x(self):
         """

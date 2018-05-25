@@ -11,7 +11,7 @@ import geopandas as gpd
 import numpy as np
 from shapely.geometry import Point
 
-def get_neighborhood(latitude, longitude, path=None):
+def get_neighborhood(latitude, longitude, neighborhoods):
     """
     Returns the Object ID for the Seattle neighborhood for a
     given latitude and longitude.
@@ -22,6 +22,7 @@ def get_neighborhood(latitude, longitude, path=None):
     Args:
         latitude (float): latitude of the location
         longitude (float): longitude of the location
+        neighborhoods (geopandas dataframe): neighborhoods
 
     Returns:
         object_id (int): object id of the seattle
@@ -33,9 +34,8 @@ def get_neighborhood(latitude, longitude, path=None):
         ValueError: if the latitude or longitude can't be
             converted into float
     """
-    neighborhoods = _pull_neighborhoods_file(path)
     neighborhood_count = _find_neighborhood_count(neighborhoods)
-    
+
     location_point = Point(float(latitude), float(longitude))
     for i in range(0, neighborhood_count):
         if neighborhoods['geometry'][i].contains(location_point):
@@ -43,7 +43,7 @@ def get_neighborhood(latitude, longitude, path=None):
     return -1
 
 
-def assign_neighborhood(dataframe):
+def assign_neighborhood(dataframe, path=None):
     """
     Returns the provided dataframe with an additional column
     object_id which contains the object id of the seattle
@@ -73,19 +73,29 @@ def assign_neighborhood(dataframe):
     if not 'Y' in dataframe.columns:
         raise ValueError("Dataframe doesn't have a column Y")
 
+    neighborhoods = pull_neighborhoods_file(path)
     object_ids = np.zeros(len(dataframe))
     for i in range(0, len(object_ids)):
-        object_ids[i] = get_neighborhood(dataframe['X'][i], dataframe['Y'][i])
+        object_ids[i] = get_neighborhood(
+            dataframe['X'][i], dataframe['Y'][i], neighborhoods)
 
     dataframe['object_id'] = object_ids
     return dataframe
 
-def _pull_neighborhoods_file(path=None):    
+def pull_neighborhoods_file(path=None):
+    """
+    Read GeoJson file of Neighborhoods.
+
+    Args:
+        path(string): path to geojson file.
+    Returns:
+        GeoJson data frame of neighborhoods.
+    """
     if path is None:
         path = 'wa_collisions/data/Neighborhoods/Neighborhoods.json'
     return gpd.read_file(path)
-       
-def _find_neighborhood_count(frame=None):    
+
+def _find_neighborhood_count(frame=None, path=None):
     if frame is None:
-        frame = _pull_neighborhoods()
+        frame = pull_neighborhoods_file(path)
     return len(frame)

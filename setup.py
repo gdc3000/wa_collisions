@@ -4,6 +4,7 @@ Set up file for python module wa_collisions.
 This file supports the installation of the wa_collisions module. 
 The module allows user to create interactive visualizations and
 statistically compare patterns in vehicle collisions in Washington.
+Adaped from shablona template. 
 """
 
 
@@ -31,12 +32,35 @@ CLASSIFIERS = [
     ]
 
 DESCRIPTION = 'Understanding collision patterns in Seattle'
-LONG_DESCRIPTION = 'Python module that allows the user to explore accidents'
-LONG_DESCRIPTION = LONG_DESCRIPTION + ' around Seattle. The user can create '
-LONG_DESCRIPTION = LONG_DESCRIPTION + 'interactive visualizations that'
-LONG_DESCRIPTION = LONG_DESCRIPTION + ' compare different collision conditions'
-LONG_DESCRIPTION = LONG_DESCRIPTION + ' and their locations around'
-LONG_DESCRIPTION = LONG_DESCRIPTION + ' the city.'
+LONG_DESCRIPTION = """
+
+wa_collisions
+
+========
+
+wa_collisions is a module that allows users to create interactive
+visualizations in python of vehicle collisions in Seattle. 
+
+There are example jupyter notebooks for implementation in the github
+repository. 
+
+Please visit the readme for more information README_.
+
+.. _README: https://github.com/gdc3000/wa_collisions/blob/master/README.md
+
+License
+
+=======
+
+``wa_collisions`` is licensed under the terms of the MIT license. See the file
+"LICENSE" for information on the history of this software, terms & conditions
+for usage, and a DISCLAIMER OF ALL WARRANTIES.
+
+All trademarks referenced herein are property of their respective holders.
+
+Copyright (c) 2018, Libby Montague, Fei Wang, Geoff Coyner, Salik Warsi.
+
+"""
 
 PACKAGES = ['wa_collisions.create_indicator_map_visual',
             'wa_collisions.interactive_plotting',

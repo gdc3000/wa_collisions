@@ -1,33 +1,31 @@
-## vehicle_collisions
+## wa_collisions
 [![Build Status](https://travis-ci.org/gdc3000/wa_collisions.svg?branch=master)](https://travis-ci.org/gdc3000/wa_collisions)
 [![Coverage Status](https://coveralls.io/repos/github/gdc3000/wa_collisions/badge.svg)](https://coveralls.io/github/gdc3000/wa_collisions)
 
-Shablona is a template project for small scientific python projects. The
-recommendations we make here follow the standards and conventions of much of
-the scientific Python eco-system. Following these standards and recommendations
-will make it easier for others to use your code, and can make it easier for you
-to port your code into other projects and collaborate with other users of this
-eco-system.
+This module allows users to explore vehicle collisions around Seattle through creating interactive visuzliations and statistically comparing different factors. The collsiions are grouped into neighborhoods. 
+The data is from... 
+This module is based off of the [https://github.com/uwescience/shablona](sheblona) template for creating python projects. 
+The module is tested on data from the Seattle Open Data portal. But if your city has similar data, then it can be reused with data in the same format. 
 
-To use it as a template for your own project, you will need to follow the
-instructions at the [bottom of this page](#using-vehicle_collisions-as-a-template).
-
-First, let me explain all the different moving parts that make up a small
-scientific python project, and all the elements which allow us to effectively
-share it with others, test it, document it, and track its evolution.
 
 ### Organization of the  project
 
 The project has the following structure:
 
-    vehicle_collisions/
+    wa_collisions/
       |- README.md
-      |- vehicle_collisions/
+      |- wa_collisions/
          |- __init__.py
-         |- vehicle_collisions.py
-         |- due.py
+         |- wa_collisions.py
+         |- create_indicator_map_visual.py
+         |- interactive_plotting.py
+         |- neighborhood_reader.py
+         |- read_clean_integrate_data.py
+         |- render_stats.py
+         |- version.py
+         |- visualizer.py
          |- data/
-            |- ...
+            |- Collisions_test.csv
          |- tests/
             |- ...
       |- doc/

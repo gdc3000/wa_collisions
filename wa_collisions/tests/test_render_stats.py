@@ -10,6 +10,7 @@ import wa_collisions.read_clean_integrate_data as read_clean_integrate_data
 FILE_PATH = 'wa_collisions/data/Collisions_test.csv'
 FILE_PATH_NBRHD = 'wa_collisions/data/Collisions_With_Neighborhoods_test.csv'
 
+#Read and clean collision data used across numerous test cases.
 DF_NO_NEIGHBORHOODS = read_clean_integrate_data.read_collision_data(FILE_PATH)
 DF_NEIGHBORHOODS = read_clean_integrate_data.read_collision_data(FILE_PATH_NBRHD)
 DF_NO_NEIGHBORHOODS = read_clean_integrate_data.clean_collision_data(DF_NO_NEIGHBORHOODS)
@@ -39,13 +40,24 @@ class RenderStatsTest(unittest.TestCase):
             render_stats.read_collision_with_neighborhoods(FILE_PATH,
                                                            contains_neighborhood=True)
 
-    def test_returns_object_id(self):
+    def test_returns_neighbhorhood_true_no_error(self):
         """
         Tests that read_collision_with_neighborhoods returns a dataframe with a field
-            called 'object_id' and has at least 10 rows.
+            called 'object_id' and has at least 10 rows when contains_neighborhood=True.
         """
         frame = render_stats.read_collision_with_neighborhoods(
             FILE_PATH_NBRHD, contains_neighborhood=True)
+
+        self.assertTrue('object_id' in frame.columns)
+        self.assertTrue(frame.shape[0] > 10)
+
+    def test_returns_neighbhorhood_false_no_error(self):
+        """
+        Tests that read_collision_with_neighborhoods returns a dataframe with a field
+            called 'object_id' and has at least 10 rows when contains_neighborhood=False.
+        """
+        frame = render_stats.read_collision_with_neighborhoods(
+            FILE_PATH, contains_neighborhood=False)
 
         self.assertTrue('object_id' in frame.columns)
         self.assertTrue(frame.shape[0] > 10)
@@ -152,6 +164,20 @@ class RenderStatsTest(unittest.TestCase):
 
         injury_count = int(out.sum()['SpeedLimitSame'])
         self.assertTrue(injury_count == 21)
+
+    def test_transition_date_before_start(self):
+        """
+        Tests that a ValueError is returned when transition_date before falls before any date in the
+            data.
+        """
+        test_treatment_in = ['Atlantic', 'Pike-Market', 'Belltown', 'International District'
+                             , 'Central Business District', 'First Hill', 'Yesler Terrace'
+                             , 'Pioneer Square', 'Interbay', 'Mann', 'Minor']
+        transition_date = "1900-01-01"
+        out_df = render_stats.pivot_by_treatment(DF_NEIGHBORHOODS, treatment_list=test_treatment_in
+                                                 , resample_by='D', agg_by='injuries')
+        with self.assertRaises(ValueError):
+            render_stats.find_period_ranges(out_df, transition_date=transition_date)
 
     def test_by_day(self):
         """

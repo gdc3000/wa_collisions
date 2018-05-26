@@ -4,7 +4,6 @@ Adapted from shablona template.
 """
 
 __version__ = "1.0"
-from __future__ import absolute_import, division, print_function
 from os.path import join as pjoin
 
 

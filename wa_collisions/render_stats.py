@@ -46,10 +46,10 @@ def read_collision_with_neighborhoods(file_path, contains_neighborhood=False):
             a field called 'object_id' which is the id for the \
             neighborhood.".format(file_path))
 
-    data = read_clean_integrate_data.clean_collision_data(data)
-
     if not contains_neighborhood:
-        data = read_clean_integrate_data.add_neighborhoods_collisions(data)
+        data = read_clean_integrate_data.clean_collisions_neighborhoods(data)
+    else:
+        data = read_clean_integrate_data.clean_collision_data(data)
 
     return data
 

@@ -136,7 +136,7 @@ def clean_collision_data(collision_data,include_since_year=None):
     return collision_data
 
 
-def clean_collisions_neighborhoods(collision_data):
+def clean_collisions_neighborhoods(collision_data, geo_json_path=None):
     """
     Add the neighborhoods and clean collision data.
 
@@ -146,7 +146,7 @@ def clean_collisions_neighborhoods(collision_data):
 
 
     Args:
-        data:
+        collision_data():
 
     Returns:
         cleaned dataframe of data from the collision data file
@@ -158,7 +158,7 @@ def clean_collisions_neighborhoods(collision_data):
     collision_data = clean_collision_data(collision_data)
 
     ## add the assigned neighborhoods
-    collision_data = assign_neighborhood(collision_data)
+    collision_data = assign_neighborhood(collision_data, geo_json_path)
 
     return collision_data
     

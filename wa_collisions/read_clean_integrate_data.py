@@ -92,6 +92,12 @@ def clean_collision_data(collision_data,include_since_year=None):
     # https://pandas.pydata.org/pandas-docs/stable/
     # indexing.html#attribute-access
 
+    # convert the column names to lower case
+    # in between downloading the data and submitting the project, the file
+    # changed
+    collision_data.columns = [c.lower() for c in collision_data.columns]
+    collision_data = collision_data.rename(columns = {'x':'X', 'y':'Y'})
+
     if not isinstance(include_since_year, int) and include_since_year is not None:
         raise ValueError("{0} is not None or an int".format(include_since_year))
 
@@ -105,8 +111,8 @@ def clean_collision_data(collision_data,include_since_year=None):
                'lightcond', 'roadcond', 'junctiontype', 'location',
                'pedcount', 'pedcylcount', 'personcount', 'sdot_coldesc',
                'severitydesc', 'speeding', 'weather', 'time', 'epoch',
-               'year', 'month', 'day','S_HOOD']
-    
+               'year', 'month', 'day', 'S_HOOD']
+
     #Handle exception where neighborhood is included
     if 'object_id' in collision_data.columns:
         columns = columns + ['object_id']

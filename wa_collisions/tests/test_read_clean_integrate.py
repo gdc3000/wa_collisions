@@ -95,6 +95,19 @@ class IntegrateDataTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             clean_data = read_clean_integrate_data.clean_collision_data(test_data
                 ,include_since_year='randomstring')
+
+    def test_clean_collisions_neighborhoods(self):
+        """
+        Test the methods in read_create_integrate_data work.
+
+        Simple test to confirm that the method
+        clean_collisions_neighborhoods runs.
+        """
+        data_file = COLLISIONS_DATA
+        test_data = read_clean_integrate_data.read_collision_data(data_file)
+        neighborhood_data = read_clean_integrate_data.clean_collisions_neighborhoods(test_data)
+        self.assertTrue(len(neighborhood_data) > 1)
+        self.assertTrue('object_id' in neighborhood_data.columns)
         
 
 if __name__ == '__main__':

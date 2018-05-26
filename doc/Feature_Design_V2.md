@@ -3,9 +3,8 @@
 ## Goals of the Project:
 
 1. Clean and prepare Seattle area collision data for regression and other machine learning projects.
-2. Integrate with crime data. This will be used to determine the crime rate in each neighborhood that a collision occurs.
 3. Create a visualization of Seattle area collision data.
-4. Advanced analysis of Seattle area collision data.
+4. Advanced analysis of Seattle area collision data and the change in speed limits.
 
 ## Use Cases:
 
@@ -15,29 +14,15 @@
 ### Where do more accidents occur in Seattle?
 
 * The user of this package will have an understanding of where the most accidents in Seattle are occuring by neighbourhood and in a visual form.
-* We will visualize the locations of accidents in neighbourhoods on a map.
+* We will visualize the locations of accidents in neighbourhoods on a map. 
+* The map will include factors that may impact accidents: weather, road conditions, etc. 
 * We will make this analysis repeatable so that it could be re-used with similar datasets from different cities.
-* Contact: Salik Warsi 
-* The first iteration will not include: We will perform analysis on the characteristics of different locations (such as population density, road quality, traffic volumes - depending on
-  data availability) to understanding the relationships between these variables and collisions.
+* Contact: Salik Warsi and Fei Wang
 
-### How does weather/climate effect driving?
-
-* The user of this package will have the ability to dynamically analyze the correlation between collision density within a neighborhood in Seattle and temperature and weather type
-* We will divide the Seattle city area into sub areas by density of collisions and proximities to the 10 weather stations. For each area, determine the effect of temperature, weather type on the density of collisions based on historical data.
-* The user will be provided with an UI to select one of the sub areas
-* The package returns a time series visualization of the temperatures of that neighborhood, together with the collision density
-* The package will also fit a regression model on number of collisions with estimated road surface temperature, air temperature, precipitation and weather type for the selected neighborhood. It then renders the result of correlation coefficients and confidence intervels for each predictor variable to the user
-* User should also be able to apply the same analysis to the entire Seattle city
+### How have accidents changed over time in Seattle?
+* The user of this package will be able to visually compare how accidents have changed over time. 
+* The visualization will include factors that impact driving including: weather, road conditions, etc. 
 * Contact: Fei Wang
-
-### Do different types of accidents happen in different neighborhoods with different levels of crime (911 call)?
-
-* Because of issues with the data integration, we are not working on this part at this time. The collision data needs to be mapped to the beats and then to the collision data.
-* The user of this package will have the ability to correlate the types of accidents and the levels of crime in each neighboorhood.
-* We will measure the type of accident based on the encoding from the Seattle collision dataset. The level of crime will be based on the frequency of 911 calls in each neighboorhood.
-* There will be a way to visually and quantitatively coorrelate the two types of data. The user can then better determine where to live and drive in Seattle.
-* Contact: Libby Montague
 
 ### Have the number of accidents changed over time? Can we see the change in Seattle speed limits in the Seattle collision data?
 

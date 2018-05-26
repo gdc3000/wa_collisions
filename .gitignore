@@ -19,4 +19,3 @@ tests/__pycache__/*
 wa_collisions/data/Bellevue_Crash_Data_2015_01_01_2017_12_31.csv
 wa_collisions/data/Collisions.csv
 wa_collisions/data/Collisions_With_Neighborhoods.csv
-wa_collisions/Neighborhoods/*

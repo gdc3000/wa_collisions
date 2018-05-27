@@ -14,6 +14,7 @@ _build/
 auto_examples/
 gen_api/
 scripts/.ipynb_checkpoints/
+examples/.ipynb_checkpoints/
 tests/__pycache__/*
 
 wa_collisions/data/Bellevue_Crash_Data_2015_01_01_2017_12_31.csv

@@ -26,13 +26,26 @@ The project has the following structure:
          |- visualizer.py
          |- data/
             |- Collisions_test.csv
+            |- Collisions_With_Neighborhoods_test.csv
+            |- Neighborhoods
+                |- Neighborhoods.json
+                |- WGS84
+                    |- ...
          |- tests/
-            |- ...
+            |- __init__.py
+            |- test_neighborhood_reader.py
+            |- test_read_clean_integrate.py
+            |- test_render_stats.py
+            |- test_visualizer.py
       |- doc/
-         |- Makefile
-         |- conf.py
-         |- sphinxext/
-            |- ...
+         |- Feature_Design_V1.md
+         |- Feature_Design_V2.md
+         |- Technology_Review_Presentation.pptx
+         |- dash.png
+         |- datasets_V1.md
+         |- folium.png
+         |- geopandas.png
+         |- technology_review_outline.md
          |- _static/
             |- ...
       |- setup.py
@@ -40,9 +53,12 @@ The project has the following structure:
       |- .mailmap
       |- appveyor.yml
       |- LICENSE
+      |- .coverage
+      |- .coveragerc
+      |- .gitignore
+      |- .mailmap
       |- Makefile
-      |- ipynb/
-         |- ...
+      |- requirements.txt
 
 
 In the following sections we will examine these elements one by one. First,

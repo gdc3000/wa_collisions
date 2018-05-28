@@ -36,7 +36,7 @@ def read_collision_data(file_path):
         raise ValueError("file doesn't exist: " + str(file_path))
 
     # read in the data frome the file
-    collision_data = pd.read_csv(file_path)
+    collision_data = pd.read_csv(file_path, low_memory = False)
 
     # return the data
     return collision_data
@@ -161,10 +161,7 @@ def clean_weather_data(weather_data):
 
     #Remove fields with missing values
     weather_data = weather_data.reindex(columns = columns)
-    weather_data = weather_data[ (weather_data['tmpf'] != 'M')
-                            & (weather_data[' p01i'] != 'M')
-                            & (weather_data[' sknt'] != 'M')
-                    ]
+    weather_data = weather_data[(weather_data['tmpf'] != 'M') & (weather_data[' p01i'] != 'M') & (weather_data[' sknt'] != 'M')]
     weather_data.columns = ['station', 'timestamp','temperature','precipitation','wind_speed']
 
     #convert types to floats
@@ -180,27 +177,42 @@ def clean_weather_data(weather_data):
     weather_data['hour'] = weather_data['timestamp'].dt.hour
 
     # aggregate by hour
-    weather_final_hour = weather_data.groupby(['year','month','day','hour']).agg({'temperature': np.mean,
-                                                          'precipitation': np.mean,
-                                                          'wind_speed': np.mean}).reset_index()
+    weather_final_hour = weather_data.groupby(['year','month','day','hour']).agg({'temperature': np.mean, 'precipitation': np.mean, 'wind_speed': np.mean}).reset_index()
 
     # aggregate by day
-    weather_final_day = weather_final_hour.groupby(['year','month','day']).agg(
-                                                            {'temperature': [np.mean, np.max, np.min],
-                                                            'precipitation': np.sum,
-                                                            'hour' : np.size,
-                                                            'wind_speed': np.mean}).reset_index()
+    weather_final_day = weather_final_hour.groupby(['year','month','day']).agg( {'temperature': [np.mean, np.max, np.min], 'precipitation': np.sum, 'hour' : np.size, 'wind_speed': np.mean}).reset_index()
     weather_final_day.columns = weather_final_day.columns.get_level_values(0)
-    weather_final_day.columns = ['year','month','day','temperature_mean','temperature_high'
-                                ,'temperature_low','precipitation','count_of_obs','wind_speed']
+    weather_final_day.columns = ['year','month','day','temperature_mean','temperature_high' ,'temperature_low','precipitation','count_of_obs','wind_speed']
 
     # only keep days with more than 22 hours of weather data
     weather_final_day = weather_final_day[weather_final_day['count_of_obs'] >= 22]
-    weather_final_day = weather_final_day.drop(columns = ['count_of_obs'], axis = 0, inplace = True)
+    weather_final_day.drop(columns = ['count_of_obs'], axis = 1, inplace = True)
 
     # return the weather data aggregate at day level
     return weather_final_day
 
+
+
+def clean_collisions_neighborhoods(collision_data, geo_json_path=None):
+    """
+    Add the neighborhoods and clean collision data.
+    Clean the collision data and add the neighborhood data. We have tests
+    for the clean_collision_data and assign neighborhood. We do not have a set
+    test for this function because of the run time to assign the neighborhoods.
+    Args:
+        collision_data():
+    Returns:
+        cleaned dataframe of data from the collision data file
+    Raises:
+        None
+    """
+
+    collision_data = clean_collision_data(collision_data)
+
+    ## add the assigned neighborhoods
+    collision_data = assign_neighborhood(collision_data, geo_json_path)
+
+    return collision_data
 
 
 def integrate_data(collision_data_file_path, include_since_year, weather_data_file_path, geo_json_path = None):

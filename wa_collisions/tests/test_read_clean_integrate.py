@@ -13,6 +13,7 @@ from wa_collisions import read_clean_integrate_data
 
 # store the relative path to the Collisions data
 COLLISIONS_DATA = "wa_collisions/data/Collisions_test.csv"
+GEO_PATH = "wa_collisions/data/Neighborhoods/Neighborhoods.json"
 
 # Define a class in which the tests will run
 class IntegrateDataTest(unittest.TestCase):
@@ -105,7 +106,7 @@ class IntegrateDataTest(unittest.TestCase):
         """
         data_file = COLLISIONS_DATA
         test_data = read_clean_integrate_data.read_collision_data(data_file)
-        neighborhood_data = read_clean_integrate_data.clean_collisions_neighborhoods(test_data)
+        neighborhood_data = read_clean_integrate_data.clean_collisions_neighborhoods(test_data, GEO_PATH)
         self.assertTrue(len(neighborhood_data) > 1)
         self.assertTrue('object_id' in neighborhood_data.columns)
         

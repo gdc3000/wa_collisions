@@ -138,7 +138,7 @@ def clean_collision_data(collision_data,include_since_year=None):
     return collision_data
 
 
-def clean_collisions_neighborhoods(collision_data, geo_json_path=None):
+def clean_collisions_neighborhoods(collision_data, geo_json_path=None, weather_path=None):
     """
     Add the neighborhoods and clean collision data.
 
@@ -160,7 +160,8 @@ def clean_collisions_neighborhoods(collision_data, geo_json_path=None):
     collision_data = clean_collision_data(collision_data)
 
     ## add the assigned neighborhoods
-    collision_data = assign_neighborhood(collision_data, geo_json_path)
+    if geo_json_path is not None:
+        collision_data = assign_neighborhood(collision_data, geo_json_path)
 
     return collision_data
     

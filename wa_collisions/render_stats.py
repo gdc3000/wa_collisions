@@ -16,6 +16,9 @@ import wa_collisions.read_clean_integrate_data as read_clean_integrate_data
 
 VALID_RESAMPLE_TYPES = ['M', 'W', 'D']
 
+# added in because of change to read_clean_integrate_data
+GEO_PATH = "wa_collisions/data/Neighborhoods/Neighborhoods.json"
+
 def read_collision_with_neighborhoods(file_path, contains_neighborhood=False):
     """
     Read in the collision dataframe.
@@ -47,7 +50,7 @@ def read_collision_with_neighborhoods(file_path, contains_neighborhood=False):
             neighborhood.".format(file_path))
 
     if not contains_neighborhood:
-        data = read_clean_integrate_data.clean_collisions_neighborhoods(data)
+        data = read_clean_integrate_data.clean_collisions_neighborhoods(data, GEO_PATH)
     else:
         data = read_clean_integrate_data.clean_collision_data(data)
 

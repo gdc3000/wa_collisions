@@ -1,11 +1,11 @@
 """
-Version file for wa_collisions. 
+Version file for wa_collisions.
 Adapted from shablona template.
 """
 
 __version__ = "1.0"
-#from __future__ import absolute_import, division, print_function
 from os.path import join as pjoin
+# from __future__ import absolute_import, division, print_function
 
 
 # Format expected by setup.py and doc/source/conf.py: string of form "X.Y.Z"
@@ -46,10 +46,10 @@ wa_collisions
 ========
 
 wa_collisions is a module that allows users to create interactive
-visualizations in python of vehicle collisions in Seattle. 
+visualizations in python of vehicle collisions in Seattle.
 
 There are example jupyter notebooks for implementation in the github
-repository. 
+repository.
 
 Please visit the readme for more information README_.
 

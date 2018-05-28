@@ -11,7 +11,7 @@ wa_collisions/data/Collisions.csv
 wa_collisions/data/collisions_combined.csv
 wa_collisions/data/Collisions_With_Neighborhoods.csv
 wa_collisions/data/Collisions_Final.csv
-
+wa_collisions/data/CollisionsNeighborhood.csv
 *~
 *.DS_Store
 _build/

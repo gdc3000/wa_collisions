@@ -104,6 +104,7 @@ def clean_collision_data(collision_data,include_since_year=None):
         raise ValueError("{0} is not None or an int".format(include_since_year))
 
     collision_data['time'] = pd.to_datetime(collision_data.incdttm)
+    collision_data['date'] = pd.to_datetime(collision_data.incdate)
     collision_data['year'] = collision_data.time.dt.year
     collision_data['month'] = collision_data.time.dt.month
     collision_data['day'] = collision_data.time.dt.day
@@ -112,7 +113,7 @@ def clean_collision_data(collision_data,include_since_year=None):
     columns = ['Y', 'X', 'addrtype', 'collisiontype', 'fatalities', 'injuries',
                'lightcond', 'roadcond', 'junctiontype', 'location',
                'pedcount', 'pedcylcount', 'personcount', 'sdot_coldesc',
-               'severitydesc', 'speeding', 'weather', 'time',
+               'severitydesc', 'speeding', 'weather', 'time', 'date',
                'year', 'month', 'day', 'S_HOOD']
 
     # Handle exception where neighborhood is included

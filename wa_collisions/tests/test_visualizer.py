@@ -8,6 +8,13 @@ import folium
 from wa_collisions.visualizer import visualize_neighborhood
 from wa_collisions.visualizer import visualize_neighborhood_count
 from wa_collisions.visualizer import visualize_neighborhood_mean
+from wa_collisions.visualizer import visualize_heatmap_with_time
+from wa_collisions.read_clean_integrate_data import integrate_data
+
+# store the relative path to the Collisions data, Weather data and GeoJson neighborhoods data
+COLLISIONS_DATA = "wa_collisions/data/Collisions_test.csv"
+WEATHER_DATA = "wa_collisions/data/Weather_test.csv"
+GEO_PATH = "wa_collisions/data/Neighborhoods/Neighborhoods.json"
 
 # Define a class in which the tests will run
 class VisualizerTest(unittest.TestCase):
@@ -93,6 +100,14 @@ class VisualizerTest(unittest.TestCase):
         test_data = {"object_id": [1], "Value":[2]}
         dataframe = pd.DataFrame(data=test_data)
         test_map = visualize_neighborhood_mean(dataframe, "Value")
+        self.assertTrue(isinstance(test_map, folium.folium.Map))
+
+    def test_visualize_heatmap(self):
+        """
+        """
+        clean_data = integrate_data(COLLISIONS_DATA, 2014, WEATHER_DATA, GEO_PATH)
+        clean_data['date'] = pd.to_datetime(clean_data.date)
+        test_map = visualize_heatmap_with_time(clean_data, '2018-01-01', '2018-02-01')
         self.assertTrue(isinstance(test_map, folium.folium.Map))
 
 if __name__ == '__main__':

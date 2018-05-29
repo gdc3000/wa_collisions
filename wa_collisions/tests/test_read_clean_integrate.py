@@ -11,7 +11,7 @@ from wa_collisions import read_clean_integrate_data
 # adapted from class 3 lecture - structure of unit tests
 # adapted from my homeowork 2 - the tests completed
 
-# store the relative path to the Collisions data
+# store the relative path to the Collisions data, Weather data and GeoJson neighborhoods data
 COLLISIONS_DATA = "wa_collisions/data/Collisions_test.csv"
 WEATHER_DATA = "wa_collisions/data/Weather_test.csv"
 GEO_PATH = "wa_collisions/data/Neighborhoods/Neighborhoods.json"

@@ -5,8 +5,10 @@ Each function excepts the data in form of a
 dataframe and creates a visualization.
 """
 
-import folium
+import pandas as pd
 import numpy as np
+import folium
+import folium.plugins as plugins
 
 MAP_JSON_DEFAULT = "wa_collisions/data/Neighborhoods/Neighborhoods.json"
 MAP_LOCATION_START = [47.6199206, -122.3230027]
@@ -107,3 +109,62 @@ def visualize_neighborhood_mean(neighborhood_data, value, path=None):
     counts_per_neighborhood = neighborhood_data.groupby(
         ['object_id'])[value].mean().reset_index(name='mean')
     return visualize_neighborhood(counts_per_neighborhood, 'mean', path)
+
+
+def visualize_heatmap_with_time(data, start_date = '2001-01-01', end_date = '2020-01-01'):
+    """
+    Visualizes the mean value for each neighborhood.
+
+    Args:
+        data(pandas dataframe): Dataframe containing
+            the rows per collisions which is to be mapped.
+        start_date (string): the starting date of the collisions
+            to be presented in the heatmap
+        end_date (string): the end date of the collisions
+            to be presented in the heatmap
+
+    Returns:
+        the heatmap produced
+
+    Raises:
+        ValueError: if neighborhood_data doesn't have the column
+            'object_id' denoting neighborhood or the column value.
+    """
+
+    columns = ['Y', 'X', 'date', 'object_id']
+    df_collision = data.reindex(columns = columns)
+    df_collision = df_collision.dropna(axis=0, how='any')
+
+    dateMask = (df_collision['date'] >= np.datetime64(start_date)) & (df_collision['date'] <= np.datetime64(end_date))
+    # neighborhoodMask = (df_collision.object_id == 80)
+    # index = (dateMask & neighborhoodMask)
+    index = dateMask
+    data_subset = df_collision.reindex(index[index == True].index.values)
+    dates = sorted(data_subset.date.value_counts().index.values)
+
+    data = list()
+    for date in dates:
+        dateMask = df_collision['date'] == date
+       # neighborhoodMask = (df_collision.object_id == 80)
+       # index = (dateMask & neighborhoodMask)
+        index = dateMask
+        coordinates = df_collision.reindex(index[index == True].index.values)[['Y', 'X']].values
+        NewData = coordinates * np.array([[1, 1]])
+        data.append(NewData.tolist())
+
+    # create heatmap object 
+    time_index = [pd.to_datetime(date).strftime('%Y-%m-%d')  for date in dates]
+
+    m = folium.Map(location = MAP_LOCATION_START
+                , zoom_start = MAP_ZOOM
+                )
+
+    hm = plugins.HeatMapWithTime(
+        data,
+        index=time_index,
+        auto_play=True,
+        max_opacity=0.3)
+
+    hm.add_to(m)
+
+    return m

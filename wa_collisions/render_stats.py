@@ -56,9 +56,13 @@ def read_collision_with_neighborhoods(file_path, contains_neighborhood=False):
 
     return data
 
-def pivot_by_treatment(input_frame, treatment_list, control_list=None
-                       , neighborhood_path='wa_collisions/data/Neighborhoods/Neighborhoods.json'
-                       , agg_by=None, resample_by='D'):
+def pivot_by_treatment(
+        input_frame,
+        treatment_list,
+        control_list=None,
+        neighborhood_path='wa_collisions/data/Neighborhoods/Neighborhoods.json',
+        agg_by=None,
+        resample_by='D'):
     """
     Read in the collision dataframe with a neighborhood assigned.
 
@@ -106,7 +110,7 @@ def pivot_by_treatment(input_frame, treatment_list, control_list=None
 
     if not os.path.exists(neighborhood_path):
         raise ValueError("neighborhood_path doesn't exist: " + str(neighborhood_path))
-    
+
     if resample_by not in VALID_RESAMPLE_TYPES:
         raise ValueError("Parameter resample_by must be one of: " \
             + str(VALID_RESAMPLE_TYPES))
@@ -120,7 +124,7 @@ def pivot_by_treatment(input_frame, treatment_list, control_list=None
     data = input_frame.copy()
 
     neighborhoods_df = geopandas.read_file(neighborhood_path)
-    
+
     #Find treatment groups by id
     treatment_ids = _find_neighborhoods_ids(input_list=treatment_list
                                             , neighborhoods_df=neighborhoods_df)
@@ -146,7 +150,7 @@ def pivot_by_treatment(input_frame, treatment_list, control_list=None
 
     data = data.unstack()
     data = data.fillna(0)
-    data = data.rename(columns={True: "SpeedLimitChange", False: "SpeedLimitSame"})  
+    data = data.rename(columns={True: "SpeedLimitChange", False: "SpeedLimitSame"})
     data = data[['SpeedLimitChange', 'SpeedLimitSame']]
 
     #Resample data
@@ -167,7 +171,7 @@ def find_period_ranges(input_frame, transition_date="2016-10-01"):
     Args:
         input_frame: the dataframe containing the collision data
         transition_date: date when the pre-period ends and the post
-            period begins. Should be a string in the format of 
+            period begins. Should be a string in the format of
             'YYYY-MM-DD'.
 
     Returns:
@@ -202,7 +206,7 @@ def find_period_ranges(input_frame, transition_date="2016-10-01"):
     pre_period_range = [min_date.strftime('%Y-%m-%d'), pre_end.strftime('%Y-%m-%d')]
     post_period_range = [post_start.strftime('%Y-%m-%d'), max_date.strftime('%Y-%m-%d')]
 
-    return [pre_period_range, post_period_range]     
+    return [pre_period_range, post_period_range]
 
 def _find_neighborhoods_ids(input_list, neighborhoods_df):
     """
@@ -221,7 +225,7 @@ def _find_neighborhoods_ids(input_list, neighborhoods_df):
     """
 
     id_list = []
-    for i in range(0, len(input_list)):
+    for i, _ in enumerate(input_list):
         id_list = id_list + \
             [int(neighborhoods_df[neighborhoods_df['S_HOOD'] == input_list[i]]['OBJECTID'])]
 

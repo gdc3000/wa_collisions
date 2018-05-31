@@ -75,7 +75,7 @@ def assign_neighborhood(dataframe, path=None):
 
     neighborhoods = pull_neighborhoods_file(path)
     object_ids = np.zeros(len(dataframe))
-    for i in range(0, len(object_ids)):
+    for i, _ in enumerate(object_ids):
         object_ids[i] = get_neighborhood(
             dataframe['X'][i], dataframe['Y'][i], neighborhoods)
 

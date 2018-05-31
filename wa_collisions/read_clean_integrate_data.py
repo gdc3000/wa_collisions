@@ -108,13 +108,14 @@ def clean_collision_data(collision_data,include_since_year=None):
     collision_data['year'] = collision_data.time.dt.year
     collision_data['month'] = collision_data.time.dt.month
     collision_data['day'] = collision_data.time.dt.day
+    collision_data['hour'] = collision_data.time.dt.hour
 
     # only keep attributes that are relevant to the analysis
     columns = ['Y', 'X', 'addrtype', 'collisiontype', 'fatalities', 'injuries',
                'lightcond', 'roadcond', 'junctiontype', 'location',
                'pedcount', 'pedcylcount', 'personcount', 'sdot_coldesc',
                'severitydesc', 'speeding', 'weather', 'time', 'date',
-               'year', 'month', 'day', 'S_HOOD']
+               'year', 'month', 'day', 'hour']
 
     # Handle exception where neighborhood is included
     if 'object_id' in collision_data.columns:
@@ -137,6 +138,8 @@ def clean_collision_data(collision_data,include_since_year=None):
     collision_data['ind_fatalities'] = collision_data.fatalities > 0
 
     collision_data.reset_index(inplace=True)
+    # drop redundant columns
+    collision_data.drop(columns = ['index', 'speeding'], axis = 1, inplace = True)
 
     return collision_data
 
@@ -238,14 +241,22 @@ def integrate_data(collision_data_file_path, include_since_year, weather_data_fi
         None
     """
 
+    # read in the collision data
+    # check that the file exists
+    if not os.path.exists(collision_data_file_path):
+        raise ValueError("collision data file doesn't exist: " + str(collision_data_file_path))
+
     collision_data = read_collision_data(collision_data_file_path)
     collision_data = clean_collision_data(collision_data, include_since_year)
 
-    ## add the assigned neighborhoods
+    # add the assigned neighborhoods
+    if not os.path.exists(geo_json_path):
+        raise ValueError("geo json file doesn't exist: " + str(geo_json_path))
     data = assign_neighborhood(collision_data, geo_json_path)
-    if geo_json_path is not None:
-        collision_data = assign_neighborhood(collision_data, geo_json_path)
 
+    # read in the weather data
+    if not os.path.exists(weather_data_file_path):
+        raise ValueError("weather data file doesn't exist: " + str(weather_data_file_path))
     weather_data = read_weather_data(weather_data_file_path)
     weather_data = clean_weather_data(weather_data)
 

@@ -135,7 +135,7 @@ def clean_collision_data(collision_data,include_since_year=None):
     collision_data['ind_person'] = collision_data.personcount > 0
     collision_data['ind_pedcycl'] = collision_data.pedcylcount > 0
     collision_data['ind_fatalities'] = collision_data.fatalities > 0
-
+    
     collision_data.reset_index(inplace=True)
 
     return collision_data

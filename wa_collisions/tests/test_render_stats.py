@@ -3,6 +3,7 @@ Unittests for render_stats.py
 """
 import datetime
 import unittest
+from causalimpact import CausalImpact
 
 import wa_collisions.render_stats as render_stats
 import wa_collisions.read_clean_integrate_data as read_clean_integrate_data
@@ -235,6 +236,24 @@ class RenderStatsTest(unittest.TestCase):
         max_date = out_df.index.max()
         max_date = datetime.date(max_date.year, max_date.month, max_date.day)
         self.assertTrue(max_date.strftime('%Y-%m-%d') == out[1][1])
+    
+    def test_causal_impact(self):
+        """
+        Performs a smoke test using causal impact to ensure jupyter notebook will run.
+        """
+        #Setup 
+        test_treatment_in = ['Atlantic', 'Pike-Market', 'Belltown', 'International District'
+                             , 'Central Business District', 'First Hill', 'Yesler Terrace'
+                             , 'Pioneer Square', 'Interbay', 'Mann', 'Minor']
+        transition_date = "2016-12-22"
+        out_df = render_stats.pivot_by_treatment(DF_NEIGHBORHOODS, treatment_list=test_treatment_in
+                                                 , resample_by='D', agg_by=None)
+        out_date = render_stats.find_period_ranges(out_df, transition_date=transition_date)
+
+        #Call causal impact package
+        causal_impact_out = CausalImpact(out_df, out_date[0], out_date[1])
+
+        self.assertTrue(isinstance(causal_impact_out, CausalImpact))
 
 if __name__ == '__main__':
     unittest.main()

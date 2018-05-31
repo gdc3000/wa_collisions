@@ -17,7 +17,7 @@ install:
     - pip install coveralls
     - pip install pylint
     - pip install -r requirements.txt
-
+    - pip install git+ssh://github.com/jamalsenouci/causalimpact.git
 
 # the actual commands to run
 script:

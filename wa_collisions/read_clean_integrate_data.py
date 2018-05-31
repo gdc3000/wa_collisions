@@ -36,7 +36,7 @@ def read_collision_data(file_path):
         raise ValueError("file doesn't exist: " + str(file_path))
 
     # read in the data frome the file
-    collision_data = pd.read_csv(file_path, low_memory = False)
+    collision_data = pd.read_csv(file_path, low_memory=False)
 
     # return the data
     return collision_data
@@ -63,13 +63,13 @@ def read_weather_data(file_path):
         raise ValueError("file doesn't exist: " + str(file_path))
 
     # read in the data frome the file
-    weather_data = pd.read_csv(file_path, low_memory = False)
+    weather_data = pd.read_csv(file_path, low_memory=False)
 
     # return the data
     return weather_data
 
 
-def clean_collision_data(collision_data,include_since_year=None):
+def clean_collision_data(collision_data, include_since_year=None):
     """
     Clean the collision data.
 
@@ -98,7 +98,7 @@ def clean_collision_data(collision_data,include_since_year=None):
     # in between downloading the data and submitting the project, the file
     # changed
     collision_data.columns = [c.lower() for c in collision_data.columns]
-    collision_data = collision_data.rename(columns = {'x':'X', 'y':'Y'})
+    collision_data = collision_data.rename(columns={'x':'X', 'y':'Y'})
 
     if not isinstance(include_since_year, int) and include_since_year is not None:
         raise ValueError("{0} is not None or an int".format(include_since_year))
@@ -135,7 +135,7 @@ def clean_collision_data(collision_data,include_since_year=None):
     collision_data['ind_person'] = collision_data.personcount > 0
     collision_data['ind_pedcycl'] = collision_data.pedcylcount > 0
     collision_data['ind_fatalities'] = collision_data.fatalities > 0
-    
+
     collision_data.reset_index(inplace=True)
 
     return collision_data
@@ -161,9 +161,11 @@ def clean_weather_data(weather_data):
     columns = ['station', 'valid', 'tmpf', ' p01i', ' sknt']
 
     #Remove fields with missing values
-    weather_data = weather_data.reindex(columns = columns)
-    weather_data = weather_data[(weather_data['tmpf'] != 'M') & (weather_data[' p01i'] != 'M') & (weather_data[' sknt'] != 'M')]
-    weather_data.columns = ['station', 'timestamp','temperature','precipitation','wind_speed']
+    weather_data = weather_data.reindex(columns=columns)
+    weather_data = weather_data[(weather_data['tmpf'] != 'M') &
+                                (weather_data[' p01i'] != 'M') &
+                                (weather_data[' sknt'] != 'M')]
+    weather_data.columns = ['station', 'timestamp', 'temperature', 'precipitation', 'wind_speed']
 
     #convert types to floats
     weather_data['temperature'] = weather_data['temperature'].astype('float64')
@@ -178,16 +180,34 @@ def clean_weather_data(weather_data):
     weather_data['hour'] = weather_data['timestamp'].dt.hour
 
     # aggregate by hour
-    weather_final_hour = weather_data.groupby(['year','month','day','hour']).agg({'temperature': np.mean, 'precipitation': np.mean, 'wind_speed': np.mean}).reset_index()
+    weather_final_hour = weather_data.groupby(
+        ['year', 'month', 'day', 'hour']).agg(
+            {'temperature': np.mean,
+             'precipitation': np.mean,
+             'wind_speed': np.mean}).reset_index()
 
     # aggregate by day
-    weather_final_day = weather_final_hour.groupby(['year','month','day']).agg( {'temperature': [np.mean, np.max, np.min], 'precipitation': np.sum, 'hour' : np.size, 'wind_speed': np.mean}).reset_index()
+    weather_final_day = weather_final_hour.groupby(
+        ['year', 'month', 'day']).agg(
+            {'temperature': [np.mean, np.max, np.min],
+             'precipitation': np.sum,
+             'hour' : np.size,
+             'wind_speed': np.mean}).reset_index()
     weather_final_day.columns = weather_final_day.columns.get_level_values(0)
-    weather_final_day.columns = ['year','month','day','temperature_mean','temperature_high' ,'temperature_low','precipitation','count_of_obs','wind_speed']
+    weather_final_day.columns = [
+        'year',
+        'month',
+        'day',
+        'temperature_mean',
+        'temperature_high',
+        'temperature_low',
+        'precipitation',
+        'count_of_obs',
+        'wind_speed']
 
     # only keep days with more than 22 hours of weather data
     weather_final_day = weather_final_day[weather_final_day['count_of_obs'] >= 22]
-    weather_final_day.drop(columns = ['count_of_obs'], axis = 1, inplace = True)
+    weather_final_day.drop(columns=['count_of_obs'], axis=1, inplace=True)
 
     # return the weather data aggregate at day level
     return weather_final_day
@@ -216,7 +236,11 @@ def clean_collisions_neighborhoods(collision_data, geo_json_path=None):
     return collision_data
 
 
-def integrate_data(collision_data_file_path, include_since_year, weather_data_file_path, geo_json_path = None):
+def integrate_data(
+        collision_data_file_path,
+        include_since_year,
+        weather_data_file_path,
+        geo_json_path=None):
     """
     Add the neighborhoods and clean collision data.
 
@@ -250,7 +274,6 @@ def integrate_data(collision_data_file_path, include_since_year, weather_data_fi
     weather_data = clean_weather_data(weather_data)
 
     # join add weather information
-    data = pd.merge(data, weather_data, how = 'inner', on = ['year', 'month', 'day'])
+    data = pd.merge(data, weather_data, how='inner', on=['year', 'month', 'day'])
 
     return data
-

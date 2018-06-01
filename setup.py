@@ -14,9 +14,9 @@ PACKAGES = find_packages()
 
 # Get version and release info, which is all stored in
 # vehicle_collisions/version.py
-VER_FILE = os.path.join('wa_collisions', 'version.py')
-with open(VER_FILE) as f:
-    exec(f.read())
+#VER_FILE = os.path.join('wa_collisions/', 'version.py')
+#with open(VER_FILE) as f:
+#    exec(f.read())
 
 # used format from https://docs.python.org/2/distutils/setupscript.html
 
@@ -62,12 +62,10 @@ Copyright (c) 2018, Libby Montague, Fei Wang, Geoff Coyner, Salik Warsi.
 
 """
 
-PACKAGES = ['wa_collisions.create_indicator_map_visual',
-            'wa_collisions.interactive_plotting',
+PACKAGES = ['wa_collisions.interactive_plotting',
             'wa_collisions.neighborhood_reader',
             'wa_collisions.read_clean_integrate_data',
             'wa_collisions.render_stats',
-            'wa_collisions.version',
             'wa_collisons.visualizer']
 
 # from the requirements.txt
@@ -115,8 +113,9 @@ OPTS = dict(name='WA Collisions',
             version='1.0',
             packages=PACKAGES,
             package_data='data/*',
-            install_requires=REQUIRES,
-            requires=REQUIRES)
+            #install_requires=REQUIRES,
+            #requires=REQUIRES
+            )
 
 
 if __name__ == '__main__':

@@ -4,8 +4,6 @@ Adapted from shablona template.
 """
 
 __version__ = "1.0"
-from os.path import join as pjoin
-# from __future__ import absolute_import, division, print_function
 
 
 # Format expected by setup.py and doc/source/conf.py: string of form "X.Y.Z"

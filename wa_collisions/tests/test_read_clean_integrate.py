@@ -75,8 +75,9 @@ class IntegrateDataTest(unittest.TestCase):
         """
         data_file = COLLISIONS_DATA
         test_data = read_clean_integrate_data.read_collision_data(data_file)
-        clean_data = read_clean_integrate_data.clean_collision_data(test_data
-            ,include_since_year=2014)
+        clean_data = read_clean_integrate_data.clean_collision_data(
+            test_data,
+            include_since_year=2014)
         self.assertTrue(clean_data.shape[0] > 0)
 
     def test_clean_data_weather(self):
@@ -89,7 +90,8 @@ class IntegrateDataTest(unittest.TestCase):
         data_file = WEATHER_DATA
         test_data = read_clean_integrate_data.read_weather_data(data_file)
         clean_data = read_clean_integrate_data.clean_weather_data(test_data)
-        self.assertTrue(clean_data.groupby(['year', 'month', 'day']).count().shape[0] == clean_data.shape[0])
+        self.assertTrue(
+            clean_data.groupby(['year', 'month', 'day']).count().shape[0] == clean_data.shape[0])
 
     def test_clean_data_collisions_end_year(self):
         """
@@ -100,15 +102,16 @@ class IntegrateDataTest(unittest.TestCase):
         """
         data_file = COLLISIONS_DATA
         test_data = read_clean_integrate_data.read_collision_data(data_file)
-        clean_data = read_clean_integrate_data.clean_collision_data(test_data
-            ,include_since_year=2014)
+        clean_data = read_clean_integrate_data.clean_collision_data(
+            test_data,
+            include_since_year=2014)
 
         print('clean data min year:', clean_data.year.min())
-        self.assertTrue(clean_data.year.min()==2014)
+        self.assertTrue(clean_data.year.min() == 2014)
 
         with self.assertRaises(ValueError):
-            clean_data = read_clean_integrate_data.clean_collision_data(test_data
-                ,include_since_year='randomstring')
+            clean_data = read_clean_integrate_data.clean_collision_data(
+                test_data, include_since_year='randomstring')
 
     def test_integrate_data(self):
         """
@@ -117,7 +120,8 @@ class IntegrateDataTest(unittest.TestCase):
         Simple test to confirm that the method
         integrate_data runs.
         """
-        clean_data = read_clean_integrate_data.integrate_data(COLLISIONS_DATA, 2014, WEATHER_DATA, GEO_PATH)
+        clean_data = read_clean_integrate_data.integrate_data(
+            COLLISIONS_DATA, 2014, WEATHER_DATA, GEO_PATH)
         self.assertTrue(clean_data.shape[0] > 1)
         self.assertTrue('year' in clean_data.columns)
         self.assertTrue('wind_speed' in clean_data.columns)

@@ -7,8 +7,8 @@ given a dataframe containing latitudes and longitudes, assigns
 Seattle neighbourhoods to them
 """
 
-import geopandas as gpd
 import numpy as np
+import geopandas as gpd
 from shapely.geometry import Point
 
 def get_neighborhood(latitude, longitude, neighborhoods):

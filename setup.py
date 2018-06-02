@@ -9,6 +9,7 @@ Adaped from shablona template.
 
 
 import os
+<<<<<<< HEAD
 from setuptools import setup, find_packages
 PACKAGES = find_packages()
 
@@ -17,6 +18,9 @@ PACKAGES = find_packages()
 #VER_FILE = os.path.join('wa_collisions/', 'version.py')
 #with open(VER_FILE) as f:
 #    exec(f.read())
+=======
+from setuptools import setup
+>>>>>>> 340dfdd116364338350e0b2c26047dd4ee07f52d
 
 # used format from https://docs.python.org/2/distutils/setupscript.html
 
@@ -62,6 +66,7 @@ Copyright (c) 2018, Libby Montague, Fei Wang, Geoff Coyner, Salik Warsi.
 
 """
 
+<<<<<<< HEAD
 PACKAGES = ['wa_collisions.interactive_plotting',
             'wa_collisions.neighborhood_reader',
             'wa_collisions.read_clean_integrate_data',
@@ -99,6 +104,11 @@ REQUIRES = ['branca==0.3.0',
            ]
 
 OPTS = dict(name='WA Collisions',
+=======
+PACKAGES = ['wa_collisions']
+
+opts = dict(name='wa_collisions',
+>>>>>>> 340dfdd116364338350e0b2c26047dd4ee07f52d
             maintainer='Libby Montague, Fei Wang, Geoff Coyner, Salik Warsi',
             maintainer_email='',
             description=DESCRIPTION,
@@ -110,13 +120,18 @@ OPTS = dict(name='WA Collisions',
             author='Libby Montague, Fei Wang, Geoff Coyner, Salik Warsi',
             author_email='',
             platforms='Microsoft Windows',
+<<<<<<< HEAD
             version='1.0',
             packages=PACKAGES,
             package_data='data/*',
             #install_requires=REQUIRES,
             #requires=REQUIRES
             )
+=======
+            version='==1.0',
+            packages=PACKAGES)
+>>>>>>> 340dfdd116364338350e0b2c26047dd4ee07f52d
 
 
 if __name__ == '__main__':
-    setup(**OPTS)
+    setup(**opts)

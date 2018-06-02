@@ -111,7 +111,7 @@ def visualize_neighborhood_mean(neighborhood_data, value, path=None):
     return visualize_neighborhood(counts_per_neighborhood, 'mean', path)
 
 
-def visualize_heatmap_with_time(data, start_date = '2001-01-01', end_date = '2020-01-01'):
+def visualize_heatmap_with_time(data, start_date='2001-01-01', end_date='2020-01-01'):
     """
     Visualizes the mean value for each neighborhood.
 
@@ -132,14 +132,15 @@ def visualize_heatmap_with_time(data, start_date = '2001-01-01', end_date = '202
     """
 
     columns = ['Y', 'X', 'date', 'object_id']
-    df_collision = data.reindex(columns = columns)
+    df_collision = data.reindex(columns=columns)
     df_collision = df_collision.dropna(axis=0, how='any')
 
-    dateMask = (df_collision['date'] >= np.datetime64(start_date)) & (df_collision['date'] <= np.datetime64(end_date))
+    dateMask = ((df_collision['date'] >= np.datetime64(start_date)) &
+                (df_collision['date'] <= np.datetime64(end_date)))
     # neighborhoodMask = (df_collision.object_id == 80)
     # index = (dateMask & neighborhoodMask)
     index = dateMask
-    data_subset = df_collision.reindex(index[index == True].index.values)
+    data_subset = df_collision.reindex(index[index].index.values)
     dates = sorted(data_subset.date.value_counts().index.values)
 
     data = list()
@@ -148,16 +149,15 @@ def visualize_heatmap_with_time(data, start_date = '2001-01-01', end_date = '202
        # neighborhoodMask = (df_collision.object_id == 80)
        # index = (dateMask & neighborhoodMask)
         index = dateMask
-        coordinates = df_collision.reindex(index[index == True].index.values)[['Y', 'X']].values
+        coordinates = df_collision.reindex(index[index].index.values)[['Y', 'X']].values
         NewData = coordinates * np.array([[1, 1]])
         data.append(NewData.tolist())
 
-    # create heatmap object 
+    # create heatmap object
     time_index = [pd.to_datetime(date).strftime('%Y-%m-%d')  for date in dates]
 
-    m = folium.Map(location = MAP_LOCATION_START
-                , zoom_start = MAP_ZOOM
-                )
+    m = folium.Map(location=MAP_LOCATION_START,
+                   zoom_start=MAP_ZOOM)
 
     hm = plugins.HeatMapWithTime(
         data,

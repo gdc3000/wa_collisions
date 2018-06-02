@@ -104,6 +104,8 @@ class VisualizerTest(unittest.TestCase):
 
     def test_visualize_heatmap(self):
         """
+        Passing correct data to visualize_heatmap_with_time returns
+        a map
         """
         clean_data = integrate_data(COLLISIONS_DATA, 2014, WEATHER_DATA, GEO_PATH)
         clean_data['date'] = pd.to_datetime(clean_data.date)

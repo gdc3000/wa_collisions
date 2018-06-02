@@ -1,14 +1,13 @@
 """
-Set up file for python module wa_collisions. 
+Set up file for python module wa_collisions.
 
-This file supports the installation of the wa_collisions module. 
+This file supports the installation of the wa_collisions module.
 The module allows user to create interactive visualizations and
 statistically compare patterns in vehicle collisions in Washington.
-Adaped from shablona template. 
+Adaped from shablona template.
 """
 
 
-import os
 from setuptools import setup
 
 # used format from https://docs.python.org/2/distutils/setupscript.html
@@ -57,7 +56,7 @@ Copyright (c) 2018, Libby Montague, Fei Wang, Geoff Coyner, Salik Warsi.
 
 PACKAGES = ['wa_collisions']
 
-opts = dict(name='wa_collisions',
+OPTS = dict(name='wa_collisions',
             maintainer='Libby Montague, Fei Wang, Geoff Coyner, Salik Warsi',
             maintainer_email='',
             description=DESCRIPTION,
@@ -74,4 +73,4 @@ opts = dict(name='wa_collisions',
 
 
 if __name__ == '__main__':
-    setup(**opts)
+    setup(**OPTS)

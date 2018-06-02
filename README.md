@@ -65,6 +65,11 @@ The project has the following structure:
 
 ### Installation
 
+To install the package run the following:
+    python setup.py install
+Then install the required dependancies:
+    pip install -r requirements.txt
+
 For installation and distribution we will use the python standard
 library `distutils` module. This module uses a `setup.py` file to
 figure out how to install your software on a particular system. For a

@@ -236,12 +236,12 @@ class RenderStatsTest(unittest.TestCase):
         max_date = out_df.index.max()
         max_date = datetime.date(max_date.year, max_date.month, max_date.day)
         self.assertTrue(max_date.strftime('%Y-%m-%d') == out[1][1])
-    
+
     def test_causal_impact(self):
         """
         Performs a smoke test using causal impact to ensure jupyter notebook will run.
         """
-        #Setup 
+        #Setup
         test_treatment_in = ['Atlantic', 'Pike-Market', 'Belltown', 'International District'
                              , 'Central Business District', 'First Hill', 'Yesler Terrace'
                              , 'Pioneer Square', 'Interbay', 'Mann', 'Minor']

@@ -15,7 +15,6 @@ from wa_collisions.neighborhood_reader import assign_neighborhood
 
 def read_collision_data(file_path):
     """
-    Read in the collision dataframe.
 
     Uses the input file path to find the csv file with the collision
     data from Washington state.
@@ -45,7 +44,8 @@ def read_weather_data(file_path):
     """
     Read in the weather data.
 
-    Uses the input file path to ...
+    Uses the input file path to find the csv file with the weather
+    data from the Iowa Environmental Mosonet database
 
 
     Args:
@@ -73,17 +73,18 @@ def clean_collision_data(collision_data, include_since_year=None):
     """
     Clean the collision data.
 
-    Uses the collision data and returns a cleaned data frame ...
+    Uses the collision data and returns a cleaned data frame
 
 
     Args:
-        data:
+        data: dataframe that contains the raw data from the collision data file
+        include_since_year: the starting year of collision accidents in the output dataframe
 
     Returns:
         cleaned dataframe of data from the collision data file
 
     Raises:
-        None
+        ValueError: raises this error when the user-input year is not an integer
     """
     # change the dates to date time and extract year, month, day, hour
     # for joining with weather data later
@@ -108,13 +109,16 @@ def clean_collision_data(collision_data, include_since_year=None):
     collision_data['year'] = collision_data.time.dt.year
     collision_data['month'] = collision_data.time.dt.month
     collision_data['day'] = collision_data.time.dt.day
+    collision_data['hour'] = collision_data.time.dt.hour
+    collision_data['minute'] = collision_data.time.dt.minute
+    collision_data['second'] = collision_data.time.dt.second
 
     # only keep attributes that are relevant to the analysis
     columns = ['Y', 'X', 'addrtype', 'collisiontype', 'fatalities', 'injuries',
                'lightcond', 'roadcond', 'junctiontype', 'location',
                'pedcount', 'pedcylcount', 'personcount', 'sdot_coldesc',
                'severitydesc', 'speeding', 'weather', 'time', 'date',
-               'year', 'month', 'day', 'S_HOOD']
+               'year', 'month', 'day', 'hour', 'minute', 'second']
 
     # Handle exception where neighborhood is included
     if 'object_id' in collision_data.columns:
@@ -135,8 +139,18 @@ def clean_collision_data(collision_data, include_since_year=None):
     collision_data['ind_person'] = collision_data.personcount > 0
     collision_data['ind_pedcycl'] = collision_data.pedcylcount > 0
     collision_data['ind_fatalities'] = collision_data.fatalities > 0
-
     collision_data.reset_index(inplace=True)
+
+    # drop redundant columns
+    collision_data.drop(columns=['index', 'speeding'], axis=1, inplace=True)
+
+    # remove rows where exact accident time was not available (estimated as start of the date only)
+    time_mask = (collision_data.hour != 0) \
+                | (collision_data.minute != 0) \
+                | (collision_data.second != 0)
+    #collision_data = collision_data[time_mask]
+    #collision_data.reset_index(inplace=True)
+    collision_data['ind_valid_time'] = time_mask
 
     return collision_data
 
@@ -145,14 +159,14 @@ def clean_weather_data(weather_data):
     """
     Clean the weather data.
 
-    Uses the weather data and returns a cleaned data frame ...
+    Uses the weather data and returns a cleaned data frame
 
 
     Args:
-        data:
+        data: dataframe that contains the raw data from the weather data file
 
     Returns:
-        cleaned dataframe of data from the collision data file
+        cleaned dataframe of data from the weather data file
 
     Raises:
         None
@@ -216,14 +230,16 @@ def clean_weather_data(weather_data):
 
 def clean_collisions_neighborhoods(collision_data, geo_json_path=None):
     """
-    Add the neighborhoods and clean collision data.
+    Add the neighborhoods to the cleaned collision data.
     Clean the collision data and add the neighborhood data. We have tests
     for the clean_collision_data and assign neighborhood. We do not have a set
     test for this function because of the run time to assign the neighborhoods.
+
     Args:
-        collision_data():
+        collision_data: dataframe that contains the cleaned collision data
+        geo_json_path: path to the GeoJSON file that contains neighborhood data
     Returns:
-        cleaned dataframe of data from the collision data file
+        cleaned dataframe of data from the collision data file with neighborhood attributes
     Raises:
         None
     """
@@ -242,34 +258,37 @@ def integrate_data(
         weather_data_file_path,
         geo_json_path=None):
     """
-    Add the neighborhoods and clean collision data.
-
-    Clean the collision data and add the neighborhood data. We have tests
-    for the clean_collision_data and assign neighborhood. We do not have a set
-    test for this function because of the run time to assign the neighborhoods.
-
+    Clean and integrate collision data, weather data and neighborhood data
 
     Args:
         collision_data_file_path: file path to the collision dataset
-        include_since_year:
+        include_since_year: the starting year of collision accidents in the output dataframe
         weather_data_file_path: file path to the weather dataset
-        geo_json_path: file path to the neighorhoods geojson file
+        geo_json_path: file path to the neighorhoods GEOJSON file
 
     Returns:
-        cleaned dataframe of data from the collision data file
+        cleaned dataframe of data from the integrated data
 
     Raises:
-        None
+        ValueError: raises this error when the file paths do not exist
     """
+
+    # read in the collision data
+    # check that the file exists
+    if not os.path.exists(collision_data_file_path):
+        raise ValueError("collision data file doesn't exist: " + str(collision_data_file_path))
 
     collision_data = read_collision_data(collision_data_file_path)
     collision_data = clean_collision_data(collision_data, include_since_year)
 
-    ## add the assigned neighborhoods
+    # add the assigned neighborhoods
+    if not os.path.exists(geo_json_path):
+        raise ValueError("geo json file doesn't exist: " + str(geo_json_path))
     data = assign_neighborhood(collision_data, geo_json_path)
-    if geo_json_path is not None:
-        collision_data = assign_neighborhood(collision_data, geo_json_path)
 
+    # read in the weather data
+    if not os.path.exists(weather_data_file_path):
+        raise ValueError("weather data file doesn't exist: " + str(weather_data_file_path))
     weather_data = read_weather_data(weather_data_file_path)
     weather_data = clean_weather_data(weather_data)
 

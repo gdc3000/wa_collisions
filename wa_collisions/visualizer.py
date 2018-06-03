@@ -111,13 +111,15 @@ def visualize_neighborhood_mean(neighborhood_data, value, path=None):
     return visualize_neighborhood(counts_per_neighborhood, 'mean', path)
 
 
-def visualize_heatmap_with_time(data, start_date='2001-01-01', end_date='2020-01-01'):
+def visualize_heatmap_by_day(data, district, start_date='2018-01-01', end_date='2018-12-31'):
     """
     Visualizes the mean value for each neighborhood.
 
     Args:
         data(pandas dataframe): Dataframe containing
             the rows per collisions which is to be mapped.
+        district (string): the district of where the collisions
+            to be presented in the heatmap occured
         start_date (string): the starting date of the collisions
             to be presented in the heatmap
         end_date (string): the end date of the collisions
@@ -131,26 +133,78 @@ def visualize_heatmap_with_time(data, start_date='2001-01-01', end_date='2020-01
             'object_id' denoting neighborhood or the column value.
     """
 
-    columns = ['Y', 'X', 'date', 'object_id']
-    df_collision = data.reindex(columns=columns)
-    df_collision = df_collision.dropna(axis=0, how='any')
+    columns = ['Y', 'X', 'date', 'object_id', 'l_hood']
+    df_collision = data.reindex(columns=columns).dropna(axis=0, how='any')
 
-    dateMask = ((df_collision['date'] >= np.datetime64(start_date)) &
+    timeMask = ((df_collision['date'] >= np.datetime64(start_date)) &
                 (df_collision['date'] <= np.datetime64(end_date)))
-    index = dateMask
-    data_subset = df_collision.reindex(index[index].index.values)
-    dates = sorted(data_subset.date.value_counts().index.values)
+    if district == 'ALL':
+        index = timeMask
+    else:
+        index = timeMask & (df_collision['l_hood'] == district)
+    data = df_collision.reindex(index[index].index.values)
+    dates = sorted(data.date.value_counts().index.values)
 
     data = list()
     for date in dates:
-        dateMask = df_collision['date'] == date
-        index = dateMask
+        timeMask = df_collision['date'] == date
+        if district == 'ALL':
+            index = timeMask
+        else:
+            index = timeMask & (df_collision['l_hood'] == district)
         coordinates = df_collision.reindex(index[index].index.values)[['Y', 'X']].values
-        NewData = coordinates * np.array([[1, 1]])
-        data.append(NewData.tolist())
+        coordinates = coordinates * np.array([[1, 1]])
+        data.append(coordinates.tolist())
 
     # create heatmap object
     time_index = [pd.to_datetime(date).strftime('%Y-%m-%d')  for date in dates]
+
+    m = folium.Map(location=MAP_LOCATION_START,
+                   zoom_start=MAP_ZOOM)
+
+    hm = plugins.HeatMapWithTime(
+        data,
+        index=time_index,
+        auto_play=True,
+        max_opacity=0.3)
+
+    hm.add_to(m)
+
+    return m
+
+def visualize_heatmap_by_hour(data, district, start_date='2018-01-01', end_date='2018-12-31'):
+    """
+    TO-DO: add docstring
+    """
+
+    columns = ['Y', 'X', 'date', 'object_id', 's_hood', 'l_hood', 'hour']
+    df_collision = data.reindex(columns=columns).dropna(axis=0, how='any')
+
+    dateMask = ((df_collision['date'] >= np.datetime64(start_date)) &
+                (df_collision['date'] <= np.datetime64(end_date)))
+    if district == 'ALL':
+        index = dateMask
+    else:
+        index = dateMask & (df_collision['l_hood'].isin(district))
+    data = df_collision.reindex(index[index].index.values)
+
+    hours = sorted(data.hour.value_counts().index.values)
+
+    data = list()
+    for hour in hours:
+        timeMask = df_collision['hour'] == hour
+        if district == 'ALL':
+            index = timeMask
+        else:
+            index = timeMask & (df_collision['l_hood'].isin(district))
+        coordinates = df_collision.reindex(index[index].index.values)[['Y', 'X']].values
+        coordinates = coordinates * np.array([[1, 1]])
+        data.append(coordinates.tolist())
+
+    # create heatmap object
+    time_index = [(str(hour) + ' AM') if hour < 12 else str(hour - 12) \
+                  + ' PM' if hour > 12 else str(hour) + ' PM' \
+                  for hour in hours]
 
     m = folium.Map(location=MAP_LOCATION_START,
                    zoom_start=MAP_ZOOM)
@@ -203,6 +257,19 @@ def weather_selection_widget(weather_list):
     )
     return weather_selection
 
+def district_selection_widget(district_list):
+    """
+    TO-DO: add docstring
+    """
+    style = {'description_width': 'initial'}
+    roadcond_selection = widgets.Dropdown(
+        options=['ALL'] + sorted(district_list),
+        value='ALL',
+        description='District:',
+        style=style,
+        disabled=False
+    )
+    return roadcond_selection
 
 def map_by_roadcond_weather(df, map_json_path, roadcond='', weather=''):
     """

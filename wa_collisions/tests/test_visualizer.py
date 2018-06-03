@@ -9,10 +9,12 @@ import ipywidgets as widgets
 from wa_collisions.visualizer import visualize_neighborhood
 from wa_collisions.visualizer import visualize_neighborhood_count
 from wa_collisions.visualizer import visualize_neighborhood_mean
-from wa_collisions.visualizer import visualize_heatmap_with_time
+from wa_collisions.visualizer import visualize_heatmap_by_day
+from wa_collisions.visualizer import visualize_heatmap_by_hour
 from wa_collisions.visualizer import generate_factor_list
 from wa_collisions.visualizer import roadcond_selection_widget
 from wa_collisions.visualizer import weather_selection_widget
+from wa_collisions.visualizer import district_selection_widget
 from wa_collisions.visualizer import map_by_roadcond_weather
 from wa_collisions.visualizer import map_by_roadcond
 from wa_collisions.read_clean_integrate_data import integrate_data
@@ -108,13 +110,23 @@ class VisualizerTest(unittest.TestCase):
         test_map = visualize_neighborhood_mean(dataframe, "Value")
         self.assertTrue(isinstance(test_map, folium.folium.Map))
 
-    def test_visualize_heatmap(self):
+    def test_visualize_heatmap_time_day(self):
         """
         Passing correct data to visualize_heatmap_with_time returns
         a map
         """
         test_data = integrate_data(COLLISIONS_DATA, 2014, WEATHER_DATA, GEO_PATH)
-        test_map = visualize_heatmap_with_time(test_data, '2018-01-01', '2018-02-01')
+        test_map = visualize_heatmap_by_day(test_data, '2018-01-01', '2018-02-01')
+        self.assertTrue(isinstance(test_map, folium.folium.Map))
+
+    def test_visualize_heatmap_time_hour(self):
+        """
+        Passing correct data to visualize_heatmap_with_time returns
+        a map
+        """
+        test_data = integrate_data(COLLISIONS_DATA, 2014, WEATHER_DATA, GEO_PATH)
+        test_map = visualize_heatmap_by_hour(test_data, \
+                   ['DOWNTOWN', 'CAPITOL HILL'], '2018-01-01', '2018-02-01')
         self.assertTrue(isinstance(test_map, folium.folium.Map))
 
     def test_generate_factor_list(self):
@@ -139,6 +151,14 @@ class VisualizerTest(unittest.TestCase):
         """
         weather_list = ['raining', 'snowing']
         test_widget = weather_selection_widget(weather_list)
+        self.assertIsInstance(test_widget, widgets.widgets.widget_selection.Dropdown)
+
+    def test_district_selection_widget(self):
+        """
+        TO-DO: add docstring
+        """
+        district_list = ['DOWNTOWN', 'UNIVERSITY DISTRICT']
+        test_widget = district_selection_widget(district_list)
         self.assertIsInstance(test_widget, widgets.widgets.widget_selection.Dropdown)
 
     def test_map_by_roadcond_weather(self):

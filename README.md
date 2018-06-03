@@ -147,6 +147,9 @@ feedback through the issues functionality on github.
 
 ### Limitations
 
+- The project can be installed through the setup.py, but it is not available for download pip. 
+- The functionality has been tested extensively on Seattle data, but it has not been tested for any other cities. 
+
 ### Licensing and Acknowledgements
 
 Washington Collisions uses only open source software and is available

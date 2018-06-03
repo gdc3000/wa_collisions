@@ -19,17 +19,14 @@ The project has the following structure:
       |- README.md
       |- wa_collisions/
          |- __init__.py
-         |- wa_collisions.py
-         |- create_indicator_map_visual.py
-         |- interactive_plotting.py
          |- neighborhood_reader.py
          |- read_clean_integrate_data.py
          |- render_stats.py
-         |- version.py
          |- visualizer.py
          |- data/
             |- Collisions_test.csv
             |- Collisions_With_Neighborhoods_test.csv
+            |- Weather_test.csv
             |- Neighborhoods
                 |- Neighborhoods.json
                 |- WGS84
@@ -40,7 +37,12 @@ The project has the following structure:
             |- test_read_clean_integrate.py
             |- test_render_stats.py
             |- test_visualizer.py
+      |- examples/ 
+         |- Example - CausalImpact SpeedLimits.ipynb
+         |- Example - Prepare Data.ipynb 
+         |- Example - Visualize Data.ipynb 
       |- doc/
+         |- Design_Picture.png
          |- Feature_Design_V1.md
          |- Feature_Design_V2.md
          |- Technology_Review_Presentation.pptx
@@ -49,19 +51,19 @@ The project has the following structure:
          |- folium.png
          |- geopandas.png
          |- technology_review_outline.md
+         |- wa_collisions_final_presentation.pptx
+         |- wa_collisions_logo.png
          |- _static/
             |- ...
-      |- setup.py
-      |- .travis.yml
-      |- .mailmap
-      |- appveyor.yml
-      |- LICENSE
       |- .coverage
       |- .coveragerc
       |- .gitignore
-      |- .mailmap
-      |- Makefile
+      |- .pylintrc
+      |- .travis.yml
+      |- LICENSE
       |- requirements.txt
+      |- setup.py
+      
 
 ### Installation
 
@@ -91,9 +93,26 @@ packaging](https://the-hitchhikers-guide-to-packaging.readthedocs.org).
 
 ### Examples
 
+#### Prepare Data
+
+The collisions and neighborhood data were sourced from the [Seattle Open Data](https://data.seattle.gov/).
+The weather data is from the [Iowa State University database of hourly aiport 
+AWOS/ASOS reports](https://mesonet.agron.iastate.edu/request/download.phtml). Download
+instructions are available in [exmples/ Example - Prepare Data.ipynb](https://github.com/gdc3000/wa_collisions/blob/master/examples/Example%20-%20Prepare%20Data.ipynb).  The 
+read_clean_integrate_data module works to prepare the data. The testing scripts 
+use example data provided in wa_collisions/data. Users can use the read_clean_integrate_data
+module to process data from their own city. Although please note, this functionality 
+has not been tested.  
+
+#### Visualize Data 
+
+
+
+#### Causal Impact Analysis 
+
 ### Project History
 
-This project was develoepd in 
+This project was developed in 
 
 ### Limitations
 

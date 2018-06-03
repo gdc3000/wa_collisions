@@ -118,7 +118,10 @@ involved, cyclist involved, fatality, etc.). Additionally, road conditions can b
 weather data to answer questions like: "what is the incidence of ice related collisions
 when the weather is overcast?" 
 
-Add over time example! 
+![example static over time](doc/_images/example_visual_overtime.PNG)
+
+The number of collisions across Seattle can also be visualized over time. This allows the user 
+to understand how the collisions changed across neighborhoods of Seattle. 
 
 #### Causal Impact Analysis 
 
@@ -131,7 +134,16 @@ series models to compare collisions and injuries “control” and “treatment.
 
 ### Project History
 
-This project was developed in 
+This project was developed during DATA 515 Software Design at the Unviersity of
+Washington. In addition to the project goals outlined below, the project aims to create 
+a cohesive python module. During and after project development we welcome any 
+feedback through the issues functionality on github. 
+
+#### Project Goals:
+
+1. Clean and prepare Seattle area collision data for regression and other machine learning projects.
+3. Create a visualization of Seattle area collision data.
+4. Advanced analysis of Seattle area collision data and the change in speed limits.
 
 ### Limitations
 

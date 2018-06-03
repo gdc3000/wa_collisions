@@ -5,10 +5,16 @@ Unittests for visualizer.py
 import unittest
 import pandas as pd
 import folium
+import ipywidgets as widgets
 from wa_collisions.visualizer import visualize_neighborhood
 from wa_collisions.visualizer import visualize_neighborhood_count
 from wa_collisions.visualizer import visualize_neighborhood_mean
 from wa_collisions.visualizer import visualize_heatmap_with_time
+from wa_collisions.visualizer import generate_factor_list
+from wa_collisions.visualizer import roadcond_selection_widget
+from wa_collisions.visualizer import weather_selection_widget
+from wa_collisions.visualizer import map_by_roadcond_weather
+from wa_collisions.visualizer import map_by_roadcond
 from wa_collisions.read_clean_integrate_data import integrate_data
 
 # store the relative path to the Collisions data, Weather data and GeoJson neighborhoods data
@@ -107,10 +113,49 @@ class VisualizerTest(unittest.TestCase):
         Passing correct data to visualize_heatmap_with_time returns
         a map
         """
-        clean_data = integrate_data(COLLISIONS_DATA, 2014, WEATHER_DATA, GEO_PATH)
-        clean_data['date'] = pd.to_datetime(clean_data.date)
-        test_map = visualize_heatmap_with_time(clean_data, '2018-01-01', '2018-02-01')
+        test_data = integrate_data(COLLISIONS_DATA, 2014, WEATHER_DATA, GEO_PATH)
+        test_map = visualize_heatmap_with_time(test_data, '2018-01-01', '2018-02-01')
         self.assertTrue(isinstance(test_map, folium.folium.Map))
+
+    def test_generate_factor_list(self):
+        """
+        TO-DO: add docstring
+        """
+        test_data = integrate_data(COLLISIONS_DATA, 2014, WEATHER_DATA, GEO_PATH)
+        test_dict = generate_factor_list(['weather', 'roadcond', 'collisiontype'], test_data)
+        self.assertIsInstance(test_dict, dict)
+
+    def test_roadcond_selection_widget(self):
+        """
+        TO-DO: add docstring
+        """
+        roadcond_list = ['wet', 'oil']
+        test_widget = roadcond_selection_widget(roadcond_list)
+        self.assertIsInstance(test_widget, widgets.widgets.widget_selection.Dropdown)
+
+    def test_weather_selection_widget(self):
+        """
+        TO-DO: add docstring
+        """
+        weather_list = ['raining', 'snowing']
+        test_widget = weather_selection_widget(weather_list)
+        self.assertIsInstance(test_widget, widgets.widgets.widget_selection.Dropdown)
+
+    def test_map_by_roadcond_weather(self):
+        """
+        TO-DO: add docstring
+        """
+        test_data = integrate_data(COLLISIONS_DATA, 2014, WEATHER_DATA, GEO_PATH)
+        test_map = map_by_roadcond_weather(test_data, GEO_PATH, roadcond='Wet', weather='Raining')
+        self.assertIsInstance(test_map, folium.folium.Map)
+
+    def test_map_by_roadcond(self):
+        """
+        TO-DO: add docstring
+        """
+        test_data = integrate_data(COLLISIONS_DATA, 2014, WEATHER_DATA, GEO_PATH)
+        test_map = map_by_roadcond(test_data, GEO_PATH, roadcond='Dry')
+        self.assertIsInstance(test_map, folium.folium.Map)
 
 if __name__ == '__main__':
     unittest.main()

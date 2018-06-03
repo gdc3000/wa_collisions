@@ -29,8 +29,7 @@ def read_collision_data(file_path):
     Raises:
         ValueError: raises this error when the file path does not exist
     """
-    # check that the file exists
-    # adapted from 07-Exceptions
+
     if not os.path.exists(file_path):
         raise ValueError("file doesn't exist: " + str(file_path))
 
@@ -58,7 +57,6 @@ def read_weather_data(file_path):
         ValueError: raises this error when the file path does not exist
     """
     # check that the file exists
-    # adapted from 07-Exceptions
     if not os.path.exists(file_path):
         raise ValueError("file doesn't exist: " + str(file_path))
 
@@ -86,18 +84,8 @@ def clean_collision_data(collision_data, include_since_year=None):
     Raises:
         ValueError: raises this error when the user-input year is not an integer
     """
-    # change the dates to date time and extract year, month, day, hour
-    # for joining with weather data later
-    # edited this because dt.year has a Future warning
-    # edited so that we use the ['new_column'] instead of .new_column
-    # for creating a new column
-    # reference:
-    # https://pandas.pydata.org/pandas-docs/stable/
-    # indexing.html#attribute-access
 
     # convert the column names to lower case
-    # in between downloading the data and submitting the project, the file
-    # changed
     collision_data.columns = [c.lower() for c in collision_data.columns]
     collision_data = collision_data.rename(columns={'x':'X', 'y':'Y'})
 
@@ -124,9 +112,6 @@ def clean_collision_data(collision_data, include_since_year=None):
     if 'object_id' in collision_data.columns:
         columns = columns + ['object_id']
 
-    # recieving a warning about using .loc
-    #collision_data.loc[(-collision_data.X.isna()) & (-collision_data.Y.isna() &
-    # (collision_data.year >= 2014)), columns]
     # drop the na
     collision_data = collision_data.dropna(axis=0, how='any', subset=['X', 'Y'])
     if include_since_year is not None:
@@ -148,8 +133,6 @@ def clean_collision_data(collision_data, include_since_year=None):
     time_mask = (collision_data.hour != 0) \
                 | (collision_data.minute != 0) \
                 | (collision_data.second != 0)
-    #collision_data = collision_data[time_mask]
-    #collision_data.reset_index(inplace=True)
     collision_data['ind_valid_time'] = time_mask
 
     return collision_data

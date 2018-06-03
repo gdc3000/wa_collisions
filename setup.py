@@ -8,22 +8,7 @@ Adaped from shablona template.
 """
 
 
-<<<<<<< HEAD
-import os
-<<<<<<< HEAD
-from setuptools import setup, find_packages
-PACKAGES = find_packages()
-
-# Get version and release info, which is all stored in
-# vehicle_collisions/version.py
-#VER_FILE = os.path.join('wa_collisions/', 'version.py')
-#with open(VER_FILE) as f:
-#    exec(f.read())
-=======
-=======
->>>>>>> ddebf317cd4e060c592255de780a799260f15e49
 from setuptools import setup
->>>>>>> 340dfdd116364338350e0b2c26047dd4ee07f52d
 
 # used format from https://docs.python.org/2/distutils/setupscript.html
 
@@ -69,53 +54,9 @@ Copyright (c) 2018, Libby Montague, Fei Wang, Geoff Coyner, Salik Warsi.
 
 """
 
-<<<<<<< HEAD
-PACKAGES = ['wa_collisions.interactive_plotting',
-            'wa_collisions.neighborhood_reader',
-            'wa_collisions.read_clean_integrate_data',
-            'wa_collisions.render_stats',
-            'wa_collisons.visualizer']
-
-# from the requirements.txt
-REQUIRES = ['branca==0.3.0',
-            'certifi==2018.4.16',
-            'chardet==3.0.4',
-            'click==6.7',
-            'click-plugins==1.0.3',
-            'cligj==0.4.0',
-            'cycler==0.10.0',
-            'descartes==1.1.0',
-            'Fiona==1.7.11.post2',
-            'folium==0.5.0',
-            'geopandas==0.3.0',
-            'idna==2.6',
-            'Jinja2==2.10',
-            'kiwisolver==1.0.1',
-            'MarkupSafe==1.0',
-            'matplotlib==2.2.2',
-            'munch==2.3.2',
-            'numpy==1.14.3',
-            'pandas==0.23.0',
-            'pyparsing==2.2.0',
-            'pyproj==1.9.5.1',
-            'python-dateutil==2.7.3',
-            'pytz==2018.4',
-            'requests==2.18.4',
-            'Shapely==1.6.4.post1',
-            'six==1.11.0',
-            'urllib3==1.22'
-           ]
-
-OPTS = dict(name='WA Collisions',
-=======
 PACKAGES = ['wa_collisions']
 
-<<<<<<< HEAD
-opts = dict(name='wa_collisions',
->>>>>>> 340dfdd116364338350e0b2c26047dd4ee07f52d
-=======
 OPTS = dict(name='wa_collisions',
->>>>>>> ddebf317cd4e060c592255de780a799260f15e49
             maintainer='Libby Montague, Fei Wang, Geoff Coyner, Salik Warsi',
             maintainer_email='',
             description=DESCRIPTION,
@@ -127,17 +68,8 @@ OPTS = dict(name='wa_collisions',
             author='Libby Montague, Fei Wang, Geoff Coyner, Salik Warsi',
             author_email='',
             platforms='Microsoft Windows',
-<<<<<<< HEAD
-            version='1.0',
-            packages=PACKAGES,
-            package_data='data/*',
-            #install_requires=REQUIRES,
-            #requires=REQUIRES
-            )
-=======
             version='==1.0',
             packages=PACKAGES)
->>>>>>> 340dfdd116364338350e0b2c26047dd4ee07f52d
 
 
 if __name__ == '__main__':

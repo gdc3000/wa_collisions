@@ -110,6 +110,10 @@ has not been tested.
 
 #### Visualize Data 
 
+Since this is an interactive notebook, jupyter needs to be run with an additional parameter:
+
+`jupyter notebook --NotebookApp.iopub_data_rate_limit=10000000000`
+
 ![example choropleth visual](doc/_images/example_visual_choropleth.PNG)
 
 Visualize the incidence of collisions around Seattle by neighborhood. The collisions can be

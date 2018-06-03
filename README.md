@@ -11,6 +11,8 @@ not speed limits changing in central Seattle in October 2016 had a significant
 impact on the number of collisions, the number of speeding related collisions
 or collision related injuries.
 
+![wa_collisions logo](wa_collisions/doc/_images/wa_collisions_logo.png)
+
 ### Organization of the  project
 
 The project has the following structure:
@@ -42,19 +44,16 @@ The project has the following structure:
          |- Example - Prepare Data.ipynb 
          |- Example - Visualize Data.ipynb 
       |- doc/
-         |- Design_Picture.png
          |- Feature_Design_V1.md
          |- Feature_Design_V2.md
          |- Technology_Review_Presentation.pptx
-         |- dash.png
          |- datasets_V1.md
-         |- folium.png
-         |- geopandas.png
          |- technology_review_outline.md
          |- wa_collisions_final_presentation.pptx
-         |- wa_collisions_logo.png
          |- _static/
             |- ...
+         |- _images/
+            |- ...  
       |- .coverage
       |- .coveragerc
       |- .gitignore
@@ -71,6 +70,11 @@ To install the package run the following:
     python setup.py install
 Then install the required dependancies:
     pip install -r requirements.txt
+Install the [Causal Impact](https://github.com/jamalsenouci/causalimpact) package which is not available on pip. 
+    pip install git+http://github.com/jamalsenouci/causalimpact.git
+
+
+NEED TO FIGURE OUT HOW TO DO! 
 
 For installation and distribution we will use the python standard
 library `distutils` module. This module uses a `setup.py` file to
@@ -98,7 +102,7 @@ packaging](https://the-hitchhikers-guide-to-packaging.readthedocs.org).
 The collisions and neighborhood data were sourced from the [Seattle Open Data](https://data.seattle.gov/).
 The weather data is from the [Iowa State University database of hourly aiport 
 AWOS/ASOS reports](https://mesonet.agron.iastate.edu/request/download.phtml). Download
-instructions are available in [exmples/ Example - Prepare Data.ipynb](https://github.com/gdc3000/wa_collisions/blob/master/examples/Example%20-%20Prepare%20Data.ipynb).  The 
+instructions are available in [Example - Prepare Data](examples/Example%20-%20Prepare%20Data.ipynb).  The 
 read_clean_integrate_data module works to prepare the data. The testing scripts 
 use example data provided in wa_collisions/data. Users can use the read_clean_integrate_data
 module to process data from their own city. Although please note, this functionality 
@@ -106,9 +110,24 @@ has not been tested.
 
 #### Visualize Data 
 
+![example choropleth visual](wa_collisions/doc/_images/example_visual_choropleth.PNG)
 
+Visualize the incidence of collisions around Seattle by neighborhood. The collisions can be
+visualized by categorical variables (road condition) or indicator variables (pedestrian 
+involved, cyclist involved, fatality, etc.). Additionally, road conditions can be compared with 
+weather data to answer questions like: "what is the incidence of ice related collisions
+when the weather is overcast?" 
+
+Add over time example! 
 
 #### Causal Impact Analysis 
+
+![example speed limit graph](wa_collisions/doc/_images/speed_limit_graph.png)
+
+We investigated whethere there was an effect of changing speed limits on collision rate. 
+The example notebook groups neighborhoods into those where speed limits changed in 2016 
+and those where they did not. We used [Causal Impact](https://github.com/jamalsenouci/causalimpact) package and Bayesian structural time 
+series models to compare collisions and injuries “control” and “treatment.”
 
 ### Project History
 

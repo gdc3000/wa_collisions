@@ -20,3 +20,5 @@
 
 5. Check the unittests 
     python -m unittest
+
+6. Confirm that the [jupyter notebook examples](wa_collisions/examples) work 

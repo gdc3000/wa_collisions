@@ -11,7 +11,7 @@ not speed limits changing in central Seattle in October 2016 had a significant
 impact on the number of collisions, the number of speeding related collisions
 or collision related injuries.
 
-![wa_collisions logo](wa_collisions/doc/_images/wa_collisions_logo.png)
+![wa_collisions logo](doc/_images/wa_collisions_logo.png)
 
 ### Organization of the  project
 
@@ -110,7 +110,7 @@ has not been tested.
 
 #### Visualize Data 
 
-![example choropleth visual](wa_collisions/doc/_images/example_visual_choropleth.PNG)
+![example choropleth visual](doc/_images/example_visual_choropleth.PNG)
 
 Visualize the incidence of collisions around Seattle by neighborhood. The collisions can be
 visualized by categorical variables (road condition) or indicator variables (pedestrian 
@@ -122,7 +122,7 @@ Add over time example!
 
 #### Causal Impact Analysis 
 
-![example speed limit graph](wa_collisions/doc/_images/speed_limit_graph.png)
+![example speed limit graph](doc/_images/speed_limit_graph.png)
 
 We investigated whethere there was an effect of changing speed limits on collision rate. 
 The example notebook groups neighborhoods into those where speed limits changed in 2016 

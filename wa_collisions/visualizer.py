@@ -9,12 +9,12 @@ import pandas as pd
 import numpy as np
 import folium
 import folium.plugins as plugins
+import ipywidgets as widgets
 
 MAP_JSON_DEFAULT = "wa_collisions/data/Neighborhoods/Neighborhoods.json"
 MAP_LOCATION_START = [47.6199206, -122.3230027]
 MAP_ZOOM = 11
 ERROR = 0.000001
-
 
 def visualize_neighborhood(neighborhood_data, mapping_value, path=None):
     """
@@ -137,8 +137,6 @@ def visualize_heatmap_with_time(data, start_date='2001-01-01', end_date='2020-01
 
     dateMask = ((df_collision['date'] >= np.datetime64(start_date)) &
                 (df_collision['date'] <= np.datetime64(end_date)))
-    # neighborhoodMask = (df_collision.object_id == 80)
-    # index = (dateMask & neighborhoodMask)
     index = dateMask
     data_subset = df_collision.reindex(index[index].index.values)
     dates = sorted(data_subset.date.value_counts().index.values)
@@ -146,8 +144,6 @@ def visualize_heatmap_with_time(data, start_date='2001-01-01', end_date='2020-01
     data = list()
     for date in dates:
         dateMask = df_collision['date'] == date
-       # neighborhoodMask = (df_collision.object_id == 80)
-       # index = (dateMask & neighborhoodMask)
         index = dateMask
         coordinates = df_collision.reindex(index[index].index.values)[['Y', 'X']].values
         NewData = coordinates * np.array([[1, 1]])
@@ -168,3 +164,67 @@ def visualize_heatmap_with_time(data, start_date='2001-01-01', end_date='2020-01
     hm.add_to(m)
 
     return m
+
+def generate_factor_list(factor_list, df):
+    """
+    TO-DO: add docstring
+    """
+
+    factors = dict()
+    for _, key in enumerate(factor_list):
+        factors[key] = df[key].value_counts().index.values
+    return factors
+
+def roadcond_selection_widget(roadcond_list):
+    """
+    TO-DO: add docstring
+    """
+    style = {'description_width': 'initial'}
+    roadcond_selection = widgets.Dropdown(
+        options=roadcond_list,
+        value=roadcond_list[0],
+        description='Road Condition:',
+        style=style,
+        disabled=False
+    )
+    return roadcond_selection
+
+def weather_selection_widget(weather_list):
+    """
+    TO-DO: add docstring
+    """
+    style = {'description_width': 'initial'}
+    weather_selection = widgets.Dropdown(
+        options=weather_list,
+        value=weather_list[0],
+        description='Weather Type:',
+        style=style,
+        disabled=False
+    )
+    return weather_selection
+
+
+def map_by_roadcond_weather(df, map_json_path, roadcond='', weather=''):
+    """
+    TO-DO: add docstring
+    """
+    columns = ['X', 'Y', 'roadcond', 'weather', 'object_id']
+    mask = (df.roadcond == roadcond) & (df.weather == weather)
+    df_collision = df.loc[mask, columns].dropna(axis=0, how='any')
+    if df_collision.shape[0] == 0:
+        print("No matched collision")
+        return None
+    return visualize_neighborhood_count(df_collision, path=map_json_path)
+
+
+def map_by_roadcond(df, map_json_path, roadcond=''):
+    """
+    TO-DO: add docstring
+    """
+    columns = ['X', 'Y', 'roadcond', 'object_id']
+    mask = (df.roadcond == roadcond)
+    df_collision = df.loc[mask, columns].dropna(axis=0, how='any')
+    if df_collision.shape[0] == 0:
+        print("No matched collision")
+        return None
+    return visualize_neighborhood_count(df_collision, path=map_json_path)

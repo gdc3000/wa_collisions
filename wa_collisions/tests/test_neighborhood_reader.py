@@ -19,7 +19,7 @@ class NeighborhoodReaderTest(unittest.TestCase):
         Tests that wrong location returns -1
         """
         neighborhoods = pull_neighborhoods_file()
-        object_id = get_neighborhood(0, 0, neighborhoods)
+        object_id, _, _ = get_neighborhood(0, 0, neighborhoods)
         self.assertTrue(object_id == -1)
 
     def test_right_neighborhood(self):
@@ -28,7 +28,7 @@ class NeighborhoodReaderTest(unittest.TestCase):
         """
         neighborhoods = pull_neighborhoods_file()
         # Location in Broadway neighborhood
-        object_id = get_neighborhood(
+        object_id, _, _ = get_neighborhood(
             -122.3230027, 47.6199206, neighborhoods)
         self.assertTrue(object_id == 100)
 
@@ -77,7 +77,7 @@ class NeighborhoodReaderTest(unittest.TestCase):
         test_df = pd.DataFrame(data=test_data)
         neighborhoods = assign_neighborhood(test_df)
         self.assertTrue(len(neighborhoods) == 2)
-        self.assertTrue(neighborhoods.columns.size == 3)
+        self.assertTrue(neighborhoods.columns.size == 5)
         self.assertTrue("X" in neighborhoods.columns)
         self.assertTrue("Y" in neighborhoods.columns)
         self.assertTrue("object_id" in neighborhoods.columns)

@@ -13,10 +13,10 @@ from shapely.geometry import Point
 
 def get_neighborhood(latitude, longitude, neighborhoods):
     """
-    Returns the Object ID for the Seattle neighborhood for a
+    Returns the Object ID, S_HOOD and L_HOOD for the Seattle neighborhood for a
     given latitude and longitude.
 
-    Returns -1 if the location is not in any Seattle
+    Returns -1, None, None if the location is not in any Seattle
     neighborhood
 
     Args:
@@ -29,6 +29,11 @@ def get_neighborhood(latitude, longitude, neighborhoods):
         neighborhood. object_id varies from 1 to 119
         (inclusive). Returns -1 if the location is not
         in any Seattle neighborhood.
+        s_hood (string): small neighborhood name of the
+        corresponding object id
+        l_hood (string): large neighborhood name of the
+        corresponding object id
+
 
     Raises:
         ValueError: if the latitude or longitude can't be
@@ -39,15 +44,18 @@ def get_neighborhood(latitude, longitude, neighborhoods):
     location_point = Point(float(latitude), float(longitude))
     for i in range(0, neighborhood_count):
         if neighborhoods['geometry'][i].contains(location_point):
-            return neighborhoods['OBJECTID'][i]
-    return -1
+            return neighborhoods['OBJECTID'][i], \
+                   neighborhoods['S_HOOD'][i], neighborhoods['L_HOOD'][i]
+    return -1, None, None
 
 
 def assign_neighborhood(dataframe, path=None):
     """
-    Returns the provided dataframe with an additional column
-    object_id which contains the object id of the seattle
-    neighborhood of the location in the dataframe.
+    Returns the provided dataframe with additional columns
+    object_id, which contains the object id of the seattle
+    neighborhood of the location in the dataframe, and s_hood
+    which contains the small neighborhood name and l_hood which
+    contains the large neighborhood name
 
     The dataframe must have columns X and Y for the location.
 
@@ -75,11 +83,15 @@ def assign_neighborhood(dataframe, path=None):
 
     neighborhoods = pull_neighborhoods_file(path)
     object_ids = np.zeros(len(dataframe))
+    s_hoods = ["" for x in range(len(dataframe))]
+    l_hoods = ["" for x in range(len(dataframe))]
     for i, _ in enumerate(object_ids):
-        object_ids[i] = get_neighborhood(
+        object_ids[i], s_hoods[i], l_hoods[i] = get_neighborhood(
             dataframe['X'][i], dataframe['Y'][i], neighborhoods)
 
     dataframe['object_id'] = object_ids
+    dataframe['s_hood'] = s_hoods
+    dataframe['l_hood'] = l_hoods
     return dataframe
 
 def pull_neighborhoods_file(path=None):

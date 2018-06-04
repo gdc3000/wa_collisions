@@ -7,7 +7,7 @@ import pandas as pd
 from wa_collisions.neighborhood_reader import assign_neighborhood
 from wa_collisions.neighborhood_reader import get_neighborhood
 from wa_collisions.neighborhood_reader import pull_neighborhoods_file
-from wa_collisions.neighborhood_reader import _find_neighborhood_count 
+from wa_collisions.neighborhood_reader import _find_neighborhood_count
 
 # store the relative path to the GeoJson neighborhoods data
 GEO_PATH = "wa_collisions/data/Neighborhoods/Neighborhoods.json"

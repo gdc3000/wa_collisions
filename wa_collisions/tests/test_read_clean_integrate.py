@@ -128,17 +128,17 @@ class IntegrateDataTest(unittest.TestCase):
         self.assertTrue('object_id' in clean_data.columns)
         self.assertTrue('ind_person' in clean_data.columns)
 
-        # test if a value error is raised when passing an invalid path for collision data 
+        # test if a value error is raised when passing an invalid path for collision data
         with self.assertRaises(ValueError):
             clean_data = read_clean_integrate_data.integrate_data(
                 '', 2014, WEATHER_DATA, GEO_PATH)
 
-        # test if a value error is raised when passing an invalid path for weather data 
+        # test if a value error is raised when passing an invalid path for weather data
         with self.assertRaises(ValueError):
             clean_data = read_clean_integrate_data.integrate_data(
                 COLLISIONS_DATA, 2014, '', GEO_PATH)
 
-        # test if a value error is raised when passing an invalid path for geo_json data 
+        # test if a value error is raised when passing an invalid path for geo_json data
         with self.assertRaises(ValueError):
             clean_data = read_clean_integrate_data.integrate_data(
                 COLLISIONS_DATA, 2014, WEATHER_DATA, '')

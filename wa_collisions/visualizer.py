@@ -129,7 +129,7 @@ def visualize_heatmap_by_day(data, districts, start_date='2018-01-01', end_date=
         the heatmap produced
 
     Raises:
-        ValueError: if timeframe user selected is invalid 
+        ValueError: if timeframe user selected is invalid
     """
 
     columns = ['Y', 'X', 'date', 'object_id', 'l_hood']
@@ -297,8 +297,7 @@ def map_by_roadcond_weather(df, map_json_path, roadcond='', weather=''):
     if df_collision.shape[0] == 0:
         print("No matched collision")
         return None
-    else:
-        return visualize_neighborhood_count(df_collision, path=map_json_path)
+    return visualize_neighborhood_count(df_collision, path=map_json_path)
 
 
 def map_by_roadcond(df, map_json_path, roadcond=''):
@@ -311,5 +310,4 @@ def map_by_roadcond(df, map_json_path, roadcond=''):
     if df_collision.shape[0] == 0:
         print("No matched collision")
         return None
-    else:
-        return visualize_neighborhood_count(df_collision, path=map_json_path)
+    return visualize_neighborhood_count(df_collision, path=map_json_path)

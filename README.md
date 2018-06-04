@@ -66,13 +66,14 @@ The project has the following structure:
 
 ### Installation
 
-To install the package run the following:
-    python setup.py install
-Then install the required dependancies:
-    pip install -r requirements.txt
-Install the [Causal Impact](https://github.com/jamalsenouci/causalimpact) package which is not available on pip. 
-    pip install git+http://github.com/jamalsenouci/causalimpact.git
+* To install the package run the following:
+    * python setup.py install
+* Then install the required dependancies:
+    * pip install -r requirements.txt
+* Install the [Causal Impact](https://github.com/jamalsenouci/causalimpact) package which is not available on pip. 
+    * pip install git+http://github.com/jamalsenouci/causalimpact.git
 
+There are additional installation and testing instructions provided in [doc folder](doc/test_package_installation_instructions.md). 
 
 NEED TO FIGURE OUT HOW TO DO! 
 
@@ -113,6 +114,8 @@ has not been tested.
 Since this is an interactive notebook, jupyter needs to be run with an additional parameter:
 
 `jupyter notebook --NotebookApp.iopub_data_rate_limit=10000000000`
+
+Additionally, the interactive map visuals will only work in Mozilla Firefox. 
 
 ![example choropleth visual](doc/_images/example_visual_choropleth.PNG)
 

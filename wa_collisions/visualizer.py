@@ -172,7 +172,7 @@ def visualize_heatmap_by_day(data, district, start_date='2018-01-01', end_date='
 
     return m
 
-def visualize_heatmap_by_hour(data, district, start_date='2018-01-01', end_date='2018-12-31'):
+def visualize_heatmap_by_hour(data, districts, start_date='2018-01-01', end_date='2018-12-31'):
     """
     TO-DO: add docstring
     """
@@ -182,10 +182,10 @@ def visualize_heatmap_by_hour(data, district, start_date='2018-01-01', end_date=
 
     dateMask = ((df_collision['date'] >= np.datetime64(start_date)) &
                 (df_collision['date'] <= np.datetime64(end_date)))
-    if district == 'ALL':
+    if districts == 'ALL':
         index = dateMask
     else:
-        index = dateMask & (df_collision['l_hood'].isin(district))
+        index = dateMask & (df_collision['l_hood'].isin(districts))
     data = df_collision.reindex(index[index].index.values)
 
     hours = sorted(data.hour.value_counts().index.values)
@@ -193,10 +193,10 @@ def visualize_heatmap_by_hour(data, district, start_date='2018-01-01', end_date=
     data = list()
     for hour in hours:
         timeMask = df_collision['hour'] == hour
-        if district == 'ALL':
+        if districts == 'ALL':
             index = timeMask
         else:
-            index = timeMask & (df_collision['l_hood'].isin(district))
+            index = timeMask & (df_collision['l_hood'].isin(districts))
         coordinates = df_collision.reindex(index[index].index.values)[['Y', 'X']].values
         coordinates = coordinates * np.array([[1, 1]])
         data.append(coordinates.tolist())

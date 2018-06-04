@@ -126,7 +126,7 @@ feedback through the issues functionality on github.
 #### Project Goals:
 
 1. Clean and prepare Seattle area collision data for regression and other machine learning projects.
-3. Create a visualization of Seattle area collision data.
+3. Create visualizations to help users explore the Seattle area collision data.
 4. Advanced analysis of Seattle area collision data and the change in speed limits.
 
 ### Limitations

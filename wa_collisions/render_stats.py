@@ -19,7 +19,8 @@ VALID_RESAMPLE_TYPES = ['M', 'W', 'D']
 # added in because of change to read_clean_integrate_data
 GEO_PATH = "wa_collisions/data/Neighborhoods/Neighborhoods.json"
 
-def read_collision_with_neighborhoods(file_path, contains_neighborhood=False):
+def read_collision_with_neighborhoods(file_path, contains_neighborhood=False
+                                      , geo_path_root=''):
     """
     Read in the collision dataframe.
 
@@ -32,6 +33,8 @@ def read_collision_with_neighborhoods(file_path, contains_neighborhood=False):
             object_ids is available at the file path, then this arg should
             be set to true. This will reduce the processing time
             significantly.
+        geo_path_root: allows user to add a prefix to the default path
+            for the neighborhood shape file GEO_PATH.
 
     Returns:
         dataframe of data from the collision data file and containing
@@ -39,7 +42,9 @@ def read_collision_with_neighborhoods(file_path, contains_neighborhood=False):
             neighbhorhood the collision occurred in.
 
     Raises:
-        ValueError: raises this error when the file path does not exist
+        ValueError: raises this error when the file path does not exist.
+        ValueError: raises this error when the geo_path_root variable
+            is not of type string.
     """
 
     data = read_clean_integrate_data.read_collision_data(file_path)
@@ -49,8 +54,13 @@ def read_collision_with_neighborhoods(file_path, contains_neighborhood=False):
             a field called 'object_id' which is the id for the \
             neighborhood.".format(file_path))
 
+    if not isinstance(geo_path_root, str):
+        raise ValueError("geo_path_root must be either None or \
+                         of type string.")
+
     if not contains_neighborhood:
-        data = read_clean_integrate_data.clean_collisions_neighborhoods(data, GEO_PATH)
+        geo_path = geo_path_root + GEO_PATH
+        data = read_clean_integrate_data.clean_collisions_neighborhoods(data, geo_path)
     else:
         data = read_clean_integrate_data.clean_collision_data(data)
 

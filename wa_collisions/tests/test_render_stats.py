@@ -64,6 +64,19 @@ class RenderStatsTest(unittest.TestCase):
         self.assertTrue('object_id' in frame.columns)
         self.assertTrue(frame.shape[0] > 10)
 
+    def test_geo_path_root_value_error(self):
+        """
+        Tests that read_collision_with_neighborhoods returns a value error if
+            geo_path_root arg is not of type string.
+        """
+        with self.assertRaises(ValueError):
+            render_stats.read_collision_with_neighborhoods(
+                FILE_PATH, contains_neighborhood=False, geo_path_root=1)
+
+        with self.assertRaises(ValueError):
+            render_stats.read_collision_with_neighborhoods(
+                FILE_PATH, contains_neighborhood=False, geo_path_root=None)
+
     def test_value_errors(self):
         """
         Tests ValueError scenarios in pivot_by_treatment_value.

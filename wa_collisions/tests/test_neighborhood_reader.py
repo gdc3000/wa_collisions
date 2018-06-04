@@ -7,6 +7,10 @@ import pandas as pd
 from wa_collisions.neighborhood_reader import assign_neighborhood
 from wa_collisions.neighborhood_reader import get_neighborhood
 from wa_collisions.neighborhood_reader import pull_neighborhoods_file
+from wa_collisions.neighborhood_reader import _find_neighborhood_count 
+
+# store the relative path to the GeoJson neighborhoods data
+GEO_PATH = "wa_collisions/data/Neighborhoods/Neighborhoods.json"
 
 # Define a class in which the tests will run
 class NeighborhoodReaderTest(unittest.TestCase):
@@ -83,6 +87,14 @@ class NeighborhoodReaderTest(unittest.TestCase):
         self.assertTrue("object_id" in neighborhoods.columns)
         self.assertTrue(neighborhoods["object_id"][0] == -1)
         self.assertTrue(neighborhoods["object_id"][1] == 100)
+
+    def test_find_neighborhood_count(self):
+        """
+        Test to see if the find_neighborhood_count function
+        returns the correct number of neighborhoods.
+        """
+        counts = _find_neighborhood_count(None, GEO_PATH)
+        self.assertTrue(counts == 119)
 
 if __name__ == '__main__':
     unittest.main()

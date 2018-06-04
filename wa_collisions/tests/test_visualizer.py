@@ -116,8 +116,23 @@ class VisualizerTest(unittest.TestCase):
         a map
         """
         test_data = integrate_data(COLLISIONS_DATA, 2014, WEATHER_DATA, GEO_PATH)
-        test_map = visualize_heatmap_by_day(test_data, '2018-01-01', '2018-02-01')
+
+        # test when there is no matching for the given timeframe
+        test_map = visualize_heatmap_by_day(test_data, 'ALL', '2018-01-01', '2018-02-01')
+        self.assertIsNone(test_map)
+        test_map = visualize_heatmap_by_day(test_data, ['CAPITOL HILL', 'DOWNTOWN'], '2018-01-01', '2018-02-01')
+        self.assertIsNone(test_map)
+
+        # test when there is matched data for the given timeframe
+        test_map = visualize_heatmap_by_day(test_data, 'ALL', '2016-01-01', '2018-02-01')
         self.assertTrue(isinstance(test_map, folium.folium.Map))
+        test_map = visualize_heatmap_by_day(test_data, ['CAPITOL HILL', 'DOWNTOWN'], '2016-01-01', '2018-02-01')
+        self.assertTrue(isinstance(test_map, folium.folium.Map))
+
+        # test if a value error is raised when passing an invalid timeframe 
+        with self.assertRaises(ValueError):
+            test_map = visualize_heatmap_by_day(test_data, \
+                    'ALL', '2018-01-01', '2017-02-01')
 
     def test_visualize_heatmap_time_hour(self):
         """
@@ -125,9 +140,27 @@ class VisualizerTest(unittest.TestCase):
         a map
         """
         test_data = integrate_data(COLLISIONS_DATA, 2014, WEATHER_DATA, GEO_PATH)
+
+        # test when there is no matching for the given timeframe
         test_map = visualize_heatmap_by_hour(test_data, \
                    ['DOWNTOWN', 'CAPITOL HILL'], '2018-01-01', '2018-02-01')
+        self.assertIsNone(test_map)
+        test_map = visualize_heatmap_by_hour(test_data, \
+                   'ALL', '2018-01-01', '2018-02-01')
+        self.assertIsNone(test_map)
+
+        # test when there is matched data for the given timeframe
+        test_map = visualize_heatmap_by_hour(test_data, \
+                   ['DOWNTOWN', 'CAPITOL HILL'], '2016-01-01', '2018-02-01')
         self.assertTrue(isinstance(test_map, folium.folium.Map))
+        test_map = visualize_heatmap_by_hour(test_data, \
+                   'ALL', '2016-01-01', '2018-02-01')
+        self.assertTrue(isinstance(test_map, folium.folium.Map))
+
+        # test if a value error is raised when passing an invalid timeframe 
+        with self.assertRaises(ValueError):
+            test_map = visualize_heatmap_by_hour(test_data, \
+                    'ALL', '2018-01-01', '2017-02-01')
 
     def test_generate_factor_list(self):
         """
@@ -168,6 +201,9 @@ class VisualizerTest(unittest.TestCase):
         test_data = integrate_data(COLLISIONS_DATA, 2014, WEATHER_DATA, GEO_PATH)
         test_map = map_by_roadcond_weather(test_data, GEO_PATH, roadcond='Wet', weather='Raining')
         self.assertIsInstance(test_map, folium.folium.Map)
+        test_map = map_by_roadcond_weather(test_data[(test_data.roadcond != 'Dry') \
+        | (test_data.weather != 'Raining')], GEO_PATH, 'Dry', 'Raining')
+        self.assertIsNone(test_map)
 
     def test_map_by_roadcond(self):
         """
@@ -176,6 +212,8 @@ class VisualizerTest(unittest.TestCase):
         test_data = integrate_data(COLLISIONS_DATA, 2014, WEATHER_DATA, GEO_PATH)
         test_map = map_by_roadcond(test_data, GEO_PATH, roadcond='Dry')
         self.assertIsInstance(test_map, folium.folium.Map)
+        test_map = map_by_roadcond(test_data[test_data.roadcond != 'Dry'], GEO_PATH, 'Dry')
+        self.assertIsNone(test_map)
 
 if __name__ == '__main__':
     unittest.main()

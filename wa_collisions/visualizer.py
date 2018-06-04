@@ -111,7 +111,7 @@ def visualize_neighborhood_mean(neighborhood_data, value, path=None):
     return visualize_neighborhood(counts_per_neighborhood, 'mean', path)
 
 
-def visualize_heatmap_by_day(data, district, start_date='2018-01-01', end_date='2018-12-31'):
+def visualize_heatmap_by_day(data, districts, start_date='2018-01-01', end_date='2018-12-31'):
     """
     Visualizes the mean value for each neighborhood.
 
@@ -129,29 +129,37 @@ def visualize_heatmap_by_day(data, district, start_date='2018-01-01', end_date='
         the heatmap produced
 
     Raises:
-        ValueError: if neighborhood_data doesn't have the column
-            'object_id' denoting neighborhood or the column value.
+        ValueError: if timeframe user selected is invalid 
     """
 
     columns = ['Y', 'X', 'date', 'object_id', 'l_hood']
     df_collision = data.reindex(columns=columns).dropna(axis=0, how='any')
 
+    if np.datetime64(start_date) > np.datetime64(end_date):
+        raise ValueError("Invalid timeframe input. Please enter again.")
+
     timeMask = ((df_collision['date'] >= np.datetime64(start_date)) &
                 (df_collision['date'] <= np.datetime64(end_date)))
-    if district == 'ALL':
+
+    if districts == 'ALL':
         index = timeMask
     else:
-        index = timeMask & (df_collision['l_hood'] == district)
+        index = timeMask & (df_collision['l_hood'].isin(districts))
+
+    if sum(index) == 0:
+        print('No matched collision.')
+        return None
+
     data = df_collision.reindex(index[index].index.values)
     dates = sorted(data.date.value_counts().index.values)
 
     data = list()
     for date in dates:
         timeMask = df_collision['date'] == date
-        if district == 'ALL':
+        if districts == 'ALL':
             index = timeMask
         else:
-            index = timeMask & (df_collision['l_hood'] == district)
+            index = timeMask & (df_collision['l_hood'].isin(districts))
         coordinates = df_collision.reindex(index[index].index.values)[['Y', 'X']].values
         coordinates = coordinates * np.array([[1, 1]])
         data.append(coordinates.tolist())
@@ -180,12 +188,20 @@ def visualize_heatmap_by_hour(data, districts, start_date='2018-01-01', end_date
     columns = ['Y', 'X', 'date', 'object_id', 's_hood', 'l_hood', 'hour']
     df_collision = data.reindex(columns=columns).dropna(axis=0, how='any')
 
-    dateMask = ((df_collision['date'] >= np.datetime64(start_date)) &
+    if np.datetime64(start_date) > np.datetime64(end_date):
+        raise ValueError("Invalid timeframe input. Please enter again.")
+
+    timeMask = ((df_collision['date'] >= np.datetime64(start_date)) &
                 (df_collision['date'] <= np.datetime64(end_date)))
     if districts == 'ALL':
-        index = dateMask
+        index = timeMask
     else:
-        index = dateMask & (df_collision['l_hood'].isin(districts))
+        index = timeMask & (df_collision['l_hood'].isin(districts))
+
+    if sum(index) == 0:
+        print('No matched collision.')
+        return None
+
     data = df_collision.reindex(index[index].index.values)
 
     hours = sorted(data.hour.value_counts().index.values)
@@ -281,7 +297,8 @@ def map_by_roadcond_weather(df, map_json_path, roadcond='', weather=''):
     if df_collision.shape[0] == 0:
         print("No matched collision")
         return None
-    return visualize_neighborhood_count(df_collision, path=map_json_path)
+    else:
+        return visualize_neighborhood_count(df_collision, path=map_json_path)
 
 
 def map_by_roadcond(df, map_json_path, roadcond=''):
@@ -294,4 +311,5 @@ def map_by_roadcond(df, map_json_path, roadcond=''):
     if df_collision.shape[0] == 0:
         print("No matched collision")
         return None
-    return visualize_neighborhood_count(df_collision, path=map_json_path)
+    else:
+        return visualize_neighborhood_count(df_collision, path=map_json_path)

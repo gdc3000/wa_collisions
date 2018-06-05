@@ -9,7 +9,7 @@
 ## Use Cases:
 
 - For each use case, we plan to create on jypter notebook demo.
-- The demo will call the components which will by python method(s) that are within our vehicle_collisions/
+- The demo will call the components which will by python method(s) that are within our wa_collisions/
 
 ### Where do more accidents occur in Seattle?
 

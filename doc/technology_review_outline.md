@@ -53,8 +53,10 @@
 
 ## [Python Folium](http://python-visualization.github.io/folium/)
 
-## [Bokeh]
+## [Bokeh](https://bokeh.pydata.org/en/latest/)
 
 ### Conclusion 
+
+* We decided to go with Folium. Please see the [powerpoint document](Technology_Review_Presentation.pptx) for the full analysis. 
 
 

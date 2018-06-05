@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/gdc3000/wa_collisions.svg?branch=master)](https://travis-ci.org/gdc3000/wa_collisions)
 [![Coverage Status](https://coveralls.io/repos/github/gdc3000/wa_collisions/badge.svg)](https://coveralls.io/github/gdc3000/wa_collisions)
 
-Washington Collisions is a tool for cleaning up, visualizating and 
+Washington Collisions is a tool for cleaning up, visualizing and 
 analyzing Seattle collisions and neighborhoods data as well as weather data.
 In our example files we show visualizations using the Folium python 
 package, which show how collisions vary by neighborhood under various weather
@@ -109,7 +109,7 @@ to understand how the collisions changed across neighborhoods of Seattle.
 
 ![example speed limit graph](doc/_images/speed_limit_graph.png)
 
-We investigated whethere there was an effect of changing speed limits on collision rate. 
+We investigated whether there was an effect of changing speed limits on collision rate. 
 The example notebook groups neighborhoods into those where speed limits changed in 2016 
 and those where they did not. We used [Causal Impact](https://github.com/jamalsenouci/causalimpact) package and Bayesian structural time 
 series models to compare collisions and injuries “control” and “treatment.”
@@ -129,7 +129,7 @@ feedback through the issues functionality on github.
 
 ### Limitations
 
-- The project can be installed through the setup.py, but it is not available for download pip. 
+- The project can be installed through the setup.py, but it is not available for download via pip. 
 - The functionality has been tested extensively on Seattle data, but it has not been tested for any other cities. 
 
 ### Licensing and Acknowledgements

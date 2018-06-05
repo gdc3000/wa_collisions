@@ -3,8 +3,6 @@ Unittests for render_stats.py
 """
 import datetime
 import unittest
-import numpy as np
-import pandas as pd
 from causalimpact import CausalImpact
 
 import wa_collisions.render_stats as render_stats

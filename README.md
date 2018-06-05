@@ -70,8 +70,6 @@ The project has the following structure:
     * python setup.py install
 * Then install the required dependancies:
     * pip install -r requirements.txt
-* Install the [Causal Impact](https://github.com/jamalsenouci/causalimpact) package which is not available on pip. 
-    * pip install git+http://github.com/jamalsenouci/causalimpact.git 
 
 ### Examples
 

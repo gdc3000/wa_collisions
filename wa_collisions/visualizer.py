@@ -113,12 +113,12 @@ def visualize_neighborhood_mean(neighborhood_data, value, path=None):
 
 def visualize_heatmap_by_day(data, districts, start_date='2018-01-01', end_date='2018-12-31'):
     """
-    Visualizes the mean value for each neighborhood.
+    Visualize the geographical distribution of collisons in a series of daily heatmaps.
 
     Args:
         data(pandas dataframe): Dataframe containing
             the rows per collisions which is to be mapped.
-        district (string): the district of where the collisions
+        districts (string): the district of where the collisions
             to be presented in the heatmap occured
         start_date (string): the starting date of the collisions
             to be presented in the heatmap
@@ -182,7 +182,23 @@ def visualize_heatmap_by_day(data, districts, start_date='2018-01-01', end_date=
 
 def visualize_heatmap_by_hour(data, districts, start_date='2018-01-01', end_date='2018-12-31'):
     """
-    TO-DO: add docstring
+    Visualize the geographical distribution of collisons in a series of hourly heatmaps.
+
+    Args:
+        data(pandas dataframe): Dataframe containing
+            the rows per collisions which is to be mapped.
+        districts (string): the district of where the collisions
+            to be presented in the heatmap occured
+        start_date (string): the starting date of the collisions
+            to be presented in the heatmap
+        end_date (string): the end date of the collisions
+            to be presented in the heatmap
+
+    Returns:
+        the heatmap produced
+
+    Raises:
+        ValueError: if timeframe user selected is invalid
     """
 
     columns = ['Y', 'X', 'date', 'object_id', 's_hood', 'l_hood', 'hour']
@@ -237,7 +253,17 @@ def visualize_heatmap_by_hour(data, districts, start_date='2018-01-01', end_date
 
 def generate_factor_list(factor_list, df):
     """
-    TO-DO: add docstring
+    Create a dictionary that contains the unique values of different
+    factors based on the input dataset for visualizations toggling.
+
+    Args:
+        factor_list(list): List containing
+            factors the user want to toggle when interacting with
+            the visualizations.
+        df(dataframe): Dataframe that is used to
+            calculate the unique values of each factor.
+    Returns:
+        the dictionary produced
     """
 
     factors = dict()
@@ -247,7 +273,14 @@ def generate_factor_list(factor_list, df):
 
 def roadcond_selection_widget(roadcond_list):
     """
-    TO-DO: add docstring
+    Create an ipython widget for toggle on different road conditions
+    when user interacts with the visualizations.
+
+    Args:
+        roadcond_list(list): List containing
+            unique values of road conditions.
+    Returns:
+        the dropdown widget produced
     """
     style = {'description_width': 'initial'}
     roadcond_selection = widgets.Dropdown(
@@ -261,7 +294,14 @@ def roadcond_selection_widget(roadcond_list):
 
 def weather_selection_widget(weather_list):
     """
-    TO-DO: add docstring
+    Create an ipython widget for toggle on different weather conditions
+    when user interacts with the visualizations.
+
+    Args:
+        roadcond_list(list): List containing
+            unique values of weather conditions.
+    Returns:
+        the dropdown widget produced
     """
     style = {'description_width': 'initial'}
     weather_selection = widgets.Dropdown(
@@ -275,7 +315,14 @@ def weather_selection_widget(weather_list):
 
 def district_selection_widget(district_list):
     """
-    TO-DO: add docstring
+    Create an ipython widget for toggle on different districts in Seattle
+    when user interacts with the visualizations.
+
+    Args:
+        roadcond_list(list): List containing
+            unique values of districts in Seattle.
+    Returns:
+        the dropdown widget produced
     """
     style = {'description_width': 'initial'}
     roadcond_selection = widgets.Dropdown(
@@ -289,7 +336,17 @@ def district_selection_widget(district_list):
 
 def map_by_roadcond_weather(df, map_json_path, roadcond='', weather=''):
     """
-    TO-DO: add docstring
+    Create an interactive choropleth plot visualizing the
+    collision densities in Seattle by road condition and weather type.
+    Args:
+        df(pandas dataframe): Dataframe containing
+            the data value per neighborhood which is to be mapped.
+        map_json_path(string): path to the geo json file of neighborhoods.
+        roadcond(string): string that contains road condition value.
+        weather(string): string that contains weather type value.
+
+    Returns:
+        the map produced
     """
     columns = ['X', 'Y', 'roadcond', 'weather', 'object_id']
     mask = (df.roadcond == roadcond) & (df.weather == weather)
@@ -302,7 +359,16 @@ def map_by_roadcond_weather(df, map_json_path, roadcond='', weather=''):
 
 def map_by_roadcond(df, map_json_path, roadcond=''):
     """
-    TO-DO: add docstring
+    Create an interactive choropleth plot visualizing the
+    collision densities in Seattle by road condition.
+    Args:
+        df(pandas dataframe): Dataframe containing
+            the data value per neighborhood which is to be mapped.
+        map_json_path(string): path to the geo json file of neighborhoods.
+        roadcond(string): string that contains road condition value.
+
+    Returns:
+        the map produced
     """
     columns = ['X', 'Y', 'roadcond', 'object_id']
     mask = (df.roadcond == roadcond)

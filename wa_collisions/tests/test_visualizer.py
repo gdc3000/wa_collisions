@@ -113,7 +113,9 @@ class VisualizerTest(unittest.TestCase):
     def test_visualize_heatmap_time_day(self):
         """
         Passing correct data to visualize_heatmap_with_time returns
-        a map
+        a map.
+        Also test when the user input timeframe is invalid whether
+        a value error was raised.
         """
         test_data = integrate_data(COLLISIONS_DATA, 2014, WEATHER_DATA, GEO_PATH)
 
@@ -139,7 +141,9 @@ class VisualizerTest(unittest.TestCase):
     def test_visualize_heatmap_time_hour(self):
         """
         Passing correct data to visualize_heatmap_with_time returns
-        a map
+        a map.
+        Also test when the user input timeframe is invalid whether
+        a value error was raised.
         """
         test_data = integrate_data(COLLISIONS_DATA, 2014, WEATHER_DATA, GEO_PATH)
 
@@ -166,7 +170,7 @@ class VisualizerTest(unittest.TestCase):
 
     def test_generate_factor_list(self):
         """
-        TO-DO: add docstring
+        Test if the generate_factor_list function correctly returns a dictionary.
         """
         test_data = integrate_data(COLLISIONS_DATA, 2014, WEATHER_DATA, GEO_PATH)
         test_dict = generate_factor_list(['weather', 'roadcond', 'collisiontype'], test_data)
@@ -174,7 +178,8 @@ class VisualizerTest(unittest.TestCase):
 
     def test_roadcond_selection_widget(self):
         """
-        TO-DO: add docstring
+        Test if the roadcond_selection_widget function correctly returns an
+        ipython dropdown widget.
         """
         roadcond_list = ['wet', 'oil']
         test_widget = roadcond_selection_widget(roadcond_list)
@@ -182,7 +187,8 @@ class VisualizerTest(unittest.TestCase):
 
     def test_weather_selection_widget(self):
         """
-        TO-DO: add docstring
+        Test if the weather_selection_widget function correctly returns an
+        ipython dropdown widget.
         """
         weather_list = ['raining', 'snowing']
         test_widget = weather_selection_widget(weather_list)
@@ -190,7 +196,8 @@ class VisualizerTest(unittest.TestCase):
 
     def test_district_selection_widget(self):
         """
-        TO-DO: add docstring
+        Test if the district_selection_widget function correctly returns an
+        ipython dropdown widget.
         """
         district_list = ['DOWNTOWN', 'UNIVERSITY DISTRICT']
         test_widget = district_selection_widget(district_list)
@@ -198,22 +205,32 @@ class VisualizerTest(unittest.TestCase):
 
     def test_map_by_roadcond_weather(self):
         """
-        TO-DO: add docstring
+        Test the map_by_roadcond_weather function correctly returns a folium map when
+        the input criteria correspond to non-empty subset of the combined dataset.
+        Test the map_by_roadcond_weather function correctly returns None  when
+        the input criteria correspond to empty subset of the combined dataset.
         """
         test_data = integrate_data(COLLISIONS_DATA, 2014, WEATHER_DATA, GEO_PATH)
+
         test_map = map_by_roadcond_weather(test_data, GEO_PATH, roadcond='Wet', weather='Raining')
         self.assertIsInstance(test_map, folium.folium.Map)
+
         test_map = map_by_roadcond_weather(test_data[(test_data.roadcond != 'Dry') \
         | (test_data.weather != 'Raining')], GEO_PATH, 'Dry', 'Raining')
         self.assertIsNone(test_map)
 
     def test_map_by_roadcond(self):
         """
-        TO-DO: add docstring
+        Test the map_by_roadcond function correctly returns a folium map when
+        the input criteria correspond to non-empty subset of the combined dataset.
+        Test the map_by_roadcond function correctly returns None  when
+        the input criteria correspond to empty subset of the combined dataset.
         """
         test_data = integrate_data(COLLISIONS_DATA, 2014, WEATHER_DATA, GEO_PATH)
+
         test_map = map_by_roadcond(test_data, GEO_PATH, roadcond='Dry')
         self.assertIsInstance(test_map, folium.folium.Map)
+
         test_map = map_by_roadcond(test_data[test_data.roadcond != 'Dry'], GEO_PATH, 'Dry')
         self.assertIsNone(test_map)
 

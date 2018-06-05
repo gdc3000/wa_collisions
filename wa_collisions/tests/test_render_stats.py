@@ -270,23 +270,5 @@ class RenderStatsTest(unittest.TestCase):
 
         self.assertTrue(isinstance(causal_impact_out, CausalImpact))
 
-    def test_causal_impact_run(self):
-        """
-        Performs a smoke test where we run causal impact on test data. This
-            test will validate Jupyter notebook dependencies.
-        """
-        try:
-            df = pd.date_range(start='1/1/2017', end='1/08/2018')
-            df = df.to_frame()
-            df['SpeedLimitChange'] = np.random.normal(5, 1)
-            df['SpeedLimitSame'] = np.random.normal(10, 2)
-            df = df.drop([0], axis=1)
-
-            impact_test = CausalImpact(df, ['2017-01-01', '2017-06-01']
-                                       , ['2017-06-02', '2018-01-08'])
-            impact_test.run()
-        except KeyError:
-            self.fail("test_causal_impact_run raised a KeyError.")
-
 if __name__ == '__main__':
     unittest.main()

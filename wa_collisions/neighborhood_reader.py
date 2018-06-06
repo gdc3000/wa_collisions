@@ -11,6 +11,8 @@ import numpy as np
 import geopandas as gpd
 from shapely.geometry import Point
 
+DEFAULT_JSON_PATH = 'wa_collisions/data/Neighborhoods/Neighborhoods.json'
+
 def get_neighborhood(latitude, longitude, neighborhoods):
     """
     Returns the Object ID, S_HOOD and L_HOOD for the Seattle neighborhood for a
@@ -104,7 +106,7 @@ def pull_neighborhoods_file(path=None):
         GeoJson data frame of neighborhoods.
     """
     if path is None:
-        path = 'wa_collisions/data/Neighborhoods/Neighborhoods.json'
+        path = DEFAULT_JSON_PATH
     return gpd.read_file(path)
 
 def _find_neighborhood_count(frame=None, path=None):

@@ -123,14 +123,14 @@ class VisualizerTest(unittest.TestCase):
         test_map = visualize_heatmap_by_day(test_data, 'ALL', '2018-01-01', '2018-02-01')
         self.assertIsNone(test_map)
         test_map = visualize_heatmap_by_day(test_data, \
-                   ['CAPITOL HILL', 'DOWNTOWN'], '2018-01-01', '2018-02-01')
+                   'CAPITOL HILL', '2018-01-01', '2018-02-01')
         self.assertIsNone(test_map)
 
         # test when there is matched data for the given timeframe
         test_map = visualize_heatmap_by_day(test_data, 'ALL', '2016-01-01', '2018-02-01')
         self.assertTrue(isinstance(test_map, folium.folium.Map))
         test_map = visualize_heatmap_by_day(test_data, \
-                   ['CAPITOL HILL', 'DOWNTOWN'], '2016-01-01', '2018-02-01')
+                   'CAPITOL HILL', '2016-01-01', '2018-02-01')
         self.assertTrue(isinstance(test_map, folium.folium.Map))
 
         # test if a value error is raised when passing an invalid timeframe

@@ -12,12 +12,12 @@ import os
 from datetime import datetime
 import geopandas
 
-import wa_collisions.read_clean_integrate_data as read_clean_integrate_data
+import wacollisions.read_clean_integrate_data as read_clean_integrate_data
 
 VALID_RESAMPLE_TYPES = ['M', 'W', 'D']
 
 # added in because of change to read_clean_integrate_data
-GEO_PATH = "wa_collisions/data/Neighborhoods/Neighborhoods.json"
+GEO_PATH = "wacollisions/data/Neighborhoods/Neighborhoods.json"
 
 def read_collision_with_neighborhoods(file_path, contains_neighborhood=False
                                       , geo_path_root=''):
@@ -70,7 +70,7 @@ def pivot_by_treatment(
         input_frame,
         treatment_list,
         control_list=None,
-        neighborhood_path='wa_collisions/data/Neighborhoods/Neighborhoods.json',
+        neighborhood_path='wacollisions/data/Neighborhoods/Neighborhoods.json',
         agg_by=None,
         resample_by='D'):
     """
@@ -88,7 +88,7 @@ def pivot_by_treatment(
             neighborhoods in the control group. If None is passed, then
             neighborhoods not in the treatment list are assumed to be
             in the control list.
-        neighborhood_path (default = '../wa_collisions/data
+        neighborhood_path (default = '../wacollisions/data
             /Neighborhoods/Neighborhoods.json'): a path to the json
             file which contains the Seattle neighborhoods and can
             be used to map object_id to a neighbhorhood name.

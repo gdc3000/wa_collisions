@@ -6,15 +6,15 @@ and Integrates the data.
 import unittest
 
 #import read_clean_integrate_data
-from wa_collisions import read_clean_integrate_data
+from wacollisions import read_clean_integrate_data
 
 # adapted from class 3 lecture - structure of unit tests
 # adapted from my homeowork 2 - the tests completed
 
 # store the relative path to the Collisions data, Weather data and GeoJson neighborhoods data
-COLLISIONS_DATA = "wa_collisions/data/Collisions_test.csv"
-WEATHER_DATA = "wa_collisions/data/Weather_test.csv"
-GEO_PATH = "wa_collisions/data/Neighborhoods/Neighborhoods.json"
+COLLISIONS_DATA = "wacollisions/data/Collisions_test.csv"
+WEATHER_DATA = "wacollisions/data/Weather_test.csv"
+GEO_PATH = "wacollisions/data/Neighborhoods/Neighborhoods.json"
 
 # Define a class in which the tests will run
 class IntegrateDataTest(unittest.TestCase):

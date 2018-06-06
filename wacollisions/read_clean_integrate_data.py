@@ -11,7 +11,7 @@ import pandas as pd
 import numpy as np
 #from pytz import timezone
 
-from wa_collisions.neighborhood_reader import assign_neighborhood
+from wacollisions.neighborhood_reader import assign_neighborhood
 
 def read_collision_data(file_path):
     """

@@ -4,13 +4,13 @@ Unittests for neighborhood_reader.py
 
 import unittest
 import pandas as pd
-from wa_collisions.neighborhood_reader import assign_neighborhood
-from wa_collisions.neighborhood_reader import get_neighborhood
-from wa_collisions.neighborhood_reader import pull_neighborhoods_file
-from wa_collisions.neighborhood_reader import _find_neighborhood_count
+from wacollisions.neighborhood_reader import assign_neighborhood
+from wacollisions.neighborhood_reader import get_neighborhood
+from wacollisions.neighborhood_reader import pull_neighborhoods_file
+from wacollisions.neighborhood_reader import _find_neighborhood_count
 
 # store the relative path to the GeoJson neighborhoods data
-GEO_PATH = "wa_collisions/data/Neighborhoods/Neighborhoods.json"
+GEO_PATH = "wacollisions/data/Neighborhoods/Neighborhoods.json"
 
 # Define a class in which the tests will run
 class NeighborhoodReaderTest(unittest.TestCase):

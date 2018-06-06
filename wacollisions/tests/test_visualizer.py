@@ -6,23 +6,23 @@ import unittest
 import pandas as pd
 import folium
 import ipywidgets as widgets
-from wa_collisions.visualizer import visualize_neighborhood
-from wa_collisions.visualizer import visualize_neighborhood_count
-from wa_collisions.visualizer import visualize_neighborhood_mean
-from wa_collisions.visualizer import visualize_heatmap_by_day
-from wa_collisions.visualizer import visualize_heatmap_by_hour
-from wa_collisions.visualizer import generate_factor_list
-from wa_collisions.visualizer import roadcond_selection_widget
-from wa_collisions.visualizer import weather_selection_widget
-from wa_collisions.visualizer import district_selection_widget
-from wa_collisions.visualizer import map_by_roadcond_weather
-from wa_collisions.visualizer import map_by_roadcond
-from wa_collisions.read_clean_integrate_data import integrate_data
+from wacollisions.visualizer import visualize_neighborhood
+from wacollisions.visualizer import visualize_neighborhood_count
+from wacollisions.visualizer import visualize_neighborhood_mean
+from wacollisions.visualizer import visualize_heatmap_by_day
+from wacollisions.visualizer import visualize_heatmap_by_hour
+from wacollisions.visualizer import generate_factor_list
+from wacollisions.visualizer import roadcond_selection_widget
+from wacollisions.visualizer import weather_selection_widget
+from wacollisions.visualizer import district_selection_widget
+from wacollisions.visualizer import map_by_roadcond_weather
+from wacollisions.visualizer import map_by_roadcond
+from wacollisions.read_clean_integrate_data import integrate_data
 
 # store the relative path to the Collisions data, Weather data and GeoJson neighborhoods data
-COLLISIONS_DATA = "wa_collisions/data/Collisions_test.csv"
-WEATHER_DATA = "wa_collisions/data/Weather_test.csv"
-GEO_PATH = "wa_collisions/data/Neighborhoods/Neighborhoods.json"
+COLLISIONS_DATA = "wacollisions/data/Collisions_test.csv"
+WEATHER_DATA = "wacollisions/data/Weather_test.csv"
+GEO_PATH = "wacollisions/data/Neighborhoods/Neighborhoods.json"
 
 # Define a class in which the tests will run
 class VisualizerTest(unittest.TestCase):

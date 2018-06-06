@@ -11,7 +11,7 @@ import numpy as np
 import geopandas as gpd
 from shapely.geometry import Point
 
-DEFAULT_JSON_PATH = 'wa_collisions/data/Neighborhoods/Neighborhoods.json'
+DEFAULT_JSON_PATH = 'wacollisions/data/Neighborhoods/Neighborhoods.json'
 
 def get_neighborhood(latitude, longitude, neighborhoods):
     """

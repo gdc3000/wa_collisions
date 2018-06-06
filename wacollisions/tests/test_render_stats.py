@@ -5,12 +5,12 @@ import datetime
 import unittest
 from causalimpact import CausalImpact
 
-import wa_collisions.render_stats as render_stats
-import wa_collisions.read_clean_integrate_data as read_clean_integrate_data
+import wacollisions.render_stats as render_stats
+import wacollisions.read_clean_integrate_data as read_clean_integrate_data
 
-FILE_PATH = 'wa_collisions/data/Collisions_test.csv'
-FILE_PATH_NBRHD = 'wa_collisions/data/Collisions_With_Neighborhoods_test.csv'
-GEO_PATH = "wa_collisions/data/Neighborhoods/Neighborhoods.json"
+FILE_PATH = 'wacollisions/data/Collisions_test.csv'
+FILE_PATH_NBRHD = 'wacollisions/data/Collisions_With_Neighborhoods_test.csv'
+GEO_PATH = "wacollisions/data/Neighborhoods/Neighborhoods.json"
 
 #Read and clean collision data used across numerous test cases.
 DF_NO_NEIGHBORHOODS = read_clean_integrate_data.read_collision_data(FILE_PATH)

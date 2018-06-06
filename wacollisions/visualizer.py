@@ -11,7 +11,7 @@ import folium
 import folium.plugins as plugins
 import ipywidgets as widgets
 
-MAP_JSON_DEFAULT = "wa_collisions/data/Neighborhoods/Neighborhoods.json"
+MAP_JSON_DEFAULT = "wacollisions/data/Neighborhoods/Neighborhoods.json"
 MAP_LOCATION_START = [47.6199206, -122.3230027]
 MAP_ZOOM = 11
 ERROR = 0.000001

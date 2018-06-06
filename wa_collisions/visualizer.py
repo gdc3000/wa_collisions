@@ -111,14 +111,14 @@ def visualize_neighborhood_mean(neighborhood_data, value, path=None):
     return visualize_neighborhood(counts_per_neighborhood, 'mean', path)
 
 
-def visualize_heatmap_by_day(data, districts, start_date='2018-01-01', end_date='2018-12-31'):
+def visualize_heatmap_by_day(data, district, start_date='2018-01-01', end_date='2018-12-31'):
     """
     Visualize the geographical distribution of collisons in a series of daily heatmaps.
 
     Args:
         data(pandas dataframe): Dataframe containing
             the rows per collisions which is to be mapped.
-        districts (string): the district of where the collisions
+        district (string): the district of where the collisions
             to be presented in the heatmap occured
         start_date (string): the starting date of the collisions
             to be presented in the heatmap
@@ -141,10 +141,10 @@ def visualize_heatmap_by_day(data, districts, start_date='2018-01-01', end_date=
     timeMask = ((df_collision['date'] >= np.datetime64(start_date)) &
                 (df_collision['date'] <= np.datetime64(end_date)))
 
-    if districts == 'ALL':
+    if district == 'ALL':
         index = timeMask
     else:
-        index = timeMask & (df_collision['l_hood'].isin(districts))
+        index = timeMask & (df_collision['l_hood'] == district)
 
     if sum(index) == 0:
         print('No matched collision.')
@@ -156,10 +156,10 @@ def visualize_heatmap_by_day(data, districts, start_date='2018-01-01', end_date=
     data = list()
     for date in dates:
         timeMask = df_collision['date'] == date
-        if districts == 'ALL':
+        if district == 'ALL':
             index = timeMask
         else:
-            index = timeMask & (df_collision['l_hood'].isin(districts))
+            index = timeMask & (df_collision['l_hood'] == district)
         coordinates = df_collision.reindex(index[index].index.values)[['Y', 'X']].values
         coordinates = coordinates * np.array([[1, 1]])
         data.append(coordinates.tolist())

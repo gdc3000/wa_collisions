@@ -142,4 +142,4 @@ the University of Washington for instructing us on effective software
 engineering for data science and research projects.
 
 Also, thanks to the shablona team for providing us with a great template from 
-which we built this repo. 
+which we built this repo.  
